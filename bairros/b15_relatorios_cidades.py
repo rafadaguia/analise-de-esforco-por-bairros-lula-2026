@@ -198,9 +198,17 @@ def relatorio(k, m, D, A, pop, ranks, n_cid):
     w(f"{mil(pop.get(k, 0))} habitantes (Censo 2022) · {mil(m['ap'])} eleitores aptos · "
       f"{m.get('rm') or 'fora de região metropolitana'} · {m['u']} área(s) no mapa")
     w("")
-    if inst:
-        w(f"> **Atenção: estimativa menos segura em {uf}.** Neste estado, os cálculos variaram mais do que o normal. "
-          f"Use os números como orientação geral e confira com quem conhece o território.")
+    reproc = uf in set(D["meta"].get("ufs_reprocessando", []))
+    if inst or reproc:
+        txt = []
+        if inst:
+            txt.append(f"**Atenção: estimativa menos segura em {uf}.** Neste estado, os cálculos variaram mais do que o normal. "
+                       f"Use os números como orientação geral e confira com quem conhece o território.")
+        if reproc:
+            txt.append(f"**Atualização prevista para {D['meta'].get('atualizacao_prevista', 'breve')}:** os números de {uf} "
+                       f"estão sendo recalculados com um processamento mais longo, para deixar a estimativa mais segura. A nota, "
+                       f"os votos a recuperar e os temas deste relatório podem mudar. Baixe o relatório de novo depois da atualização.")
+        w("> " + " ".join(txt))
         w("")
 
     # ---------------------------------------------------------------- resumo

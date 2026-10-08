@@ -173,7 +173,9 @@ const MODO = "area";   // municipio | area | rm (cada página do site é gerada 
   const cacheUF = {};
   async function unidadesUF(uf) { if (!cacheUF[uf]) cacheUF[uf] = await (await fetch(`uf/${uf}.json`)).json(); return cacheUF[uf]; }
   const INST = new Set(D.meta.ufs_instaveis || []);
-  const selo = uf => INST.has(uf) ? `<div class="selo" role="note"><b>Atenção: estimativa menos segura em ${uf}.</b> Neste estado, os cálculos variaram mais do que o normal. Use a nota como orientação geral, não como número exato, e confira com quem conhece o território.</div>` : "";
+  const REPROC = new Set(D.meta.ufs_reprocessando || []);
+  const atualizacao = uf => REPROC.has(uf) ? ` <b>Atualização prevista para ${D.meta.atualizacao_prevista || "breve"}:</b> os números de ${uf} estão sendo recalculados com um processamento mais longo, para deixar a estimativa mais segura. A nota, os votos a recuperar e os temas podem mudar.` : "";
+  const selo = uf => INST.has(uf) || REPROC.has(uf) ? `<div class="selo" role="note">${INST.has(uf) ? `<b>Atenção: estimativa menos segura em ${uf}.</b> Neste estado, os cálculos variaram mais do que o normal. Use a nota como orientação geral, não como número exato, e confira com quem conhece o território.` : ""}${atualizacao(uf)}</div>` : "";
   let estado = { nivel: "pais" };
 
   const TEMA = { emprego: "emprego", jornada_6x1: "fim da escala 6x1", renda_salario_minimo: "salário mínimo e renda",

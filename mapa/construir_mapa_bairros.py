@@ -90,6 +90,18 @@ def rotulos(gu, mun, rmg, u):
     print(f"  rótulos: {len(feats):,} -> rotulos.pmtiles ({os.path.getsize(destino)/1e6:.1f} MB)")
 
 
+AVISO_QUANDO = "hoje (08/10) à noite"   # quando sai o reajuste extralongo; o aviso some sozinho quando ele termina
+
+
+def ufs_reprocessando(unidade):
+    """UFs do reajuste extralongo que ainda não têm resultado (aviso de atualização no mapa, no guia e nos relatórios)."""
+    pasta = os.path.join(VAR, unidade, "MC_extralongo")
+    alvo = os.path.join(pasta, "ufs_alvo.txt")
+    if not os.path.exists(alvo):
+        return []
+    return [uf for uf in open(alvo).read().split() if not os.path.exists(os.path.join(pasta, f"diag_{uf}.json"))]
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--unidade", default="U1"); ap.add_argument("--metodo", default="MC"); ap.add_argument("--pesos", default="P2")
@@ -211,6 +223,7 @@ def main():
         rh = dg.get("rhat_max")
         if rh is None or (isinstance(rh, float) and np.isnan(rh)) or rh > 1.05 or len(dg.get("logp_cadeias", [0] * 6)) - len(dg.get("descartadas", [])) <= 3:
             inst.append(dg["uf"])
+    reproc = ufs_reprocessando(a.unidade)
     # citações dos planos oficiais por tema (b09/b13) e força do tema soberania por município (b14)
     cit_arq = os.path.join(VAR, a.unidade, "temas_citacoes.json")
     citacoes = json.load(open(cit_arq)) if os.path.exists(cit_arq) else {}
@@ -222,7 +235,8 @@ def main():
                 r_ = sob.loc[int(k)]
                 v["sob"] = {"f": r_["forca_soberania"], "eua": round(float(r_["exp_eua_usd"]) / 1e6, 1),
                             "par": round(100 * float(r_["parcela_eua"]), 0), "am": bool(r_["amazonia_legal"]), "sede": bool(r_["sede_exportadora"])}
-    dados = {"meta": {**meta, "unidade": a.unidade, "metodo": a.metodo, "pesos": a.pesos, "ufs_instaveis": sorted(inst)},
+    dados = {"meta": {**meta, "unidade": a.unidade, "metodo": a.metodo, "pesos": a.pesos, "ufs_instaveis": sorted(inst),
+                      "ufs_reprocessando": reproc, "atualizacao_prevista": AVISO_QUANDO},
              "citacoes": citacoes,
              "grupos": niveis, "dist": dist, "municipios": municipios, "rms": rms}
     json.dump(limpo(dados), open(os.path.join(OUT, "dados.json"), "w"), ensure_ascii=False, separators=(",", ":"), allow_nan=False)
@@ -250,6 +264,10 @@ def main():
     n = iter(range(10, 20))
     fm = re.sub(r"<h2>", lambda _: f"<h2>{next(n)}. ", fm)
     assert "<!--__FONTES_METODOS__-->" in guia
+    aviso = (f'<div class="caixa alerta"><b>Atualização prevista para {AVISO_QUANDO}:</b> os números de {", ".join(reproc)} '
+             f'estão sendo recalculados com um processamento mais longo, para deixar a estimativa mais segura. Nesses estados, '
+             f'a nota, os votos a recuperar e os temas podem mudar. Confira o mapa de novo depois da atualização.</div>') if reproc else ""
+    guia = guia.replace("<!--__AVISO_REPROC__-->", aviso)
     open(os.path.join(OUT, "guia.html"), "w").write(guia.replace("<!--__FONTES_METODOS__-->", fm))
     print(f"  níveis: {len(nv_mun)} municípios, {len(nv_rm)} RMs | UFs instáveis: {sorted(inst)}")
     # bibliotecas e fontes locais (MapLibre, PMTiles, Archivo, Instrument Sans): nada é carregado de fora

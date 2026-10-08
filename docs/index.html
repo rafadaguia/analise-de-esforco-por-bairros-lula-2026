@@ -52,6 +52,12 @@ nav.mapas a:focus-visible, .botao:focus-visible { outline: 2px solid var(--focus
 .trilha button[aria-current="true"] { background: var(--ink); color: var(--surface); }
 h2 { font-family: var(--display); font-stretch: 75%; font-weight: 700; font-size: 28px; line-height: 1.05; margin: 0; }
 .sub { color: var(--ink-3); font-size: 13px; margin-top: 2px; }
+.medidas { margin: 8px 0 6px; }
+.medidas th { text-align: left; font-size: 12px; font-weight: 600; color: var(--ink-3); border-bottom: 1px solid var(--rule); padding: 4px 6px 4px 0; }
+.medidas td { padding: 7px 6px 7px 0; border-bottom: 1px solid var(--rule); vertical-align: top; font-size: 13px; }
+.medidas td.v { font-family: var(--display); font-stretch: 75%; font-size: 20px; font-weight: 700; white-space: nowrap; }
+.medidas td.num, .medidas th.num { text-align: right; white-space: nowrap; }
+.medidas td:first-child { width: 52%; }
 .kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; }
 .kpi b { display: block; font-family: var(--display); font-stretch: 75%; font-size: 24px; line-height: 1.1; }
 .kpi span { color: var(--ink-3); font-size: 12px; }
@@ -160,7 +166,9 @@ const MODO = "municipio";   // municipio | area | rm (cada página do site é ge
   const D = await (await fetch("dados.json")).json();
   // relatórios em PDF das cidades com mais de 100 mil habitantes (código IBGE -> arquivo); sem o índice, sem botão
   const REL = await fetch("relatorios/indice.json").then(r => r.ok ? r.json() : {}).catch(() => ({}));
-  const botaoRel = (k, n) => REL[k] ? `<a class="botao botao-rel" href="relatorios/${REL[k]}" download>Baixar o relatório de ${n} (PDF)</a>` : "";
+  // link direto do arquivo no GitHub: o servidor entrega como download (application/octet-stream), e o PDF baixa ao clicar
+  const GH_RAW = "https://raw.githubusercontent.com/rafadaguia/analise-de-esforco-por-bairros-lula-2026/main/docs/relatorios/";
+  const botaoRel = (k, n) => REL[k] ? `<a class="botao botao-rel" href="${GH_RAW}${REL[k]}" download="${REL[k].split("/").pop()}" rel="noopener">Baixar o relatório de ${n} (PDF)</a>` : "";
   const UFS = await (await fetch("ufs.json")).json();
   const cacheUF = {};
   async function unidadesUF(uf) { if (!cacheUF[uf]) cacheUF[uf] = await (await fetch(`uf/${uf}.json`)).json(); return cacheUF[uf]; }
@@ -265,7 +273,11 @@ const MODO = "municipio";   // municipio | area | rm (cada página do site é ge
       const f = e.features[0].properties;
       if (MODO === "rm") { if (f.r) mostrar({ nivel: "rm", rm: f.r, uf: (D.rms[f.r] || {}).uf }); return; }
       const m = D.municipios[String(f.m)]; if (!m) return;
-      if (MODO === "municipio") mostrar({ nivel: "municipio", uf: m.uf, rm: m.rm, mun: String(f.m) });
+      // mapa de municípios: o primeiro clique escolhe o estado (e aproxima); dentro dele, o clique abre o município
+      if (MODO === "municipio") {
+        if (estado.uf !== m.uf || estado.nivel === "pais") return mostrar({ nivel: "uf", uf: m.uf });
+        return mostrar({ nivel: "municipio", uf: m.uf, rm: m.rm, mun: String(f.m) });
+      }
       else mostrar({ nivel: "unidade", uf: m.uf, rm: m.rm, mun: String(f.m), id: f.id, nome: f.n });
     });
     map.on("mousemove", "sel-fill", () => map.getCanvas().style.cursor = "pointer");
@@ -301,14 +313,20 @@ const MODO = "municipio";   // municipio | area | rm (cada página do site é ge
     return `<div><div class="nota">Quantos bairros em cada nota (1 a 7)</div><div class="barras">${d.map((v, i) =>
       `<div style="height:${Math.max(2, 64 * v / mx)}px;background:var(--n${i + 1})" title="nível ${i + 1}: ${v} áreas"><small>${i + 1}</small></div>`).join("")}</div></div><div style="height:12px"></div>`;
   }
+  // medidas da ficha em tabela: valor provável (mediana) e intervalo de 90%
+  function tabelaMedidas(linhas) {
+    return `<table class="medidas"><thead><tr><th>Medida</th><th class="num">Valor</th><th class="num">Provável entre</th></tr></thead><tbody>${
+      linhas.map(([r, a, txt]) => `<tr><td>${r}</td><td class="num v">${txt != null ? txt : a ? mil(a[1]) : "–"}</td><td class="num">${
+        txt != null || !a ? "–" : `${mil(a[0])} e ${mil(a[2])}`}</td></tr>`).join("")}</tbody></table>`;
+  }
   function kpisGrupo(nv, k) {
     const g = D.grupos[nv]; if (!g) return "";
     const q = m => g[m] && g[m][k];
-    return `<div class="kpis">
-      <div class="kpi"><span>Votos que dá para recuperar</span><b class="num">${faixa(q("potencial"))}</b></div>
-      <div class="kpi"><span>Efeito de levar mais 2 em cada 100 eleitores às urnas</span><b class="num">${faixa(q("mob"))}</b></div>
-      <div class="kpi"><span>Diferença Lula − Flávio no 2º turno, se 2022 se repetir</span><b class="num">${faixa(q("margem_base"))}</b></div>
-      <div class="kpi"><span>Mesma diferença, se os eleitores de outros candidatos forem mais para Flávio</span><b class="num">${faixa(q("margem_dir"))}</b></div></div>
+    return tabelaMedidas([
+      ["Votos que dá para recuperar", q("potencial")],
+      ["Efeito de levar mais 2 em cada 100 eleitores às urnas", q("mob")],
+      ["Diferença Lula − Flávio no 2º turno, se 2022 se repetir", q("margem_base")],
+      ["Mesma diferença, se os eleitores de outros candidatos forem mais para Flávio", q("margem_dir")]]) + `
       <p class="nota" style="margin:0">Número negativo = vantagem de Flávio. Números positivos no efeito de levar gente às urnas = ajuda Lula; negativos = ajuda Flávio.</p>`;
   }
   function trilha(s) {
@@ -336,12 +354,12 @@ const MODO = "municipio";   // municipio | area | rm (cada página do site é ge
     const el = document.getElementById("ficha");
     if (s.nivel === "pais") {
       el.innerHTML = `<h2>Brasil</h2><div class="sub">${fmt.format(D.meta.unidades)} áreas analisadas · de 2022 para 2026, Lula caiu em média ${Math.abs(D.meta.nac_desloc).toFixed(1).replace(".", ",")} pontos percentuais</div>${kpisGrupo("pais", "BR")}
-      <p class="nota">${MODO === "area" ? "<b>Para ver os bairros, aproxime o mapa numa cidade ou busque um município.</b> " : ""}Clique no mapa para abrir uma ficha. "Votos que dá para recuperar" soma duas coisas: os votos que Lula perdeu além da média do país desde 2022 e o ganho de levar mais gente às urnas onde isso tende a ajudá-lo. Não é previsão de resultado.</p>`;
+      <p class="nota">${MODO === "area" ? "<b>Para ver os bairros, aproxime o mapa numa cidade ou busque um município.</b> " : ""}${MODO === "municipio" ? "Clique num estado para aproximar e, depois, num município para abrir a ficha." : "Clique no mapa para abrir uma ficha."} "Votos que dá para recuperar" soma duas coisas: os votos que Lula perdeu além da média do país desde 2022 e o ganho de levar mais gente às urnas onde isso tende a ajudá-lo. Não é previsão de resultado.</p>`;
       if (mover) map.fitBounds([[-74, -34], [-34.5, 5.5]], { padding: 10, duration: 600 });
       return;
     }
     if (s.nivel === "uf") {
-      el.innerHTML = `<h2>${s.uf}</h2><div class="sub">Unidade da Federação</div>${selo(s.uf)}${kpisGrupo("uf", s.uf)}${barras(D.dist.uf[s.uf])}`;
+      el.innerHTML = `<h2>${s.uf}</h2><div class="sub">Unidade da Federação</div>${MODO === "municipio" ? `<p class="nota"><b>Agora clique num município de ${s.uf}</b> para abrir a ficha dele. Para trocar de estado, clique em outro estado ou em "Brasil" acima.</p>` : ""}${selo(s.uf)}${kpisGrupo("uf", s.uf)}${barras(D.dist.uf[s.uf])}`;
       if (mover) zoom(bboxUF(s.uf)); return;
     }
     if (s.nivel === "rm") {
@@ -370,11 +388,11 @@ const MODO = "municipio";   // municipio | area | rm (cada página do site é ge
     if (!u) { el.innerHTML = `<h2>${s.nome || "Área sem local de votação"}</h2><div class="sub">sem local de votação</div><p class="nota">Não há escola com seção eleitoral nesta área: os moradores votam em locais de bairros vizinhos, e por isso ela não tem resultado próprio.</p>`; return; }
     el.innerHTML = `<h2>${u.n}</h2><div class="sub">${m.n} (${m.uf}) · ${fmt.format(u.ap)} aptos · ${TIPO[u.t] || u.t}</div>${botaoRel(u.m, m.n)}
       ${u.v && u.v[1] ? nivelBox(u.v[1]) : `<div class="nota">Sem nota: área com menos de 1.000 eleitores ou escolas sem localização precisa</div>`}${selo(m.uf)}
-      <div class="kpis">
-        <div class="kpi"><span>Votos que dá para recuperar</span><b class="num">${faixa(u.pot)}</b></div>
-        <div class="kpi"><span>Votos a recuperar a cada mil eleitores</span><b class="num">${u.pm == null ? "–" : fmt.format(u.pm)}</b></div>
-        <div class="kpi"><span>Efeito de levar mais 2 em cada 100 eleitores às urnas</span><b class="num">${faixa(u.mob)}</b></div>
-        <div class="kpi"><span>Chance de que levar mais gente às urnas ajude Lula</span><b class="num">${pct(u.pr, 0)}</b></div></div>
+      ${tabelaMedidas([
+        ["Votos que dá para recuperar", u.pot],
+        ["Votos a recuperar a cada mil eleitores", null, u.pm == null ? "–" : fmt.format(u.pm)],
+        ["Efeito de levar mais 2 em cada 100 eleitores às urnas", u.mob],
+        ["Chance de que levar mais gente às urnas ajude Lula", null, pct(u.pr, 0)]])}
       ${cartaoTemas(u.tm, u.n)}
       <table>
         <tr><td>Votos de Lula no 1º turno de 2026</td><td class="num">${u.l26 == null ? "–" : u.l26.toFixed(1).replace(".", ",") + "%"}</td></tr>

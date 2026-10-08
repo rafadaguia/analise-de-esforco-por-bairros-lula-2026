@@ -106,5 +106,5 @@ AtlasIntel, Quaest). Bibliotecas: MapLibre GL JS e PMTiles (BSD-3); fontes Archi
 
 ## Licença
 
-Código e tabelas desta análise: CC0 1.0 (ver `LICENSE`). Os dados de terceiros mantêm suas licenças: os nomes derivados do
+Código, tabelas e mapas desta análise: [Creative Commons Atribuição 4.0 Internacional (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/deed.pt-br) (ver `LICENSE`). Ao reutilizar, cite: "Estel Tecnologia (estel.tec.br), Análise de esforço por bairro: 2º turno de 2026". Os dados de terceiros mantêm suas licenças: os nomes derivados do
 OpenStreetMap seguem a ODbL, e as bibliotecas e fontes em `mapa/lib/` seguem as licenças incluídas na pasta.

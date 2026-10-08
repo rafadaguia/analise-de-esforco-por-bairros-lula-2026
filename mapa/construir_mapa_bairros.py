@@ -90,7 +90,7 @@ def rotulos(gu, mun, rmg, u):
     print(f"  rótulos: {len(feats):,} -> rotulos.pmtiles ({os.path.getsize(destino)/1e6:.1f} MB)")
 
 
-AVISO_QUANDO = "hoje (08/10) à noite"   # quando sai o reajuste extralongo; o aviso some sozinho quando ele termina
+AVISO_QUANDO = "amanhã (09/10)"   # quando sai o reajuste extralongo; o aviso some sozinho quando ele termina
 
 
 def ufs_reprocessando(unidade):

@@ -8,7 +8,7 @@ O mapa e o embed atuais (mapa/mapa_prioridades.html, mapa/embed.html, docs/) nã
 
 Uso: .venv-bairros/bin/python mapa/construir_mapa_bairros.py --unidade U1 --metodo MC --pesos P1
 """
-import argparse, json, os, shutil, subprocess, sys, tempfile
+import argparse, json, os, re, shutil, subprocess, sys, tempfile
 import numpy as np
 import pandas as pd
 import geopandas as gpd
@@ -209,7 +209,7 @@ def main():
     for f in _g.glob(os.path.join(pasta, "diag_??.json")):
         dg = json.load(open(f))
         rh = dg.get("rhat_max")
-        if rh is None or (isinstance(rh, float) and np.isnan(rh)) or rh > 1.05 or len(dg.get("descartadas", [])) >= 3:
+        if rh is None or (isinstance(rh, float) and np.isnan(rh)) or rh > 1.05 or len(dg.get("logp_cadeias", [0] * 6)) - len(dg.get("descartadas", [])) <= 3:
             inst.append(dg["uf"])
     # citações dos planos oficiais por tema (b09/b13) e força do tema soberania por município (b14)
     cit_arq = os.path.join(VAR, a.unidade, "temas_citacoes.json")
@@ -243,7 +243,14 @@ def main():
                            ("rm.html", "rm", "Esforço por Região Metropolitana")):
         pag = modelo.replace('/*__MODO__*/"municipio"', f'"{modo}"').replace("/*__TITULO__*/Esforço por Município", tit)
         open(os.path.join(OUT, arq), "w", encoding="utf-8").write(pag)
-    shutil.copy(os.path.join(RAIZ, "mapa", "guia_modelo.html"), os.path.join(OUT, "guia.html"))   # página "Como usar"
+    # página "Como usar": o guia mais as seções de fontes, ferramentas e metodologias (mesmo texto do README)
+    import markdown
+    guia = open(os.path.join(RAIZ, "mapa", "guia_modelo.html")).read()
+    fm = markdown.markdown(open(os.path.join(RAIZ, "mapa", "fontes_metodos.md")).read(), extensions=["sane_lists"])
+    n = iter(range(10, 20))
+    fm = re.sub(r"<h2>", lambda _: f"<h2>{next(n)}. ", fm)
+    assert "<!--__FONTES_METODOS__-->" in guia
+    open(os.path.join(OUT, "guia.html"), "w").write(guia.replace("<!--__FONTES_METODOS__-->", fm))
     print(f"  níveis: {len(nv_mun)} municípios, {len(nv_rm)} RMs | UFs instáveis: {sorted(inst)}")
     # bibliotecas e fontes locais (MapLibre, PMTiles, Archivo, Instrument Sans): nada é carregado de fora
     shutil.copytree(os.path.join(RAIZ, "mapa", "lib"), os.path.join(OUT, "lib"), dirs_exist_ok=True)

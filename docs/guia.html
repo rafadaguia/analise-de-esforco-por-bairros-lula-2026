@@ -180,7 +180,139 @@ summary { cursor: pointer; font-weight: 600; }
   <details><summary>Os números batem com as pesquisas?</summary><p>Nem sempre. O mapa parte do voto real nas urnas de 2022 e 2026, e não de pesquisas. No 1º turno, as pesquisas mostravam Lula na frente, e Flávio terminou à frente.</p></details>
   <details><summary>Com que frequência o mapa é atualizado?</summary><p>Ele usa o resultado oficial do 1º turno de 2026 (TSE). Não muda durante a campanha, a não ser que a equipe de dados publique uma nova versão.</p></details>
 
-  <p class="fontes">Produção independente e exclusiva da <a href="https://estel.tec.br">Estel Tecnologia</a> (estel.tec.br), sem relação com a campanha oficial, partidos ou candidaturas. Fontes: TSE (resultado por seção e locais de votação, 2010–2026; planos de governo registrados), IBGE (Censo 2022), prefeituras, OpenStreetMap, MTE (Novo CAGED), MDS (Bolsa Família), MDIC (Comex Stat), Datafolha, AtlasIntel e Quaest. Método e limites detalhados no notebook <code>analise_bairros.ipynb</code>.</p>
+  <h2>10. Todas as fontes de dados</h2>
+<p>Tudo o que entrou no estudo, com o uso de cada fonte. São dados públicos e agregados: nenhum dado de pessoa
+identificável foi usado.</p>
+<h3>Tribunal Superior Eleitoral (TSE), Portal de Dados Abertos</h3>
+<ul>
+<li><strong>Votação por seção eleitoral</strong>, presidente, 1º e 2º turnos de 2010, 2014, 2018 e 2022 e 1º turno de 2026
+  (arquivo de 2026 publicado em 06/10/2026). Base de todo o estudo: votos de cada candidato em cada urna.</li>
+<li><strong>Detalhe da votação por seção</strong>: eleitores aptos, comparecimento, abstenção, brancos e nulos.</li>
+<li><strong>Eleitorado por local de votação</strong> (2010 a 2026): endereço, bairro declarado e coordenadas de cada escola de votação.
+  Usado para pôr cada urna no mapa.</li>
+<li><strong>Votação por candidato, município e zona</strong> (1994 a 2026): série histórica e conferência dos totais.</li>
+<li><strong>Planos de governo registrados</strong> no sistema DivulgaCandContas: Lula (PT) e Flávio Bolsonaro (PL). Base dos temas e das
+  citações. Os arquivos estão na pasta <code>Plano de governo/</code>.</li>
+<li><strong>Registro das pesquisas eleitorais</strong> (número de registro, amostra, margem de erro).</li>
+</ul>
+<h3>Instituto Brasileiro de Geografia e Estatística (IBGE)</h3>
+<ul>
+<li><strong>Malha de setores censitários do Censo 2022</strong> (468 mil setores): a menor divisão do território.</li>
+<li><strong>Malhas de bairros, distritos e subdistritos de 2022</strong>: os bairros oficiais (18.269, em 895 municípios).</li>
+<li><strong>Agregados por setor censitário do Censo 2022</strong>: população, idade, alfabetização e domicílios (abastecimento de água,
+  esgoto e coleta de lixo). A tabela de cor ou raça foi lida para o perfil das áreas, mas <strong>não entra em nenhuma nota nem em
+  nenhuma sugestão de tema</strong>.</li>
+<li><strong>Rendimento do responsável pelo domicílio, por setor (Censo 2022)</strong>: renda média de cada área.</li>
+<li><strong>Favelas e comunidades urbanas (Censo 2022)</strong>: setores identificados como favela.</li>
+<li><strong>Composição das regiões metropolitanas, RIDEs e aglomerações urbanas</strong> (referência 31/12/2025).</li>
+<li><strong>Regiões geográficas imediatas e intermediárias</strong> e <strong>malhas de municípios e estados</strong>.</li>
+<li><strong>SIDRA</strong>: população, renda e alfabetização por município (estudo municipal de origem).</li>
+</ul>
+<h3>Prefeituras e governos estaduais</h3>
+<ul>
+<li><strong>Malhas de bairros de 30 prefeituras</strong>, usadas só na variante de comparação: Aracaju, Belo Horizonte, Brasília (GDF),
+  Curitiba, Diadema, Duque de Caxias, Florianópolis, Fortaleza, Guarulhos, João Pessoa, Juiz de Fora, Londrina, Maceió
+  (portal de dados do Governo de Alagoas), Manaus, Maringá, Mogi das Cruzes, Natal, Niterói, Ponta Grossa, Porto Alegre,
+  Porto Velho, Recife, Rio de Janeiro, Salvador, Santo André, Santos, São Bernardo do Campo, São Paulo (GeoSampa),
+  Teresina e Vitória. Endereço e conferência de cada uma: <code>bairros/insumos/prefeituras/catalogo.csv</code>.</li>
+</ul>
+<h3>Outros órgãos federais</h3>
+<ul>
+<li><strong>Ministério do Trabalho e Emprego (MTE), Novo CAGED</strong>: saldo de empregos formais por município (12 meses até
+  agosto de 2026 e ano de 2025).</li>
+<li><strong>Ministério do Desenvolvimento e Assistência Social (MDS), VIS DATA / MI Social</strong>: famílias no Bolsa Família, valor
+  médio e famílias no CadÚnico, por município (agosto e setembro de 2026).</li>
+<li><strong>Ministério do Desenvolvimento, Indústria, Comércio e Serviços (MDIC), Comex Stat</strong>: exportações de 2025 por
+  município, para os EUA e no total. Base do tema soberania nacional.</li>
+</ul>
+<h3>Pesquisas de opinião</h3>
+<ul>
+<li><strong>Datafolha</strong>: relatórios completos do 2º turno (registros BR-08039/2026, de 29/09 a 01/10/2026, e BR-04496/2026, de
+  18 e 19/08/2026) e pesquisas sobre o principal problema do país.</li>
+<li><strong>AtlasIntel</strong>: 20 pesquisas estaduais do 2º turno (27/09 a 02/10/2026) e Latam Pulse (AtlasIntel/Bloomberg).</li>
+<li><strong>Quaest</strong> (contratantes TV Globo/O Globo, Pax e Genial): principal problema do país e apoio à defesa da soberania.</li>
+<li><strong>Ipsos</strong>, "What Worries the World" (setembro de 2026).</li>
+<li>Lista com registro, amostra e margem de erro: <code>bairros/insumos/pesquisas/pesquisas.csv</code> e
+  <code>bairros/insumos/temas/importancia_temas.csv</code>.</li>
+</ul>
+<h3>Veículos de imprensa e agências de checagem</h3>
+<p>Usados para localizar números publicados de pesquisas e declarações públicas dos candidatos (cada linha com link e data em
+<code>bairros/insumos/temas/</code>): Agência Lupa, Aos Fatos, Brasil de Fato, CNN Brasil, Congresso em Foco, Diário de Pernambuco,
+Diário do Grande ABC, Estado de Minas, Estadão/Broadcast (via Terra), Gazeta do Povo, InfoMoney, Jornal Opção, Metrópoles,
+NC News, Poder360 e SBT News.</p>
+<h3>Mapas, nomes e recursos visuais</h3>
+<ul>
+<li><strong>OpenStreetMap</strong> (consulta pela Overpass API, 08/10/2026): nomes de bairros e localidades onde o IBGE não tem bairro.
+  © colaboradores do OpenStreetMap, licença ODbL.</li>
+<li><strong>Coordenadas das sedes municipais</strong>: base aberta kelvins/municipios-brasileiros (licença MIT).</li>
+<li><strong>Glifos Noto Sans</strong> (Protomaps basemaps-assets), <strong>fontes Archivo e Instrument Sans</strong> (Google Fonts), todas com licença
+  SIL OFL, e <strong>logo da Estel Tecnologia</strong> (estel.tec.br).</li>
+</ul>
+<h3>O que não foi usado</h3>
+<ul>
+<li>RAIS (exige login para a tabela municipal) e qualquer microdado de pessoa.</li>
+<li>Religião, escolaridade por nível e renda por faixa por bairro: não existem no Censo 2022 publicado e não foram estimados.</li>
+<li>Orientação sexual: nunca estimada.</li>
+</ul>
+<h2>11. Ferramentas</h2>
+<ul>
+<li><strong>Python 3.12</strong>: linguagem de toda a análise.</li>
+<li><strong>DuckDB</strong>: banco de dados analítico que lê direto os arquivos do TSE e do IBGE (dezenas de milhões de linhas) e faz as
+  somas por seção, local e área.</li>
+<li><strong>pandas e NumPy</strong>: tabelas e contas.</li>
+<li><strong>GeoPandas, Shapely e pyogrio</strong>: mapas e geometria (ponto dentro de polígono, união de setores em áreas).</li>
+<li><strong>scikit-learn (k-means) e SciPy</strong>: agrupamento das escolas de votação em áreas onde a cidade não tem bairros oficiais;
+  busca de vizinhos e otimização.</li>
+<li><strong>RapidFuzz</strong>: comparação aproximada de nomes (bairro declarado no TSE contra bairro do IBGE).</li>
+<li><strong>PyMC, PyTensor e nutpie</strong>: o modelo estatístico e o amostrador MCMC (NUTS) que estima as transferências de votos.</li>
+<li><strong>ArviZ e xarray</strong>: diagnóstico das cadeias (R-hat, tamanho efetivo da amostra) e armazenamento dos resultados.</li>
+<li><strong>PyTorch</strong>: simulação de Monte Carlo na placa de vídeo (GPU), com 10.000 sorteios.</li>
+<li><strong>joblib</strong>: processamento em paralelo por estado.</li>
+<li><strong>Ollama com o modelo gemma4 (31B)</strong>: modelo de linguagem rodando no próprio computador, sem envio de dados, que
+  classificou os 566 parágrafos dos planos de governo por tema. Cada classificação foi conferida por regras no texto.</li>
+<li><strong>Apple Vision (ocrmac)</strong>: leitura (OCR) das tabelas em imagem dos relatórios da AtlasIntel, no próprio computador.</li>
+<li><strong>PyMuPDF</strong>: leitura do texto dos planos de governo e dos relatórios de pesquisa em PDF.</li>
+<li><strong>tippecanoe e PMTiles</strong>: transformam as 19 mil áreas em "blocos" de mapa leves, servidos num único arquivo.</li>
+<li><strong>MapLibre GL JS</strong>: o mapa interativo no navegador, sem servidor e sem serviços externos.</li>
+<li><strong>Jupyter</strong>: o notebook técnico (<code>analise_bairros.ipynb</code>) com todas as tabelas e diagnósticos.</li>
+<li><strong>python-markdown e Chrome sem interface (puppeteer-core)</strong>: geração dos relatórios em PDF de cada cidade.</li>
+</ul>
+<h2>12. Metodologias</h2>
+<ul>
+<li><strong>Geocodificação dos locais de votação.</strong> Cada escola de votação recebe a coordenada oficial do TSE (99,4% dos
+  eleitores). Sem coordenada, usa-se a de outro ano, o nome do bairro declarado ou, por último, o município.</li>
+<li><strong>Construção das áreas.</strong> O resultado das urnas é somado por escola e levado ao bairro do IBGE onde a escola fica.
+  Onde a cidade não tem bairros oficiais, as escolas próximas são agrupadas (k-means) e a área é o entorno delas.
+  Áreas com menos de 1.000 eleitores são juntadas à vizinha. Resultado: 19.191 áreas.</li>
+<li><strong>Inferência ecológica RxC hierárquica</strong> (Rosen, Jiang, King e Tanner, 2001). O voto é secreto: não se sabe para
+  onde foi cada eleitor. O modelo estima, a partir dos totais de cada área no 1º e no 2º turno de 2022, que fração dos
+  eleitores de cada candidato (e de quem não votou) foi para Lula, para o adversário ou ficou de fora. A estimativa usa
+  níveis encaixados (país, estado, região metropolitana, município e área), para que áreas pequenas aprendam com as
+  vizinhas.</li>
+<li><strong>MCMC e diagnóstico.</strong> O modelo é ajustado por amostragem (NUTS), com 6 a 12 cadeias independentes por estado.
+  Cadeias presas numa solução pior são descartadas. Onde o R-hat passa de 1,05 ou sobram poucas cadeias boas, o mapa
+  avisa que a estimativa é menos segura.</li>
+<li><strong>Validação.</strong> O modelo foi ajustado sem 20% das áreas e testado nelas: o resultado real ficou dentro do intervalo de
+  90% em 95,7% dos casos. Também foi testado entre eleições (2018 → 2022 e 2014 → 2018), onde acerta menos: por isso os
+  intervalos não cobrem mudança de comportamento entre eleições.</li>
+<li><strong>Simulação de Monte Carlo.</strong> 10.000 sorteios dos parâmetros estimados aplicados ao 1º turno de 2026, em dois cenários
+  (repetição de 2022 e eleitores de outros candidatos mais para Flávio). Daí saem as medianas e os intervalos de 90%.</li>
+<li><strong>Votos que dá para recuperar.</strong> Terreno perdido (queda de Lula entre 2022 e 2026 além da média do país) mais o ganho de
+  levar 2 em cada 100 eleitores a mais às urnas, só onde isso tende a ajudar Lula.</li>
+<li><strong>Nota de 1 a 7.</strong> Junta quatro medidas, cada uma em posição relativa (de 0 a 1) entre as áreas: votos a recuperar por
+  eleitor (peso 55%), chance de a mobilização ajudar (15%), firmeza da estimativa (15%) e tamanho do eleitorado (15%). As
+  áreas são divididas em sete grupos do mesmo tamanho. Municípios e regiões metropolitanas recebem a nota da mesma forma.</li>
+<li><strong>Temas por lugar.</strong> Importância do tema nas pesquisas nacionais × relevância para o perfil da área no Censo (renda,
+  saneamento, favelas, área rural, exposição ao tarifaço) × força das propostas de cada plano de governo (compromissos e
+  metas contados parágrafo a parágrafo). Daí saem os temas para puxar, de contraste, disputados e a evitar.</li>
+<li><strong>Soberania nacional.</strong> Exposição da cidade ao mercado dos EUA (exportações por eleitor e parcela das exportações) e
+  Amazônia Legal.</li>
+<li><strong>Relatórios por cidade.</strong> Para as 319 cidades com mais de 100 mil habitantes, os achados saem de regras fixas sobre
+  os números, sem texto gerado por modelo de linguagem: cada frase mostra o número que a sustenta.</li>
+<li><strong>Estimativa por pesquisa (MrsP, comparação).</strong> As pesquisas estaduais foram combinadas com o perfil do Censo numa
+  estimativa por área, usada só para comparar com o modelo eleitoral. Ela não entra no mapa.</li>
+</ul>
+  <p class="fontes">Produção independente e exclusiva da <a href="https://estel.tec.br">Estel Tecnologia</a> (estel.tec.br), sem relação com a campanha oficial, partidos ou candidaturas. Lista completa de fontes, ferramentas e metodologias nas seções 10 a 12. Método e limites detalhados no notebook <code>analise_bairros.ipynb</code>.</p>
 </div>
 </body>
 </html>

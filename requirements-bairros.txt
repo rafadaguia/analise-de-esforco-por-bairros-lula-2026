@@ -131,3 +131,4 @@ wrapt==2.5.0
 xarray==2026.9.0
 xarray-einstats==0.11.0
 zarr==3.4.0
+markdown==3.11

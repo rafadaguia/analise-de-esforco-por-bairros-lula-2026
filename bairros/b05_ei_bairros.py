@@ -166,16 +166,20 @@ def construir(x, y, N, g, w, mun, rm, tem_rm, eta_mu, eta_sd, uf=None, logN_ref=
 
 
 LONGO = False   # --longo: 4.000 de aquecimento e target_accept 0,98 (UFs que não convergiram)
+AJUSTE = {}     # --tune/--draws/--cadeias: sobrepõem o padrão (reajuste extralongo: 10.000 / 1.500 / 12)
 
 
 def amostrar_mcmc(m, rapido, cadeias=6):
     import nutpie
+    cadeias = AJUSTE.get("cadeias") or cadeias
     comp = nutpie.compile_pymc_model(m)
     # completo: 2.000 de aquecimento e 1.000 sorteios. Com 1.000/500, R-hat chegou a 1,08 em SP
     # (terceira via) e 3 de 4 cadeias da BA ficaram em modo inferior
     kw = dict(draws=200, tune=300, chains=cadeias) if rapido else dict(draws=1000, tune=4000 if LONGO else 2000, chains=cadeias)
+    if not rapido:
+        kw.update({k: v for k, v in (("tune", AJUSTE.get("tune")), ("draws", AJUSTE.get("draws"))) if v})
     return nutpie.sample(comp, seed=SEMENTE, progress_bar=False, save_warmup=False,
-                         adaptation="low_rank", target_accept=0.98 if LONGO else 0.95, cores=cadeias, **kw)
+                         adaptation="low_rank", target_accept=0.98 if (LONGO or AJUSTE) else 0.95, cores=cadeias, **kw)
 
 
 def ds(no):
@@ -237,7 +241,8 @@ def ajustar_uf(variante, metodo, uf, rapido, validacao, out, ano=2022):
              ref_media=ref[0], ref_desvio=ref[1])
     diag = {"uf": uf, "validacao": validacao, "unidades": int(len(N)), "unidades_treino": int(treino.sum()),
             "municipios": int(mun.max() + 1), "rms": int(tem_rm.sum()), "segundos": round(time.time() - t0),
-            "rhat_max": round(rhat, 3), "ess_min": round(ess), "divergencias": div, **reg}
+            "rhat_max": round(rhat, 3), "ess_min": round(ess), "divergencias": div, "cadeias": len(reg["logp_cadeias"]),
+            "aquecimento": AJUSTE.get("tune") or (4000 if LONGO else 2000), **reg}
     json.dump(diag, open(os.path.join(out, f"diag_{tag}.json"), "w"))
     return diag
 
@@ -279,11 +284,14 @@ def main():
     ap.add_argument("--rapido", action="store_true")
     ap.add_argument("--validacao", action="store_true")
     ap.add_argument("--longo", action="store_true")
+    ap.add_argument("--tune", type=int); ap.add_argument("--draws", type=int); ap.add_argument("--cadeias", type=int)
+    ap.add_argument("--sufixo", default="", help="pasta de saída <metodo><sufixo> (ex.: _extralongo)")
     ap.add_argument("--ano", type=int, default=2022, help="ano das transferências 1º->2º turno (backtesting: 2018, 2014, 2010)")
     a = ap.parse_args()
     global LONGO
     LONGO = a.longo
-    out = os.path.join(VAR, a.unidade, a.metodo + ("_rapido" if a.rapido else "") + ("_longo" if a.longo else "") + ("" if a.ano == 2022 else f"_{a.ano}"))
+    AJUSTE.update({k: v for k, v in (("tune", a.tune), ("draws", a.draws), ("cadeias", a.cadeias)) if v})
+    out = os.path.join(VAR, a.unidade, a.metodo + ("_rapido" if a.rapido else "") + ("_longo" if a.longo else "") + ("" if a.ano == 2022 else f"_{a.ano}") + a.sufixo)
     os.makedirs(out, exist_ok=True)
     if a.metodo == "M2":
         ajustar_m2(a.unidade, out)

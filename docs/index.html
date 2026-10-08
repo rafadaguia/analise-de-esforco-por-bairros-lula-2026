@@ -71,6 +71,8 @@ td:last-child { text-align: right; }
 td + td { padding-left: 12px; }
 .nota { font-size: 12px; color: var(--ink-3); }
 .botao { display: inline-block; text-decoration: none; background: var(--ink); color: var(--surface); padding: 9px 14px; font-weight: 600; font-size: 14px; }
+.botao-rel { background: var(--surface); color: var(--ink); border: 2px solid var(--ink); margin: 8px 0 4px; }
+.botao-rel::before { content: "↓ "; }
 .selo { border: 1px solid var(--alerta); color: var(--alerta); padding: 6px 10px; font-size: 13px; }
 .lista { columns: 2; font-size: 13px; padding-left: 18px; margin: 0; }
 .lista a { color: var(--focus); }
@@ -156,6 +158,9 @@ const MODO = "municipio";   // municipio | area | rm (cada página do site é ge
   const faixa = a => a ? `${mil(a[1])} <i>provável entre ${mil(a[0])} e ${mil(a[2])}</i>` : "–";
   const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
   const D = await (await fetch("dados.json")).json();
+  // relatórios em PDF das cidades com mais de 100 mil habitantes (código IBGE -> arquivo); sem o índice, sem botão
+  const REL = await fetch("relatorios/indice.json").then(r => r.ok ? r.json() : {}).catch(() => ({}));
+  const botaoRel = (k, n) => REL[k] ? `<a class="botao botao-rel" href="relatorios/${REL[k]}" download>Baixar o relatório de ${n} (PDF)</a>` : "";
   const UFS = await (await fetch("ufs.json")).json();
   const cacheUF = {};
   async function unidadesUF(uf) { if (!cacheUF[uf]) cacheUF[uf] = await (await fetch(`uf/${uf}.json`)).json(); return cacheUF[uf]; }
@@ -357,13 +362,13 @@ const MODO = "municipio";   // municipio | area | rm (cada página do site é ge
           m.sob.am ? "Amazônia Legal" : ""].filter(Boolean).join(" · ")}. Por quê: onde o tarifaço dos EUA pesa nos empregos e na economia da cidade, a defesa da soberania tende a fazer mais sentido para as pessoas.</div>` : "";
       const rmLink = m.rm ? `<p class="nota">Faz parte da <a href="rm.html#r=${encodeURIComponent(m.rm)}">${m.rm}</a>.</p>` : "";
       el.innerHTML = `<h2>${m.n}</h2><div class="sub">${m.uf}${m.rm ? " · " + m.rm : ""} · ${fmt.format(m.ap)} aptos · ${m.u} área(s)</div>${nivelBox(m.v)}${selo(m.uf)}
-        ${kpisGrupo("municipio", s.mun)}${MODO === "municipio" ? verBairros : ""}${cartaoTemas(tc, m.n)}${sb}${barras(D.dist.municipio[s.mun])}${rmLink}
+        ${kpisGrupo("municipio", s.mun)}${MODO === "municipio" ? verBairros : ""}${botaoRel(s.mun, m.n)}${cartaoTemas(tc, m.n)}${sb}${barras(D.dist.municipio[s.mun])}${rmLink}
         ${MODO === "area" ? `<p class="nota">${m.u > 1 ? "Clique numa área do município para ver a ficha do bairro." : "Município sem divisão em bairros com local de votação."}</p>` : ""}`;
       if (mover) zoom(m.b); return;
     }
     const U = await unidadesUF(s.uf), u = U[s.id];
     if (!u) { el.innerHTML = `<h2>${s.nome || "Área sem local de votação"}</h2><div class="sub">sem local de votação</div><p class="nota">Não há escola com seção eleitoral nesta área: os moradores votam em locais de bairros vizinhos, e por isso ela não tem resultado próprio.</p>`; return; }
-    el.innerHTML = `<h2>${u.n}</h2><div class="sub">${m.n} (${m.uf}) · ${fmt.format(u.ap)} aptos · ${TIPO[u.t] || u.t}</div>
+    el.innerHTML = `<h2>${u.n}</h2><div class="sub">${m.n} (${m.uf}) · ${fmt.format(u.ap)} aptos · ${TIPO[u.t] || u.t}</div>${botaoRel(u.m, m.n)}
       ${u.v && u.v[1] ? nivelBox(u.v[1]) : `<div class="nota">Sem nota: área com menos de 1.000 eleitores ou escolas sem localização precisa</div>`}${selo(m.uf)}
       <div class="kpis">
         <div class="kpi"><span>Votos que dá para recuperar</span><b class="num">${faixa(u.pot)}</b></div>

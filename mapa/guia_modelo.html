@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Como Usar o Mapa</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="lib/fontes/fontes.css">
+<style>
+:root {
+  --bg: #f6f7f4; --surface: #fcfcfb; --ink: #141a17; --ink-2: #4c534e; --ink-3: #737a74; --rule: #dde1d9;
+  --chip: #edf0ea; --focus: #2a78d6; --neg: #b8322f; --alerta: #9a5b00; --tema: #2a66b8;
+  --n1: #fde7ea; --n2: #fbc8cf; --n3: #f6a2ae; --n4: #ee7787; --n5: #e24d5f; --n6: #cc2a3c; --n7: #a3101f;
+  --display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --body: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121513; --surface: #1a1d1b; --ink: #f1f3ef; --ink-2: #c1c7c0; --ink-3: #8f978f; --rule: #2c322e;
+    --chip: #262b27; --focus: #6da7ec; --neg: #f07a76; --alerta: #e0a44a; --tema: #3a78c9;
+    --n1: #3b2026; --n2: #5b2632; --n3: #812c3f; --n4: #a8344c; --n5: #cc4157; --n6: #e8606f; --n7: #ff8f98;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121513; --surface: #1a1d1b; --ink: #f1f3ef; --ink-2: #c1c7c0; --ink-3: #8f978f; --rule: #2c322e;
+  --chip: #262b27; --focus: #6da7ec; --neg: #f07a76; --alerta: #e0a44a; --tema: #3a78c9;
+  --n1: #3b2026; --n2: #5b2632; --n3: #812c3f; --n4: #a8344c; --n5: #cc4157; --n6: #e8606f; --n7: #ff8f98;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.6; }
+.wrap { max-width: 860px; margin: 0 auto; padding: 20px 16px 56px; }
+.eyebrow { font-family: var(--display); font-stretch: 85%; font-weight: 600; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+h1 { font-family: var(--display); font-stretch: 68%; font-weight: 800; font-size: clamp(34px, 6vw, 56px); line-height: .95; margin: 4px 0 10px; text-wrap: balance; }
+h2 { font-family: var(--display); font-stretch: 75%; font-weight: 700; font-size: 28px; line-height: 1.1; margin: 40px 0 10px; }
+h3 { font-size: 17px; margin: 22px 0 6px; }
+p, li { color: var(--ink); }
+.lede { font-size: 18px; color: var(--ink-2); max-width: 64ch; }
+nav.mapas { display: flex; flex-wrap: wrap; gap: 6px; margin: 16px 0 8px; }
+nav.mapas a { text-decoration: none; color: var(--ink); background: var(--chip); padding: 7px 14px; font-weight: 600; font-size: 14px; }
+nav.mapas a[aria-current="page"] { background: var(--ink); color: var(--surface); }
+nav.mapas a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.caixa { background: var(--surface); border: 1px solid var(--rule); padding: 14px 18px; margin: 16px 0; }
+.caixa.alerta { border-left: 4px solid var(--neg); }
+.caixa.dica { border-left: 4px solid var(--tema); }
+.passos { counter-reset: p; list-style: none; padding: 0; }
+.passos li { counter-increment: p; position: relative; padding-left: 44px; margin: 12px 0; }
+.passos li::before { content: counter(p); position: absolute; left: 0; top: 0; width: 30px; height: 30px; background: var(--ink); color: var(--surface);
+  font-family: var(--display); font-weight: 700; display: grid; place-items: center; }
+table { width: 100%; border-collapse: collapse; font-size: 15px; }
+th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-size: 13px; color: var(--ink-3); font-weight: 600; }
+.escala { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; margin: 8px 0 2px; }
+.escala div { height: 16px; }
+.escala-rot { display: flex; justify-content: space-between; font-size: 13px; color: var(--ink-3); }
+.chip { display: inline-block; font-size: 14px; font-weight: 600; padding: 3px 9px; margin: 2px 2px; }
+.chip.a { background: var(--tema); color: #fff; } .chip.f { background: var(--chip); border: 1px solid var(--tema); }
+.chip.d { background: var(--chip); color: var(--ink-2); } .chip.e { color: var(--neg); border: 1px solid var(--neg); }
+a { color: var(--focus); }
+details { background: var(--surface); border: 1px solid var(--rule); padding: 10px 14px; margin: 8px 0; }
+summary { cursor: pointer; font-weight: 600; }
+.nota { font-size: 12px; color: var(--ink-3); }
+.fontes { font-size: 13px; color: var(--ink-3); margin-top: 40px; }
+
+.marca { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--rule); margin-bottom: 4px; }
+.marca a { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink-3); font-size: 12px; }
+.marca img { height: 34px; width: auto; display: block; }
+.marca .escuro { display: none; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .marca .claro { display: none; } :root:not([data-theme="light"]) .marca .escuro { display: block; } }
+:root[data-theme="dark"] .marca .claro { display: none; } :root[data-theme="dark"] .marca .escuro { display: block; }
+
+.independente { background: var(--ink); color: var(--surface); padding: 10px 14px; font-size: 14px; line-height: 1.45; margin: 4px 0 6px; }
+.independente b { color: var(--surface); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="marca"><a href="https://estel.tec.br" rel="noopener" aria-label="Estel Tecnologia, abre o site"><img class="claro" src="lib/marca/estel-preto.png" alt="Estel Tecnologia" width="104" height="34"><img class="escuro" src="lib/marca/estel-branco.png" alt="Estel Tecnologia" width="104" height="34"></a><span class="nota">Produção independente da <a href="https://estel.tec.br" style="color:inherit">Estel Tecnologia</a></span></div>
+  <div class="independente" role="note"><b>Produção independente e exclusiva da Estel Tecnologia.</b> Esta ferramenta não tem relação com a campanha oficial de Lula, com o PT ou com qualquer partido, federação, coligação ou candidatura, e não foi encomendada nem paga por eles.</div>
+  <div class="eyebrow">2º turno de 2026 · guia para coordenadores locais</div>
+  <h1>Como usar o mapa na campanha de rua e nas redes</h1>
+  <p class="lede">O mapa ajuda a escolher <b>onde</b> concentrar o tempo da equipe e <b>sobre o que</b> conversar. Ele não substitui quem conhece o território: use-o como ponto de partida e confira com a experiência local.</p>
+  <nav class="mapas" aria-label="Mapas">
+    <a href="index.html">Municípios</a>
+    <a href="bairros.html">Bairros</a>
+    <a href="rm.html">Regiões metropolitanas</a>
+    <a href="guia.html" aria-current="page">Como usar</a>
+  </nav>
+
+  <div class="caixa alerta"><b>Em uma frase:</b> vá primeiro aos bairros com nota alta (vermelho forte), leve os temas indicados na ficha e só faça mutirão de "vamos votar" onde a chance de isso ajudar Lula for alta.</div>
+
+  <h2>1. Comece em 5 minutos</h2>
+  <ol class="passos">
+    <li><b>Abra o mapa de Municípios</b> (página inicial) e digite o nome da sua cidade na busca.</li>
+    <li><b>Leia a nota da cidade</b> (de 1 a 7) e os números da ficha. A nota 7 indica o melhor retorno por esforço.</li>
+    <li><b>Clique em "Ver os bairros"</b>. Você vai para o mapa de Bairros, já na sua cidade.</li>
+    <li><b>Anote os bairros com nota 6 e 7</b>: em geral, são as prioridades para a equipe de rua.</li>
+    <li><b>Clique em cada bairro prioritário</b> e veja o cartão "Temas para conversar". É a sugestão de pauta para panfletos, conversas e posts.</li>
+    <li><b>Confira com a equipe local</b>: o mapa erra, e quem anda no bairro sabe coisas que os dados não sabem.</li>
+  </ol>
+
+  <h2>2. Os três mapas</h2>
+  <table>
+    <tr><th>Mapa</th><th>Para quê</th><th>Quem usa</th></tr>
+    <tr><td><a href="index.html">Municípios</a></td><td>Escolher cidades onde vale reforçar a campanha; ver os temas da cidade</td><td>Coordenação estadual e regional</td></tr>
+    <tr><td><a href="bairros.html">Bairros</a></td><td>Montar o roteiro de rua: quais bairros visitar primeiro e o que levar</td><td>Coordenação municipal e de bairro</td></tr>
+    <tr><td><a href="rm.html">Regiões metropolitanas</a></td><td>Ver a região como um todo e comparar as cidades vizinhas</td><td>Coordenação de grandes cidades e regiões</td></tr>
+  </table>
+
+  <h2>3. O que é a nota de 1 a 7</h2>
+  <div class="escala" aria-hidden="true"><div style="background:var(--n1)"></div><div style="background:var(--n2)"></div><div style="background:var(--n3)"></div><div style="background:var(--n4)"></div><div style="background:var(--n5)"></div><div style="background:var(--n6)"></div><div style="background:var(--n7)"></div></div>
+  <div class="escala-rot"><span>1 · pouco retorno por esforço</span><span>7 · muito retorno por esforço</span></div>
+  <p>A nota compara os lugares entre si. Ela é mais alta onde, ao mesmo tempo:</p>
+  <ul>
+    <li><b>há muitos votos a recuperar por eleitor</b>: Lula perdeu ali mais do que a média do país entre 2022 e 2026;</li>
+    <li><b>levar mais gente às urnas tende a ajudar Lula</b>, e não Flávio;</li>
+    <li><b>a estimativa é mais firme</b>, com pouca incerteza;</li>
+    <li><b>o lugar tem bastante eleitor</b>, então cada ação alcança mais gente.</li>
+  </ul>
+  <p>Cada cidade tem uma parcela de bairros em cada nota, para que você sempre tenha por onde começar. <b>Nota baixa não quer dizer "abandone"</b>: quer dizer que ali o mesmo esforço tende a render menos votos novos.</p>
+
+  <h2>4. Como ler a ficha</h2>
+  <table>
+    <tr><th>O que aparece</th><th>O que quer dizer</th></tr>
+    <tr><td>Votos que dá para recuperar</td><td>Estimativa de quantos votos Lula pode ganhar ali: os que ele perdeu além da média do país desde 2022, mais o ganho de levar mais gente às urnas onde isso ajuda.</td></tr>
+    <tr><td>"provável entre X e Y"</td><td>A estimativa não é exata. O valor real deve estar nessa faixa na maioria das vezes.</td></tr>
+    <tr><td>Efeito de levar mais 2 em cada 100 eleitores às urnas</td><td>Positivo: o mutirão de comparecimento tende a ajudar Lula. <b>Negativo: tende a ajudar Flávio. Ali, não faça mutirão genérico de "vamos votar"</b>; foque em conversar com quem já está decidido a votar.</td></tr>
+    <tr><td>Chance de que levar mais gente às urnas ajude Lula</td><td>Acima de 90%: o mutirão é seguro. Abaixo de 10%: ele tende a atrapalhar. No meio: incerto.</td></tr>
+    <tr><td>Diferença Lula − Flávio no 2º turno</td><td>Quanto ficaria a disputa ali se as pessoas repetissem o comportamento de 2022. Número negativo = vantagem de Flávio. É uma simulação, não uma previsão.</td></tr>
+    <tr><td>Quanto Lula perdeu aqui além da média do país</td><td>Votos que Lula tinha em 2022 e não teve em 2026, além da queda média. Costuma ser o voto mais fácil de reconquistar.</td></tr>
+    <tr><td>Atenção: estimativa menos segura</td><td>Neste estado os cálculos variaram mais que o normal. Use a nota como orientação geral e confie mais no conhecimento local.</td></tr>
+  </table>
+
+  <h2>5. Os temas sugeridos</h2>
+  <p>Cada ficha traz um cartão "Temas para conversar". Ele combina três coisas: o que os eleitores dizem ser os problemas mais importantes nas pesquisas, o perfil do lugar no Censo (renda, idade, saneamento, favelas, zona rural, empregos, Bolsa Família, exportações para os EUA) e o que está escrito nos planos de governo registrados no TSE.</p>
+  <table>
+    <tr><td><span class="chip a">Puxe estes temas</span></td><td>Temas em que a proposta de Lula é mais forte e que fazem mais sentido para o perfil do lugar. Use em panfletos, conversas e posts.</td></tr>
+    <tr><td><span class="chip f">Contraste</span></td><td>Temas que o plano de Flávio não trata, ou trata pouco: salário mínimo, fim da escala 6x1, isenção do Imposto de Renda até R$ 5 mil e outros. Bons para comparar os dois. A página do plano está em "Onde está escrito".</td></tr>
+    <tr><td><span class="chip d">Cuidado</span></td><td>Temas que os dois lados disputam, como segurança, custo de vida e corrupção. Fale deles com proposta concreta e dados, nunca só com slogan.</td></tr>
+    <tr><td><span class="chip e">Melhor evitar</span></td><td>Temas que costumam dividir as pessoas e não estão entre as maiores preocupações: costumes e religião, STF e reeleição.</td></tr>
+  </table>
+  <div class="caixa dica"><b>Soberania nacional.</b> Em cidades cuja economia depende de exportar para os EUA (café, suco de laranja, carne, aço, aviões, calçados...), a ficha da cidade mostra um quadro sobre o tema. Ali, a defesa da soberania diante do tarifaço tende a fazer mais sentido para quem trabalha nesses setores.</div>
+  <p>Os temas são <b>sugestões a partir de dados, não pesquisa feita no bairro</b>. Teste, ouça as pessoas e ajuste. Nenhuma sugestão leva em conta cor, gênero, religião ou orientação sexual de quem mora no lugar, e você também não deve fazer isso.</p>
+
+  <h2>6. Na rua</h2>
+  <ul>
+    <li><b>Roteiro:</b> comece pelos bairros com nota 6 e 7 da sua cidade. Na mesma nota, prefira os que têm mais "votos que dá para recuperar".</li>
+    <li><b>Mutirão de comparecimento</b> ("no dia, vá votar"; transporte; lembrete de local de votação) só onde a chance de ajudar Lula é alta, acima de 90%. Onde ela é baixa, o mutirão genérico pode ajudar o adversário.</li>
+    <li><b>Conversa:</b> leve os temas "Puxe estes temas" e um contraste. Use a página do plano de governo para responder "onde está escrito?".</li>
+    <li><b>Registre o retorno:</b> anote o que funcionou em cada bairro. Isso vale mais que qualquer mapa.</li>
+    <li><b>Siga as regras de propaganda de rua</b> da Justiça Eleitoral e da prefeitura (horários, locais, materiais).</li>
+  </ul>
+
+  <h2>7. Nas redes</h2>
+  <ul>
+    <li><b>Conteúdo local:</b> faça posts sobre os temas sugeridos com o nome do bairro ou da cidade ("Em Sorocaba, saúde..."). Conteúdo com cara de lugar engaja mais.</li>
+    <li><b>Grupos e páginas do bairro:</b> priorize os de bairros com nota alta, com linguagem e temas do cartão.</li>
+    <li><b>Contraste com fonte:</b> ao comparar propostas, cite a página do plano registrado no TSE, que aparece no mapa.</li>
+    <li><b>Impulsionamento (anúncio pago) só pelos canais oficiais.</b> A lei eleitoral só permite impulsionar propaganda contratada pelo candidato, partido, federação ou coligação, com identificação. Simpatizantes e militantes não podem pagar anúncio de propaganda eleitoral.</li>
+    <li><b>Segmentação geográfica</b> (por cidade ou bairro) pode usar este mapa. <b>Nunca</b> segmente por dados pessoais sensíveis (religião, cor, saúde, orientação sexual) nem compre listas de contatos: a LGPD e as regras do TSE proíbem.</li>
+    <li><b>Nada de desinformação.</b> Não publique números do mapa como se fossem pesquisa de intenção de voto. Eles não são.</li>
+  </ul>
+
+  <h2>8. Cuidados importantes</h2>
+  <div class="caixa alerta">
+    <ul style="margin:0">
+      <li><b>O mapa fala de lugares, não de pessoas.</b> Um bairro com nota 7 não tem "eleitores fáceis". Cada pessoa é diferente da média do bairro.</li>
+      <li><b>Não é previsão.</b> Os números mostram o que acontece se o comportamento de 2022 se repetir. Ele pode mudar, e muda.</li>
+      <li><b>As pessoas votam onde estão inscritas</b>, nem sempre no bairro onde moram.</li>
+      <li><b>Selo "estimativa menos segura":</b> nesses estados, confie mais no conhecimento local.</li>
+      <li><b>Não colete nem guarde dados pessoais</b> de eleitores a partir do mapa. Ele só usa dados públicos e agregados.</li>
+    </ul>
+  </div>
+
+  <h2>9. Perguntas frequentes</h2>
+  <details><summary>Meu bairro tem nota baixa. Devo abandoná-lo?</summary><p>Não. A nota indica onde o mesmo esforço tende a render mais votos novos. Manter a presença onde Lula já é forte também importa, principalmente para garantir que as pessoas votem.</p></details>
+  <details><summary>Por que minha cidade aparece como uma área só?</summary><p>Quando a cidade tem poucas escolas de votação, ou nenhuma divisão em bairros nos dados oficiais, a análise fica no nível da cidade inteira.</p></details>
+  <details><summary>O nome do bairro está estranho ou termina com "e entorno".</summary><p>Onde a prefeitura não tem bairros oficiais no IBGE, a área foi montada em torno de um grupo de escolas de votação e recebeu o nome do bairro mais citado nos endereços dessas escolas.</p></details>
+  <details><summary>Os números batem com as pesquisas?</summary><p>Nem sempre. O mapa parte do voto real nas urnas de 2022 e 2026, e não de pesquisas. No 1º turno, as pesquisas mostravam Lula na frente, e Flávio terminou à frente.</p></details>
+  <details><summary>Com que frequência o mapa é atualizado?</summary><p>Ele usa o resultado oficial do 1º turno de 2026 (TSE). Não muda durante a campanha, a não ser que a equipe de dados publique uma nova versão.</p></details>
+
+  <p class="fontes">Produção independente e exclusiva da <a href="https://estel.tec.br">Estel Tecnologia</a> (estel.tec.br), sem relação com a campanha oficial, partidos ou candidaturas. Fontes: TSE (resultado por seção e locais de votação, 2010–2026; planos de governo registrados), IBGE (Censo 2022), prefeituras, OpenStreetMap, MTE (Novo CAGED), MDS (Bolsa Família), MDIC (Comex Stat), Datafolha, AtlasIntel e Quaest. Método e limites detalhados no notebook <code>analise_bairros.ipynb</code>.</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+# dados brutos e resultados intermediários (regenerados pelos scripts)
+dados_bairros/
+variantes/
+logs/
+checkpoints/
+mapa/bairros/
+# ambientes e caches
+.venv*/
+__pycache__/
+*.pyc
+.DS_Store
+.ipynb_checkpoints/

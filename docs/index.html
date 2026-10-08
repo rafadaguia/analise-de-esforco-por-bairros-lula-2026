@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Esforço por Município</title>
+<link rel="icon" href="data:,">
+<!-- bibliotecas e fontes locais (pasta lib/): a página não chama nenhum servidor externo -->
+<link rel="stylesheet" href="lib/maplibre-gl.css">
+<link rel="stylesheet" href="lib/fontes/fontes.css">
+<style>
+/* Mesma linguagem visual do mapa municipal (mapa/modelo.html): tokens, tipografia e fichas. */
+:root {
+  --bg: #f6f7f4; --surface: #fcfcfb; --ink: #141a17; --ink-2: #4c534e; --ink-3: #737a74; --rule: #dde1d9;
+  --chip: #edf0ea; --focus: #2a78d6; --sem: #d9ddd5; --linha: #8a918b; --neg: #b8322f; --pos: #1f7a4d; --alerta: #9a5b00;
+  --n1: #fde7ea; --n2: #fbc8cf; --n3: #f6a2ae; --n4: #ee7787; --n5: #e24d5f; --n6: #cc2a3c; --n7: #a3101f; --tema: #2a66b8;
+  --display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --body: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121513; --surface: #1a1d1b; --ink: #f1f3ef; --ink-2: #c1c7c0; --ink-3: #8f978f; --rule: #2c322e;
+    --chip: #262b27; --focus: #6da7ec; --sem: #2a2f2b; --linha: #5b625c; --neg: #f07a76; --pos: #5cc48f; --alerta: #e0a44a;
+    --n1: #3b2026; --n2: #5b2632; --n3: #812c3f; --n4: #a8344c; --n5: #cc4157; --n6: #e8606f; --n7: #ff8f98; --tema: #3a78c9;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121513; --surface: #1a1d1b; --ink: #f1f3ef; --ink-2: #c1c7c0; --ink-3: #8f978f; --rule: #2c322e;
+  --chip: #262b27; --focus: #6da7ec; --sem: #2a2f2b; --linha: #5b625c; --neg: #f07a76; --pos: #5cc48f; --alerta: #e0a44a;
+  --n1: #3b2026; --n2: #5b2632; --n3: #812c3f; --n4: #a8344c; --n5: #cc4157; --n6: #e8606f; --n7: #ff8f98; --tema: #3a78c9;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.5; }
+.wrap { max-width: 1400px; margin: 0 auto; padding: 20px 16px 40px; display: grid; gap: 16px; }
+.num { font-variant-numeric: tabular-nums; }
+.eyebrow { font-family: var(--display); font-stretch: 85%; font-weight: 600; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+h1 { font-family: var(--display); font-stretch: 68%; font-weight: 800; font-size: clamp(34px, 5.5vw, 58px); line-height: .95; margin: 4px 0 8px; text-wrap: balance; }
+.lede { max-width: 72ch; margin: 0; color: var(--ink-2); }
+nav.mapas { display: flex; flex-wrap: wrap; gap: 6px; }
+nav.mapas a { text-decoration: none; color: var(--ink); background: var(--chip); padding: 7px 14px; font-weight: 600; font-size: 14px; }
+nav.mapas a[aria-current="page"] { background: var(--ink); color: var(--surface); }
+nav.mapas a:focus-visible, .botao:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.aviso { border-left: 3px solid var(--neg); background: var(--surface); padding: 10px 14px; color: var(--ink-2); font-size: 14px; max-width: 110ch; }
+.grade { display: grid; grid-template-columns: minmax(0, 1fr) 420px; gap: 18px; align-items: start; }
+@media (max-width: 900px) { .grade { grid-template-columns: 1fr; } }
+#mapa { height: min(78vh, 780px); min-height: 420px; border: 1px solid var(--rule); background: var(--surface); }
+.painel { background: var(--surface); border: 1px solid var(--rule); padding: 16px; display: grid; gap: 14px; max-height: min(78vh, 780px); overflow: auto; }
+.trilha { display: flex; flex-wrap: wrap; gap: 4px; font-size: 13px; align-items: center; }
+.trilha button { border: 0; background: var(--chip); color: var(--ink); padding: 3px 8px; cursor: pointer; font: inherit; }
+.trilha button[aria-current="true"] { background: var(--ink); color: var(--surface); }
+h2 { font-family: var(--display); font-stretch: 75%; font-weight: 700; font-size: 28px; line-height: 1.05; margin: 0; }
+.sub { color: var(--ink-3); font-size: 13px; margin-top: 2px; }
+.kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; }
+.kpi b { display: block; font-family: var(--display); font-stretch: 75%; font-size: 24px; line-height: 1.1; }
+.kpi span { color: var(--ink-3); font-size: 12px; }
+.kpi i { font-style: normal; color: var(--ink-3); font-size: 12px; display: block; }
+.nivel { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
+.sw { width: 14px; height: 14px; display: inline-block; border: 1px solid var(--rule); }
+.legenda { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; font-size: 11px; color: var(--ink-3); }
+.legenda div { height: 12px; }
+.ctrl { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; font-size: 13px; }
+.ctrl input { flex: 1; min-width: 160px; padding: 6px 8px; border: 1px solid var(--rule); background: var(--surface); color: var(--ink); font: inherit; }
+.barras { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; align-items: end; height: 64px; }
+.barras div { position: relative; }
+.barras small { position: absolute; bottom: -16px; left: 0; right: 0; text-align: center; font-size: 10px; color: var(--ink-3); }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+td { padding: 4px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+td:last-child { text-align: right; }
+td + td { padding-left: 12px; }
+.nota { font-size: 12px; color: var(--ink-3); }
+.botao { display: inline-block; text-decoration: none; background: var(--ink); color: var(--surface); padding: 9px 14px; font-weight: 600; font-size: 14px; }
+.selo { border: 1px solid var(--alerta); color: var(--alerta); padding: 6px 10px; font-size: 13px; }
+.lista { columns: 2; font-size: 13px; padding-left: 18px; margin: 0; }
+.lista a { color: var(--focus); }
+.temas { border: 1px solid var(--rule); border-left: 4px solid var(--focus); background: var(--bg); padding: 12px 14px; display: grid; gap: 10px; }
+.temas h3 { margin: 0; font-family: var(--display); font-stretch: 75%; font-weight: 700; font-size: 22px; line-height: 1.1; }
+.temas h3 small { display: block; font-family: var(--body); font-stretch: 100%; font-weight: 500; font-size: 12px; color: var(--ink-3); letter-spacing: .02em; }
+.temas .grupo { display: grid; gap: 5px; }
+.temas .rot { font-size: 12px; font-weight: 600; color: var(--ink-2); text-transform: uppercase; letter-spacing: .06em; }
+.temas .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: 15px; font-weight: 600; line-height: 1.2; padding: 5px 10px; border: 1px solid transparent; }
+.chip.a { background: var(--tema); color: #fff; }
+.chip.f { background: var(--chip); color: var(--ink); border-color: var(--tema); }
+.chip.d { background: var(--chip); color: var(--ink-2); }
+.chip.e { background: transparent; color: var(--neg); border-color: var(--neg); }
+.fontes { font-size: 12px; color: var(--ink-3); max-width: 120ch; }
+.maplibregl-ctrl-attrib { font-size: 10px; }
+
+.marca { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--rule); margin-bottom: 4px; }
+.marca a { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink-3); font-size: 12px; }
+.marca img { height: 34px; width: auto; display: block; }
+.marca .escuro { display: none; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .marca .claro { display: none; } :root:not([data-theme="light"]) .marca .escuro { display: block; } }
+:root[data-theme="dark"] .marca .claro { display: none; } :root[data-theme="dark"] .marca .escuro { display: block; }
+
+.independente { background: var(--ink); color: var(--surface); padding: 10px 14px; font-size: 14px; line-height: 1.45; margin: 4px 0 6px; }
+.independente b { color: var(--surface); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="marca"><a href="https://estel.tec.br" rel="noopener" aria-label="Estel Tecnologia, abre o site"><img class="claro" src="lib/marca/estel-preto.png" alt="Estel Tecnologia" width="104" height="34"><img class="escuro" src="lib/marca/estel-branco.png" alt="Estel Tecnologia" width="104" height="34"></a><span class="nota">Produção independente da <a href="https://estel.tec.br" style="color:inherit">Estel Tecnologia</a></span></div>
+  <div class="independente" role="note"><b>Produção independente e exclusiva da Estel Tecnologia.</b> Esta ferramenta não tem relação com a campanha oficial de Lula, com o PT ou com qualquer partido, federação, coligação ou candidatura, e não foi encomendada nem paga por eles.</div>
+  <header>
+    <div class="eyebrow">2º turno de 2026 · <span id="eyebrow-modo"></span></div>
+    <h1 id="titulo"></h1>
+    <p class="lede" id="lede"></p>
+  </header>
+  <nav class="mapas" aria-label="Mapas">
+    <a href="index.html" data-modo="municipio">Municípios</a>
+    <a href="bairros.html" data-modo="area">Bairros</a>
+    <a href="rm.html" data-modo="rm">Regiões metropolitanas</a>
+    <a href="guia.html" data-modo="guia">Como usar</a>
+  </nav>
+  <div class="aviso" role="note"><b>Antes de usar, lembre:</b> o mapa mostra tendências de lugares, não de pessoas. Ele foi feito com o resultado das urnas de cada escola de votação e com o Censo 2022. As pessoas votam na escola onde estão inscritas, que nem sempre fica no bairro onde moram. E cada bairro tem gente de todo tipo: nunca use o mapa para julgar quem mora lá. Não é previsão de resultado. <a href="guia.html">Veja como usar</a>.</div>
+  <div class="grade">
+    <div id="mapa" role="region" aria-label="Mapa"></div>
+    <aside class="painel" aria-live="polite">
+      <div class="ctrl"><input id="busca" list="lista-busca" placeholder="Buscar…" aria-label="Buscar"><datalist id="lista-busca"></datalist></div>
+      <div>
+        <div class="legenda" aria-hidden="true"><div style="background:var(--n1)"></div><div style="background:var(--n2)"></div><div style="background:var(--n3)"></div><div style="background:var(--n4)"></div><div style="background:var(--n5)"></div><div style="background:var(--n6)"></div><div style="background:var(--n7)"></div></div>
+        <div class="legenda" style="grid-template-columns:1fr 1fr"><span>1 · pouco retorno por esforço</span><span style="text-align:right">7 · muito retorno por esforço</span></div>
+      </div>
+      <nav class="trilha" id="trilha" aria-label="Nível geográfico"></nav>
+      <div id="ficha"></div>
+    </aside>
+  </div>
+  <p class="fontes">Produção independente e exclusiva da <a href="https://estel.tec.br">Estel Tecnologia</a> (estel.tec.br), sem relação com a campanha oficial, partidos ou candidaturas. Fontes: TSE (votação por seção e locais de votação, 2022 e 2026), IBGE (Censo 2022: malhas e agregados por setor; regiões metropolitanas), malhas de bairros de prefeituras, nomes de parte das áreas © colaboradores do OpenStreetMap (ODbL). Método: inferência ecológica RxC hierárquica (Rosen, Jiang, King e Tanner, 2001) e Monte Carlo; nível de esforço com foco no potencial por eleitor. Detalhes, limites e reprodução no notebook <code>analise_bairros.ipynb</code>. Software: MapLibre GL JS e PMTiles (BSD-3); fontes Archivo, Instrument Sans e Noto Sans (SIL OFL 1.1); licenças em <code>lib/</code>.</p>
+</div>
+<script src="lib/maplibre-gl.js"></script>
+<script src="lib/pmtiles.js"></script>
+<script>
+function falha(e) { const f = document.getElementById("ficha"); if (f) f.innerHTML = `<p class="nota">Não foi possível carregar o mapa (${String(e && (e.message || e.reason || e)).slice(0, 200)}). Tente recarregar a página.</p>`; }
+window.addEventListener("error", falha); window.addEventListener("unhandledrejection", e => falha(e.reason));
+const MODO = "municipio";   // municipio | area | rm (cada página do site é gerada com um valor)
+(async function () {
+  const TEXTO = {
+    municipio: ["por município", "Onde ganhar votos para Lula exige menos esforço",
+      "Cada cidade recebe uma nota de 1 a 7. Nota 7 (vermelho forte) é onde o mesmo esforço de campanha tende a trazer mais votos para Lula. Clique numa cidade para ver os números e os temas, e depois os bairros."],
+    area: ["por bairro", "Onde ganhar votos para Lula exige menos esforço, bairro a bairro",
+      "Cada bairro recebe uma nota de 1 a 7. Nota 7 (vermelho forte) é onde o mesmo esforço tende a trazer mais votos. Onde a cidade não tem bairros oficiais, a área é o entorno de um grupo de escolas de votação. Busque sua cidade ou aproxime o mapa."],
+    rm: ["por região metropolitana", "Onde ganhar votos para Lula exige menos esforço, por região metropolitana",
+      "Cada região metropolitana recebe uma nota de 1 a 7. Clique numa região para ver os números, os temas e a lista de cidades, com atalhos para o mapa de cada uma."]
+  }[MODO];
+  document.getElementById("eyebrow-modo").textContent = TEXTO[0];
+  document.getElementById("titulo").textContent = TEXTO[1];
+  document.getElementById("lede").textContent = TEXTO[2];
+  document.querySelectorAll("nav.mapas a").forEach(a => { if (a.dataset.modo === MODO) a.setAttribute("aria-current", "page"); });
+
+  const fmt = new Intl.NumberFormat("pt-BR");
+  const mil = v => v == null ? "–" : Math.abs(v) >= 1000 ? fmt.format(Math.round(v / 100) / 10) + " mil" : fmt.format(Math.round(v));
+  const pct = (v, k = 1) => v == null ? "–" : (100 * v).toFixed(k).replace(".", ",") + "%";
+  const pp = v => v == null ? "–" : (v > 0 ? "+" : "") + v.toFixed(1).replace(".", ",") + " pp";
+  const faixa = a => a ? `${mil(a[1])} <i>provável entre ${mil(a[0])} e ${mil(a[2])}</i>` : "–";
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const D = await (await fetch("dados.json")).json();
+  const UFS = await (await fetch("ufs.json")).json();
+  const cacheUF = {};
+  async function unidadesUF(uf) { if (!cacheUF[uf]) cacheUF[uf] = await (await fetch(`uf/${uf}.json`)).json(); return cacheUF[uf]; }
+  const INST = new Set(D.meta.ufs_instaveis || []);
+  const selo = uf => INST.has(uf) ? `<div class="selo" role="note"><b>Atenção: estimativa menos segura em ${uf}.</b> Neste estado, os cálculos variaram mais do que o normal. Use a nota como orientação geral, não como número exato, e confira com quem conhece o território.</div>` : "";
+  let estado = { nivel: "pais" };
+
+  const TEMA = { emprego: "emprego", jornada_6x1: "fim da escala 6x1", renda_salario_minimo: "salário mínimo e renda",
+    custo_de_vida_inflacao_alimentos: "custo de vida e preço dos alimentos", saude_sus: "saúde (SUS)", educacao: "educação",
+    seguranca_publica: "segurança pública", moradia_mcmv: "moradia (Minha Casa, Minha Vida)", transporte_mobilidade: "transporte",
+    programas_sociais: "programas sociais (Bolsa Família)", impostos_isencao_ir: "isenção do Imposto de Renda",
+    previdencia: "Previdência", agronegocio_meio_ambiente: "agronegócio e meio ambiente", costumes_religiao: "costumes e religião",
+    corrupcao: "corrupção", instituicoes_stf_reeleicao: "STF e reeleição", endividamento_apostas: "endividamento e apostas",
+    saneamento: "saneamento", periferias_favelas: "periferias e favelas", agricultura_familiar: "agricultura familiar",
+    soberania_nacional: "soberania nacional" };
+  const curto = t => t.length > 190 ? t.slice(0, 187).replace(/\s\S*$/, "") + "…" : t;
+  function citacoes(tm) {
+    const C = D.citacoes || {}, linhas = [];
+    (tm.a || []).forEach(t => { const c = C[t] && C[t].lula; if (c) linhas.push(`<li><b>${TEMA[t] || t}</b> · plano de Lula, p. ${c.p}: “${curto(c.t)}”</li>`); });
+    (tm.f || []).forEach(t => { const c = C[t]; if (!c) return;
+      linhas.push(`<li><b>${TEMA[t] || t}</b> · plano de Flávio: ${c.flavio_omisso ? "não trata do tema" : `trata pouco (p. ${c.flavio.p})`}${c.lula ? `; Lula, p. ${c.lula.p}` : ""}</li>`); });
+    return linhas.length ? `<details><summary class="rot" style="cursor:pointer">Onde está escrito: planos de governo registrados no TSE</summary><ul class="nota" style="margin:6px 0 0;padding-left:18px">${linhas.join("")}</ul></details>` : "";
+  }
+  const chips = (l, c) => l && l.length ? l.map(t => `<span class="chip ${c}">${TEMA[t] || t.replace(/_/g, " ")}</span>`).join("") : `<span class="nota">–</span>`;
+  function cartaoTemas(tm, onde) {
+    if (!tm) return "";
+    return `<section class="temas" aria-label="Temas">
+      <h3>Temas para conversar em ${onde}<small>Sugestão a partir de dados (pesquisas, Censo e planos de governo). Não é pesquisa feita no lugar: teste e ajuste.</small></h3>
+      <div class="grupo"><span class="rot">Puxe estes temas: mais força para Lula aqui</span><div class="chips">${chips(tm.a, "a")}</div></div>
+      <div class="grupo"><span class="rot">Contraste: o plano de Flávio não trata (ou trata pouco)</span><div class="chips">${chips(tm.f, "f")}</div></div>
+      <div class="grupo"><span class="rot">Cuidado: os dois lados disputam estes temas</span><div class="chips">${chips(tm.d, "d")}</div></div>
+      <div class="grupo"><span class="rot">Melhor evitar: costumam dividir</span><div class="chips">${chips(tm.e, "e")}</div></div>
+      ${citacoes(tm)}
+      <p class="nota" style="margin:0">Importância dos temas nas pesquisas × perfil do lugar no Censo (renda, idade, alfabetização, saneamento, favelas, zona rural), emprego formal, Bolsa Família e exposição ao tarifaço × força das propostas nos planos oficiais registrados no TSE. "Flávio mais fraco": temas que o plano dele não trata ou trata com bem menos propostas. Não usam cor, gênero, religião ou orientação sexual; não descrevem moradores.</p>
+    </section>`;
+  }
+  // temas de um conjunto de municípios: os mais frequentes entre as áreas, com peso pelos eleitores
+  async function temasDe(muns) {
+    const soma = { a: {}, f: {}, d: {}, e: {} }; let n = 0;
+    const ufs = [...new Set(muns.map(k => D.municipios[k] && D.municipios[k].uf).filter(Boolean))];
+    const alvo = new Set(muns);
+    for (const uf of ufs) for (const u of Object.values(await unidadesUF(uf))) {
+      if (!alvo.has(u.m) || !u.tm) continue; n++;
+      for (const k of ["a", "f", "d", "e"]) (u.tm[k] || []).forEach((t, i) => soma[k][t] = (soma[k][t] || 0) + (u.ap || 1) * (k === "a" ? 3 - i : 1));
+    }
+    if (!n) return null;
+    const top = (o, k) => Object.entries(o).sort((x, y) => y[1] - x[1]).slice(0, k).map(x => x[0]);
+    return { a: top(soma.a, 3), f: top(soma.f, 2), d: top(soma.d, 2), e: top(soma.e, 2) };
+  }
+  const TIPO = { bairro: "bairro (IBGE)", bairro_prefeitura: "bairro (prefeitura)", subdistrito: "subdistrito", distrito: "distrito",
+                 municipio: "município inteiro (sem divisão com local de votação)", area_local: "conjunto de locais de votação",
+                 residual: "locais de votação não localizados" };
+  const DESC = ["", "pouco retorno por esforço", "pouco retorno por esforço", "retorno abaixo da média", "retorno médio", "retorno acima da média", "bom retorno por esforço", "melhor retorno por esforço"];
+  const nivelBox = v => v ? `<div class="nivel"><span class="sw" style="background:var(--n${v})"></span>Nota ${v} de 7 · ${DESC[v]}</div>` : "";
+
+  // ---------------------------------------------------------------- mapa
+  const protocolo = new pmtiles.Protocol(); maplibregl.addProtocol("pmtiles", protocolo.tile);
+  const base = new URL(".", location.href).href;
+  const cores = p => ["match", ["get", p], 1, css("--n1"), 2, css("--n2"), 3, css("--n3"), 4, css("--n4"), 5, css("--n5"), 6, css("--n6"), 7, css("--n7"), css("--sem")];
+  const map = new maplibregl.Map({
+    container: "mapa", attributionControl: { compact: true, customAttribution: "TSE · IBGE · prefeituras · © OpenStreetMap" },
+    style: { version: 8, glyphs: base + "lib/glifos/{fontstack}/{range}.pbf", sources: {},
+             layers: [{ id: "fundo", type: "background", paint: { "background-color": css("--surface") } }] },
+    bounds: [[-74, -34], [-34.5, 5.5]], fitBoundsOptions: { padding: 10 }, maxZoom: 15, minZoom: 2.5
+  });
+  map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
+  map.on("load", () => {
+    map.addSource("mun", { type: "vector", url: "pmtiles://" + base + "municipios.pmtiles" });
+    map.addSource("ufs", { type: "geojson", data: UFS });
+    if (MODO === "area") {
+      map.addSource("un", { type: "vector", url: "pmtiles://" + base + "unidades.pmtiles" });
+      map.addLayer({ id: "sel-fill", type: "fill", source: "un", "source-layer": "unidades", paint: { "fill-color": cores("v2"), "fill-opacity": 0.92 } });
+      map.addLayer({ id: "un-linha", type: "line", source: "un", "source-layer": "unidades", minzoom: 8, paint: { "line-color": css("--linha"), "line-width": 0.3 } });
+      map.addLayer({ id: "sel", type: "line", source: "un", "source-layer": "unidades", filter: ["==", ["get", "id"], ""], paint: { "line-color": css("--ink"), "line-width": 2.2 } });
+    } else if (MODO === "municipio") {
+      map.addLayer({ id: "sel-fill", type: "fill", source: "mun", "source-layer": "municipios", paint: { "fill-color": cores("v"), "fill-opacity": 0.92 } });
+      map.addLayer({ id: "sel", type: "line", source: "mun", "source-layer": "municipios", filter: ["==", ["get", "m"], -1], paint: { "line-color": css("--ink"), "line-width": 2.2 } });
+    } else {
+      map.addSource("rm", { type: "vector", url: "pmtiles://" + base + "rm.pmtiles" });
+      map.addLayer({ id: "sel-fill", type: "fill", source: "rm", "source-layer": "rm", paint: { "fill-color": cores("v"), "fill-opacity": 0.92 } });
+      map.addLayer({ id: "sel", type: "line", source: "rm", "source-layer": "rm", filter: ["==", ["get", "r"], ""], paint: { "line-color": css("--ink"), "line-width": 2.2 } });
+    }
+    map.addLayer({ id: "mun-linha", type: "line", source: "mun", "source-layer": "municipios", minzoom: MODO === "municipio" ? 4 : 5, paint: { "line-color": css("--linha"), "line-width": ["interpolate", ["linear"], ["zoom"], 4, 0.15, 10, 1] } });
+    map.addLayer({ id: "uf-linha", type: "line", source: "ufs", paint: { "line-color": css("--ink-2"), "line-width": 0.9 } });
+    // nomes: estados no país, municípios ao aproximar (maiores primeiro), bairros perto (só no mapa de bairros), RMs no mapa de RMs
+    map.addSource("rot", { type: "vector", url: "pmtiles://" + base + "rotulos.pmtiles" });
+    const halo = { "text-color": css("--ink"), "text-halo-color": css("--surface"), "text-halo-width": 1.6, "text-halo-blur": 0.3 };
+    if (MODO === "area") map.addLayer({ id: "rot-bairro", type: "symbol", source: "rot", "source-layer": "rotulos", minzoom: 10,
+      filter: ["==", ["get", "k"], 3], layout: { "text-field": ["get", "n"], "text-font": ["Noto Sans Regular"], "text-size": ["interpolate", ["linear"], ["zoom"], 10, 10, 14, 13],
+        "text-max-width": 8, "symbol-sort-key": ["-", 0, ["get", "r"]], "text-padding": 3 }, paint: { ...halo, "text-color": css("--ink-2") } });
+    map.addLayer({ id: "rot-mun", type: "symbol", source: "rot", "source-layer": "rotulos", minzoom: 5,
+      filter: ["==", ["get", "k"], 2], layout: { "text-field": ["get", "n"], "text-font": ["Noto Sans Medium"],
+        "text-size": ["interpolate", ["linear"], ["zoom"], 5, 10.5, 9, 12.5, 12, 14.5], "text-max-width": 9,
+        "symbol-sort-key": ["-", 0, ["get", "r"]], "text-padding": 4 }, paint: halo });
+    if (MODO === "rm") map.addLayer({ id: "rot-rm", type: "symbol", source: "rot", "source-layer": "rotulos", minzoom: 3.5, maxzoom: 8,
+      filter: ["==", ["get", "k"], 4], layout: { "text-field": ["get", "n"], "text-font": ["Noto Sans Medium"], "text-size": 11.5, "text-max-width": 10 }, paint: halo });
+    map.addLayer({ id: "rot-uf", type: "symbol", source: "rot", "source-layer": "rotulos", maxzoom: 6.5,
+      filter: ["==", ["get", "k"], 1], layout: { "text-field": ["get", "n"], "text-font": ["Noto Sans Medium"], "text-transform": "uppercase",
+        "text-letter-spacing": 0.08, "text-size": ["interpolate", ["linear"], ["zoom"], 3, 9.5, 6, 12], "text-max-width": 7 },
+      paint: { ...halo, "text-color": css("--ink-2") } });
+    map.on("click", "sel-fill", async e => {
+      const f = e.features[0].properties;
+      if (MODO === "rm") { if (f.r) mostrar({ nivel: "rm", rm: f.r, uf: (D.rms[f.r] || {}).uf }); return; }
+      const m = D.municipios[String(f.m)]; if (!m) return;
+      if (MODO === "municipio") mostrar({ nivel: "municipio", uf: m.uf, rm: m.rm, mun: String(f.m) });
+      else mostrar({ nivel: "unidade", uf: m.uf, rm: m.rm, mun: String(f.m), id: f.id, nome: f.n });
+    });
+    map.on("mousemove", "sel-fill", () => map.getCanvas().style.cursor = "pointer");
+    map.on("mouseleave", "sel-fill", () => map.getCanvas().style.cursor = "");
+    if (estado.nivel !== "pais") marcar(estado);
+  });
+  function marcar(s) {
+    if (!map.getLayer("sel")) return;
+    if (MODO === "area") map.setFilter("sel", ["==", ["get", "id"], s.id || ""]);
+    else if (MODO === "municipio") map.setFilter("sel", ["==", ["get", "m"], s.mun ? +s.mun : -1]);
+    else map.setFilter("sel", ["==", ["get", "r"], s.rm || ""]);
+  }
+
+  // ---------------------------------------------------------------- busca
+  const lista = document.getElementById("lista-busca"), busca = document.getElementById("busca"), nomes = {};
+  if (MODO === "rm") {
+    busca.placeholder = "Buscar região metropolitana…";
+    for (const k of Object.keys(D.rms)) { nomes[k] = k; lista.insertAdjacentHTML("beforeend", `<option value="${k}">`); }
+  } else {
+    busca.placeholder = "Buscar município…";
+    for (const [k, m] of Object.entries(D.municipios)) { const t = `${m.n} (${m.uf})`; nomes[t] = k; lista.insertAdjacentHTML("beforeend", `<option value="${t}">`); }
+  }
+  busca.addEventListener("change", e => {
+    const k = nomes[e.target.value]; if (!k) return;
+    if (MODO === "rm") return mostrar({ nivel: "rm", rm: k, uf: D.rms[k].uf });
+    const m = D.municipios[k]; mostrar({ nivel: "municipio", uf: m.uf, rm: m.rm, mun: k });
+  });
+
+  // ---------------------------------------------------------------- fichas
+  function barras(d) {
+    if (!d) return "";
+    const mx = Math.max(...d, 1);
+    return `<div><div class="nota">Quantos bairros em cada nota (1 a 7)</div><div class="barras">${d.map((v, i) =>
+      `<div style="height:${Math.max(2, 64 * v / mx)}px;background:var(--n${i + 1})" title="nível ${i + 1}: ${v} áreas"><small>${i + 1}</small></div>`).join("")}</div></div><div style="height:12px"></div>`;
+  }
+  function kpisGrupo(nv, k) {
+    const g = D.grupos[nv]; if (!g) return "";
+    const q = m => g[m] && g[m][k];
+    return `<div class="kpis">
+      <div class="kpi"><span>Votos que dá para recuperar</span><b class="num">${faixa(q("potencial"))}</b></div>
+      <div class="kpi"><span>Efeito de levar mais 2 em cada 100 eleitores às urnas</span><b class="num">${faixa(q("mob"))}</b></div>
+      <div class="kpi"><span>Diferença Lula − Flávio no 2º turno, se 2022 se repetir</span><b class="num">${faixa(q("margem_base"))}</b></div>
+      <div class="kpi"><span>Mesma diferença, se os eleitores de outros candidatos forem mais para Flávio</span><b class="num">${faixa(q("margem_dir"))}</b></div></div>
+      <p class="nota" style="margin:0">Número negativo = vantagem de Flávio. Números positivos no efeito de levar gente às urnas = ajuda Lula; negativos = ajuda Flávio.</p>`;
+  }
+  function trilha(s) {
+    const t = [["pais", "Brasil"]];
+    if (s.uf && MODO !== "rm") t.push(["uf", s.uf]);
+    if (s.rm) t.push(["rm", s.rm.replace(/ \(.*\)$/, "")]);
+    if (s.mun) t.push(["municipio", D.municipios[s.mun].n]);
+    if (s.id) t.push(["unidade", "Área"]);
+    document.getElementById("trilha").innerHTML = t.map(([n, r]) => `<button data-n="${n}" aria-current="${n === s.nivel}">${r}</button>`).join("<span aria-hidden='true'>›</span>");
+    document.querySelectorAll("#trilha button").forEach(b => b.addEventListener("click", () => {
+      const n = b.dataset.n, o = { nivel: n };
+      if (n !== "pais") o.uf = s.uf; if (["rm", "municipio", "unidade"].includes(n)) o.rm = s.rm;
+      if (["municipio", "unidade"].includes(n)) o.mun = s.mun;
+      mostrar(o, true);
+    }));
+  }
+  function zoom(b) { if (b) map.fitBounds([[b[0], b[1]], [b[2], b[3]]], { padding: 30, maxZoom: 13, duration: 600 }); }
+  function bboxUF(uf) {
+    const ms = Object.values(D.municipios).filter(m => m.uf === uf && m.b);
+    return ms.length ? [Math.min(...ms.map(m => m.b[0])), Math.min(...ms.map(m => m.b[1])), Math.max(...ms.map(m => m.b[2])), Math.max(...ms.map(m => m.b[3]))] : null;
+  }
+  async function mostrar(s, mover = true) {
+    estado = s; trilha(s); marcar(s);
+    if (s.mun) history.replaceState(null, "", "#m=" + s.mun); else if (s.rm && MODO === "rm") history.replaceState(null, "", "#r=" + encodeURIComponent(s.rm)); else history.replaceState(null, "", location.pathname);
+    const el = document.getElementById("ficha");
+    if (s.nivel === "pais") {
+      el.innerHTML = `<h2>Brasil</h2><div class="sub">${fmt.format(D.meta.unidades)} áreas analisadas · de 2022 para 2026, Lula caiu em média ${Math.abs(D.meta.nac_desloc).toFixed(1).replace(".", ",")} pontos percentuais</div>${kpisGrupo("pais", "BR")}
+      <p class="nota">${MODO === "area" ? "<b>Para ver os bairros, aproxime o mapa numa cidade ou busque um município.</b> " : ""}Clique no mapa para abrir uma ficha. "Votos que dá para recuperar" soma duas coisas: os votos que Lula perdeu além da média do país desde 2022 e o ganho de levar mais gente às urnas onde isso tende a ajudá-lo. Não é previsão de resultado.</p>`;
+      if (mover) map.fitBounds([[-74, -34], [-34.5, 5.5]], { padding: 10, duration: 600 });
+      return;
+    }
+    if (s.nivel === "uf") {
+      el.innerHTML = `<h2>${s.uf}</h2><div class="sub">Unidade da Federação</div>${selo(s.uf)}${kpisGrupo("uf", s.uf)}${barras(D.dist.uf[s.uf])}`;
+      if (mover) zoom(bboxUF(s.uf)); return;
+    }
+    if (s.nivel === "rm") {
+      const r = D.rms[s.rm] || { mun: [] };
+      const tm = await temasDe(r.mun);
+      const munLinks = r.mun.filter(k => D.municipios[k]).sort((a, b) => D.municipios[b].ap - D.municipios[a].ap)
+        .map(k => `<li><a href="index.html#m=${k}">${D.municipios[k].n}</a> · <a href="bairros.html#m=${k}">bairros</a></li>`).join("");
+      el.innerHTML = `<h2>${s.rm}</h2><div class="sub">${r.mun.length} municípios · ${fmt.format(r.ap || 0)} aptos</div>${nivelBox(r.v)}${selo(r.uf)}${kpisGrupo("rm", s.rm)}${cartaoTemas(tm, s.rm.replace(/ \(.*\)$/, ""))}${barras(D.dist.rm[s.rm])}
+        <div><div class="eyebrow">Municípios</div><ul class="lista">${munLinks}</ul></div>`;
+      if (mover && r.b) zoom(r.b); return;
+    }
+    const m = D.municipios[s.mun];
+    if (s.nivel === "municipio") {
+      const tc = await temasDe([s.mun]);
+      const verBairros = m.u > 1 ? `<a class="botao" href="bairros.html#m=${s.mun}">Ver os bairros de ${m.n} →</a>` : `<p class="nota">${m.n} não tem divisão em bairros com local de votação: a análise fica no nível do município.</p>`;
+      const sb = m.sob && m.sob.f !== "baixa" ? `<div class="selo" style="border-color:var(--tema);color:var(--ink)"><b>Soberania nacional: tema com força ${m.sob.f} aqui.</b> ${[
+          m.sob.eua > 0 ? `Exportou US$ ${fmt.format(m.sob.eua)} milhões aos EUA em 2025 (${fmt.format(m.sob.par)}% do total)${m.sob.sede ? ", valor que pode refletir sede de empresa" : ""}` : "",
+          m.sob.am ? "Amazônia Legal" : ""].filter(Boolean).join(" · ")}. Por quê: onde o tarifaço dos EUA pesa nos empregos e na economia da cidade, a defesa da soberania tende a fazer mais sentido para as pessoas.</div>` : "";
+      const rmLink = m.rm ? `<p class="nota">Faz parte da <a href="rm.html#r=${encodeURIComponent(m.rm)}">${m.rm}</a>.</p>` : "";
+      el.innerHTML = `<h2>${m.n}</h2><div class="sub">${m.uf}${m.rm ? " · " + m.rm : ""} · ${fmt.format(m.ap)} aptos · ${m.u} área(s)</div>${nivelBox(m.v)}${selo(m.uf)}
+        ${kpisGrupo("municipio", s.mun)}${MODO === "municipio" ? verBairros : ""}${cartaoTemas(tc, m.n)}${sb}${barras(D.dist.municipio[s.mun])}${rmLink}
+        ${MODO === "area" ? `<p class="nota">${m.u > 1 ? "Clique numa área do município para ver a ficha do bairro." : "Município sem divisão em bairros com local de votação."}</p>` : ""}`;
+      if (mover) zoom(m.b); return;
+    }
+    const U = await unidadesUF(s.uf), u = U[s.id];
+    if (!u) { el.innerHTML = `<h2>${s.nome || "Área sem local de votação"}</h2><div class="sub">sem local de votação</div><p class="nota">Não há escola com seção eleitoral nesta área: os moradores votam em locais de bairros vizinhos, e por isso ela não tem resultado próprio.</p>`; return; }
+    el.innerHTML = `<h2>${u.n}</h2><div class="sub">${m.n} (${m.uf}) · ${fmt.format(u.ap)} aptos · ${TIPO[u.t] || u.t}</div>
+      ${u.v && u.v[1] ? nivelBox(u.v[1]) : `<div class="nota">Sem nota: área com menos de 1.000 eleitores ou escolas sem localização precisa</div>`}${selo(m.uf)}
+      <div class="kpis">
+        <div class="kpi"><span>Votos que dá para recuperar</span><b class="num">${faixa(u.pot)}</b></div>
+        <div class="kpi"><span>Votos a recuperar a cada mil eleitores</span><b class="num">${u.pm == null ? "–" : fmt.format(u.pm)}</b></div>
+        <div class="kpi"><span>Efeito de levar mais 2 em cada 100 eleitores às urnas</span><b class="num">${faixa(u.mob)}</b></div>
+        <div class="kpi"><span>Chance de que levar mais gente às urnas ajude Lula</span><b class="num">${pct(u.pr, 0)}</b></div></div>
+      ${cartaoTemas(u.tm, u.n)}
+      <table>
+        <tr><td>Votos de Lula no 1º turno de 2026</td><td class="num">${u.l26 == null ? "–" : u.l26.toFixed(1).replace(".", ",") + "%"}</td></tr>
+        <tr><td>Votos de Lula no 2º turno de 2022</td><td class="num">${u.l22 == null ? "–" : u.l22.toFixed(1).replace(".", ",") + "%"}</td></tr>
+        <tr><td>Mudança de 2022 para 2026</td><td class="num">${pp(u.d)}</td></tr>
+        <tr><td>Quanto Lula perdeu aqui além da média do país</td><td class="num">${mil(u.te)} votos</td></tr>
+        <tr><td>Votos de Lula no 2º turno, se 2022 se repetir</td><td class="num">${u.ei ? pct(u.ei[1]) + ` <span class="nota">(${pct(u.ei[0])} a ${pct(u.ei[2])})</span>` : "–"}</td></tr>
+      </table>
+      <p class="nota"><a href="index.html#m=${s.mun}">← Voltar ao município</a>. Nada aqui descreve pessoas.</p>`;
+  }
+  // links diretos: #m=3550308 (município, código IBGE) ou #r=RM de São Paulo (SP)
+  function pelaUrl() {
+    const k = (location.hash.match(/m=(\d{7})/) || [])[1];
+    if (k && D.municipios[k]) { const m = D.municipios[k]; mostrar({ nivel: "municipio", uf: m.uf, rm: m.rm, mun: k }); return true; }
+    const r = (location.hash.match(/r=([^&]+)/) || [])[1];
+    if (r && MODO === "rm") { const nome = decodeURIComponent(r); if (D.rms[nome]) { mostrar({ nivel: "rm", rm: nome, uf: D.rms[nome].uf }); return true; } }
+    return false;
+  }
+  window.addEventListener("hashchange", pelaUrl);
+  if (!pelaUrl()) mostrar(estado, false);
+})();
+</script>
+</body>
+</html>

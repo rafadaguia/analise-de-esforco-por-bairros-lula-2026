@@ -47,6 +47,21 @@ nav.mapas a:focus-visible, .botao:focus-visible { outline: 2px solid var(--focus
 @media (max-width: 900px) { .grade { grid-template-columns: 1fr; } }
 #mapa { height: min(78vh, 780px); min-height: 420px; border: 1px solid var(--rule); background: var(--surface); }
 .painel { background: var(--surface); border: 1px solid var(--rule); padding: 16px; display: grid; gap: 14px; max-height: min(78vh, 780px); overflow: auto; }
+/* celular: mapa mais baixo e com margem livre à direita para rolar a página com o dedo; painel sem rolagem interna */
+.mapa-caixa { position: relative; }
+.ir-ficha, .faixa-rolar { display: none; }
+@media (max-width: 900px) {
+  #mapa { height: 62vh; min-height: 340px; margin-right: 34px; }
+  .faixa-rolar { display: flex; position: absolute; top: 0; right: 0; bottom: 0; width: 30px; align-items: center; justify-content: center;
+    background: var(--chip); color: var(--ink-3); font-size: 11px; writing-mode: vertical-rl; letter-spacing: .06em; border: 1px solid var(--rule); }
+  .painel { max-height: none; overflow: visible; }
+  .busca-topo { margin: 0 0 10px; }
+  .ir-ficha { position: absolute; left: 50%; bottom: 14px; transform: translateX(calc(-50% - 17px)); z-index: 2; border: 0; background: var(--ink);
+    color: var(--surface); font: 600 14px var(--body); padding: 10px 14px; box-shadow: 0 2px 8px rgba(0,0,0,.25); max-width: 80%; }
+  .ir-ficha.on { display: block; }
+  .voltar-mapa { display: inline-block; margin-top: 6px; font-size: 14px; }
+}
+@media (min-width: 901px) { .voltar-mapa { display: none; } }
 .trilha { display: flex; flex-wrap: wrap; gap: 4px; font-size: 13px; align-items: center; }
 .trilha button { border: 0; background: var(--chip); color: var(--ink); padding: 3px 8px; cursor: pointer; font: inherit; }
 .trilha button[aria-current="true"] { background: var(--ink); color: var(--surface); }
@@ -124,7 +139,9 @@ td + td { padding-left: 12px; }
   </nav>
   <div class="aviso" role="note"><b>Antes de usar, lembre:</b> o mapa mostra tendências de lugares, não de pessoas. Ele foi feito com o resultado das urnas de cada escola de votação e com o Censo 2022. As pessoas votam na escola onde estão inscritas, que nem sempre fica no bairro onde moram. E cada bairro tem gente de todo tipo: nunca use o mapa para julgar quem mora lá. Não é previsão de resultado. <a href="guia.html">Veja como usar</a>.</div>
   <div class="grade">
-    <div id="mapa" role="region" aria-label="Mapa"></div>
+    <div class="mapa-caixa"><div id="mapa" role="region" aria-label="Mapa"></div>
+      <div class="faixa-rolar" aria-hidden="true">↕ role a página por aqui</div>
+      <button class="ir-ficha" id="ir-ficha" type="button"></button></div>
     <aside class="painel" aria-live="polite">
       <div class="ctrl"><input id="busca" list="lista-busca" placeholder="Buscar…" aria-label="Buscar"><datalist id="lista-busca"></datalist></div>
       <div>
@@ -133,6 +150,7 @@ td + td { padding-left: 12px; }
       </div>
       <nav class="trilha" id="trilha" aria-label="Nível geográfico"></nav>
       <div id="ficha"></div>
+      <a class="voltar-mapa" href="#mapa" onclick="event.preventDefault();document.querySelector('.mapa-caixa').scrollIntoView({behavior:'smooth',block:'start'})">↑ Voltar ao mapa</a>
     </aside>
   </div>
   <p class="fontes">Produção independente e exclusiva da <a href="https://estel.tec.br">Estel Tecnologia</a> (estel.tec.br), sem relação com a campanha oficial, partidos ou candidaturas. Fontes: TSE (votação por seção e locais de votação, 2022 e 2026), IBGE (Censo 2022: malhas e agregados por setor; regiões metropolitanas), malhas de bairros de prefeituras, nomes de parte das áreas © colaboradores do OpenStreetMap (ODbL). Método: inferência ecológica RxC hierárquica (Rosen, Jiang, King e Tanner, 2001) e Monte Carlo; nível de esforço com foco no potencial por eleitor. Detalhes, limites e reprodução no notebook <code>analise_bairros.ipynb</code>. Software: MapLibre GL JS e PMTiles (BSD-3); fontes Archivo, Instrument Sans e Noto Sans (SIL OFL 1.1); licenças em <code>lib/</code>.</p>
@@ -227,6 +245,7 @@ const MODO = "rm";   // municipio | area | rm (cada página do site é gerada co
   const nivelBox = v => v ? `<div class="nivel"><span class="sw" style="background:var(--n${v})"></span>Nota ${v} de 7 · ${DESC[v]}</div>` : "";
 
   // ---------------------------------------------------------------- mapa
+  const CELULAR = matchMedia("(max-width: 900px)").matches || matchMedia("(pointer: coarse)").matches;
   const protocolo = new pmtiles.Protocol(); maplibregl.addProtocol("pmtiles", protocolo.tile);
   const base = new URL(".", location.href).href;
   const cores = p => ["match", ["get", p], 1, css("--n1"), 2, css("--n2"), 3, css("--n3"), 4, css("--n4"), 5, css("--n5"), 6, css("--n6"), 7, css("--n7"), css("--sem")];
@@ -234,8 +253,19 @@ const MODO = "rm";   // municipio | area | rm (cada página do site é gerada co
     container: "mapa", attributionControl: { compact: true, customAttribution: "TSE · IBGE · prefeituras · © OpenStreetMap" },
     style: { version: 8, glyphs: base + "lib/glifos/{fontstack}/{range}.pbf", sources: {},
              layers: [{ id: "fundo", type: "background", paint: { "background-color": css("--surface") } }] },
-    bounds: [[-74, -34], [-34.5, 5.5]], fitBoundsOptions: { padding: 10 }, maxZoom: 15, minZoom: 2.5
+    bounds: [[-74, -34], [-34.5, 5.5]], fitBoundsOptions: { padding: 10 }, maxZoom: 15, minZoom: 2.5,
+    cooperativeGestures: CELULAR,
+    locale: { "CooperativeGesturesHandler.MobileHelpText": "Use dois dedos para mover o mapa. Com um dedo, a página rola.",
+              "CooperativeGesturesHandler.WindowsHelpText": "Use Ctrl + rolagem para aproximar o mapa",
+              "CooperativeGesturesHandler.MacHelpText": "Use ⌘ + rolagem para aproximar o mapa" }
   });
+  if (CELULAR) {   // no celular, a busca fica acima do mapa: dá para achar a cidade sem passar pelo mapa
+    const caixa = document.createElement("div"); caixa.className = "busca-topo";
+    caixa.appendChild(document.querySelector(".painel .ctrl"));
+    document.querySelector(".grade").before(caixa);
+  }
+  const irFicha = document.getElementById("ir-ficha");
+  irFicha.addEventListener("click", () => document.getElementById("ficha").scrollIntoView({ behavior: "smooth", block: "start" }));
   map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
   map.on("load", () => {
     map.addSource("mun", { type: "vector", url: "pmtiles://" + base + "municipios.pmtiles" });
@@ -352,6 +382,10 @@ const MODO = "rm";   // municipio | area | rm (cada página do site é gerada co
   }
   async function mostrar(s, mover = true) {
     estado = s; trilha(s); marcar(s);
+    if (CELULAR) {
+      const nome = s.nivel === "unidade" ? (s.nome || "área") : s.nivel === "municipio" ? D.municipios[s.mun].n : s.nivel === "rm" ? s.rm.replace(/ \(.*\)$/, "") : s.nivel === "uf" ? s.uf : "";
+      irFicha.textContent = nome ? `Ver a ficha de ${nome} ↓` : ""; irFicha.classList.toggle("on", !!nome);
+    }
     if (s.mun) history.replaceState(null, "", "#m=" + s.mun); else if (s.rm && MODO === "rm") history.replaceState(null, "", "#r=" + encodeURIComponent(s.rm)); else history.replaceState(null, "", location.pathname);
     const el = document.getElementById("ficha");
     if (s.nivel === "pais") {

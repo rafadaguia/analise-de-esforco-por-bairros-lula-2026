@@ -12,6 +12,10 @@ registrados no TSE. Todos os números vêm de dados públicos e agregados (TSE, 
 **Como usar:** https://rafadaguia.github.io/analise-de-esforco-por-bairros-lula-2026/guia.html ·
 **Relatórios por cidade (PDF):** https://rafadaguia.github.io/analise-de-esforco-por-bairros-lula-2026/relatorios/00_INDICE.pdf
 
+## Objetivo
+
+Este trabalho existe para ajudar no planejamento tático de organizações e grupos de campanha: definir onde concentrar forças. Entre o 1º turno (4 de outubro) e o 2º turno (25 de outubro de 2026) são só três semanas, e não há tempo nem gente para estar em todo lugar. O mapa, os relatórios e as tabelas apontam em que estados, cidades e bairros o mesmo esforço tende a render mais votos para Lula, o que fazer em cada lugar (conversa, reconquista ou levar gente às urnas) e com que temas. É uma ferramenta de triagem para decidir rápido, a ser conferida com quem conhece o território, e não uma previsão de resultado.
+
 ## O que o mapa mostra
 
 * **Nota de 1 a 7** para cada município, bairro e região metropolitana. A nota 7 indica onde o esforço tende a render mais

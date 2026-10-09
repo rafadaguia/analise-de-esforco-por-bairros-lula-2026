@@ -39,7 +39,7 @@ Este trabalho existe para ajudar no planejamento tático de organizações e gru
 * **Não é previsão.** Os números mostram o que acontece se o comportamento de 2022 entre os turnos se repetir. Os
   intervalos medem a incerteza dentro de uma eleição, não uma mudança de comportamento entre eleições.
 * A nota serve para **triagem**: ela muda com os pesos, o método e o desenho das áreas.
-* No RJ, o cálculo foi difícil, mas um teste mostrou que a nota de cada lugar é estável, e o mapa traz um aviso leve. Os outros
+* Nenhum estado tem aviso. No RJ, o cálculo foi difícil, mas um teste mostrou que a nota de cada lugar é estável. Os outros
   estados que tinham aviso foram resolvidos em 09/10: SP, MG e ES com o dobro de cadeias; BA e CE com a pesquisa Datafolha de
   2022 sobre os eleitores da terceira via como informação prévia; PA com uma informação prévia mais apertada para os efeitos
   de renda e tamanho do eleitorado.
@@ -235,7 +235,8 @@ NC News, Poder360 e SBT News.
   da véspera do 2º turno de 2022 (BR-08297/2022) sobre para onde foram os eleitores de Tebet e Ciro, como informação prévia:
   sem ela, o cálculo não convergia; com ela, convergiu sem piorar o ajuste aos dados. No Pará, renda e tamanho do eleitorado
   variam quase só entre municípios e se confundiam com o efeito de cada município; o modelo usa ali uma informação prévia
-  mais apertada para esses dois efeitos. No Rio de Janeiro, nenhuma das duas mudanças ajudou, e vale o aviso leve.
+  mais apertada para esses dois efeitos. No Rio de Janeiro, nenhuma das duas mudanças ajudou: poucas cadeias
+  chegam à melhor solução, mas a nota de cada lugar é estável entre elas, e o mapa não traz aviso.
 * **Nomes das áreas.** Nas áreas formadas por escolas de votação, o nome vem do bairro declarado ao TSE ou do
   OpenStreetMap. Uma conferência automática restaura acentos, expande abreviações, troca nomes que apontam para lugares
   fora da área e diferencia nomes repetidos com um segundo lugar da própria área.

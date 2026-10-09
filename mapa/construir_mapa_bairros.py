@@ -93,6 +93,11 @@ def rotulos(gu, mun, rmg, u):
 AVISO_QUANDO = "breve"   # quando sai o reajuste extralongo; o aviso some sozinho quando ele termina
 
 
+# UFs com aviso leve retirado por decisão editorial (09/10): a nota é estável entre cadeias (b18), e o cálculo segue
+# registrado como difícil na metodologia e no notebook
+SEM_AVISO = {"RJ"}
+
+
 def ufs_conferidas(pasta, inst):
     """UFs com selo pelo critério dos parâmetros cuja nota é estável entre cadeias (bairros/b18_estabilidade_notas.py):
     mais de uma cadeia aproveitada, a fração dos que não votaram que iria para Lula estável (R-hat <= 1,05) em 90%+ das
@@ -238,6 +243,7 @@ def main():
     reproc = ufs_reprocessando(a.unidade)
     conf = ufs_conferidas(pasta, inst)
     inst = [u for u in inst if u not in conf]
+    conf = [u for u in conf if u not in SEM_AVISO]
     # citações dos planos oficiais por tema (b09/b13) e força do tema soberania por município (b14)
     cit_arq = os.path.join(VAR, a.unidade, "temas_citacoes.json")
     citacoes = json.load(open(cit_arq)) if os.path.exists(cit_arq) else {}

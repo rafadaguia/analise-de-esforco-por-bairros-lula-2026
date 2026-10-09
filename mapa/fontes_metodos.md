@@ -115,9 +115,14 @@ NC News, Poder360 e SBT News.
   Cadeias presas numa solução pior são descartadas. Onde o R-hat passa de 1,05 ou sobram poucas cadeias boas, o mapa
   avisa que a estimativa é menos segura. Nesses estados, um teste extra refaz a nota de cada área com grupos diferentes
   de cadeias e compara com o ruído normal da simulação: se a nota não muda além do ruído, o aviso fica mais leve
-  ("cálculo difícil, mas a nota foi conferida e é estável"). Na Bahia, o modelo usa também a pesquisa Datafolha da véspera
-  do 2º turno de 2022 (BR-08297/2022) sobre para onde foram os eleitores de Tebet e Ciro, como informação prévia: sem ela,
-  o cálculo não convergia; com ela, convergiu sem piorar o ajuste aos dados.
+  ("cálculo difícil, mas a nota foi conferida e é estável"). Na Bahia e no Ceará, o modelo usa também a pesquisa Datafolha
+  da véspera do 2º turno de 2022 (BR-08297/2022) sobre para onde foram os eleitores de Tebet e Ciro, como informação prévia:
+  sem ela, o cálculo não convergia; com ela, convergiu sem piorar o ajuste aos dados. No Pará, renda e tamanho do eleitorado
+  variam quase só entre municípios e se confundiam com o efeito de cada município; o modelo usa ali uma informação prévia
+  mais apertada para esses dois efeitos. No Rio de Janeiro, nenhuma das duas mudanças ajudou, e vale o aviso leve.
+* **Nomes das áreas.** Nas áreas formadas por escolas de votação, o nome vem do bairro declarado ao TSE ou do
+  OpenStreetMap. Uma conferência automática restaura acentos, expande abreviações, troca nomes que apontam para lugares
+  fora da área e diferencia nomes repetidos com um segundo lugar da própria área.
 * **Validação.** O modelo foi ajustado sem 20% das áreas e testado nelas: o resultado real ficou dentro do intervalo de
   90% em 95,7% dos casos. Também foi testado entre eleições (2018 → 2022 e 2014 → 2018), onde acerta menos: por isso os
   intervalos não cobrem mudança de comportamento entre eleições.

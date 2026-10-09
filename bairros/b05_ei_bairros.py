@@ -132,7 +132,7 @@ PRIORI_TERC = {"logit_lula_vs_adv": float(np.log(0.577 / 0.423)), "dp_razao": 0.
                "log_odds_vota": float(np.log(0.75 / 0.25)), "dp_vota": 0.5}
 
 
-def construir(x, y, N, g, w, mun, rm, tem_rm, eta_mu, eta_sd, uf=None, logN_ref=None, priori_terc=False):
+def construir(x, y, N, g, w, mun, rm, tem_rm, eta_mu, eta_sd, uf=None, logN_ref=None, priori_terc=False, gamma_dp=0.5):
     import pymc as pm
     import pytensor.tensor as pt
     n = len(N)
@@ -147,7 +147,9 @@ def construir(x, y, N, g, w, mun, rm, tem_rm, eta_mu, eta_sd, uf=None, logN_ref=
             vota = pt.logsumexp(eta[:, 2, :], axis=1)          # log(odds de votar em um dos dois vs. ficar de fora)
             pm.Potential("priori_terc", pm.logp(pm.Normal.dist(pr["logit_lula_vs_adv"], pr["dp_razao"]), razao).sum()
                          + pm.logp(pm.Normal.dist(pr["log_odds_vota"], pr["dp_vota"]), vota).sum())
-        gamma = pm.Normal("gamma", 0, 0.5, dims=("cov", "origem", "destino_livre"))
+        # gamma_dp menor (--gamma-dp) onde renda e tamanho variam quase só entre municípios (PA): sem isso, o efeito da
+        # covariável e o efeito do município se confundem e as cadeias não se misturam (R-hat 1,5 em gamma no PA)
+        gamma = pm.Normal("gamma", 0, gamma_dp, dims=("cov", "origem", "destino_livre"))
         # município: 2 efeitos (um por destino), comuns às origens. Com 8 por município o modelo
         # não identificava nada nos muitos municípios de unidade única (ESS 3 em SP no teste)
         s_mun = pm.HalfNormal("s_mun", 0.5, shape=2)
@@ -243,7 +245,8 @@ def ajustar_uf(variante, metodo, uf, rapido, validacao, out, ano=2022):
         treino = np.random.default_rng(SEMENTE + 1).random(len(N)) >= 0.2
     t0 = time.time()
     m = construir(x[treino], y[treino], N[treino], g[treino], w[treino], mun[treino], rm[treino], tem_rm,
-                  eta_mu, eta_sd, logN_ref=logN_ref, priori_terc=AJUSTE.get("priori_terc", False))
+                  eta_mu, eta_sd, logN_ref=logN_ref, priori_terc=AJUSTE.get("priori_terc", False),
+                  gamma_dp=AJUSTE.get("gamma_dp") or 0.5)
     tr = amostrar_mcmc(m, rapido)
     post, st, reg = descartar_presas(tr)
     rhat, ess = diagnostico(post)
@@ -256,7 +259,8 @@ def ajustar_uf(variante, metodo, uf, rapido, validacao, out, ano=2022):
     diag = {"uf": uf, "validacao": validacao, "unidades": int(len(N)), "unidades_treino": int(treino.sum()),
             "municipios": int(mun.max() + 1), "rms": int(tem_rm.sum()), "segundos": round(time.time() - t0),
             "rhat_max": round(rhat, 3), "ess_min": round(ess), "divergencias": div, "cadeias": len(reg["logp_cadeias"]),
-            "aquecimento": AJUSTE.get("tune") or (4000 if LONGO else 2000), "priori_terc": bool(AJUSTE.get("priori_terc")), **reg}
+            "aquecimento": AJUSTE.get("tune") or (4000 if LONGO else 2000), "priori_terc": bool(AJUSTE.get("priori_terc")),
+            "gamma_dp": AJUSTE.get("gamma_dp") or 0.5, **reg}
     json.dump(diag, open(os.path.join(out, f"diag_{tag}.json"), "w"))
     return diag
 
@@ -299,13 +303,14 @@ def main():
     ap.add_argument("--validacao", action="store_true")
     ap.add_argument("--longo", action="store_true")
     ap.add_argument("--tune", type=int); ap.add_argument("--draws", type=int); ap.add_argument("--cadeias", type=int)
+    ap.add_argument("--gamma-dp", type=float, help="desvio-padrão da priori dos efeitos das covariáveis (padrão 0,5)")
     ap.add_argument("--priori-terc", action="store_true", help="usa a pesquisa de 2022 sobre a terceira via como priori")
     ap.add_argument("--sufixo", default="", help="pasta de saída <metodo><sufixo> (ex.: _extralongo)")
     ap.add_argument("--ano", type=int, default=2022, help="ano das transferências 1º->2º turno (backtesting: 2018, 2014, 2010)")
     a = ap.parse_args()
     global LONGO
     LONGO = a.longo
-    AJUSTE.update({k: v for k, v in (("tune", a.tune), ("draws", a.draws), ("cadeias", a.cadeias), ("priori_terc", a.priori_terc)) if v})
+    AJUSTE.update({k: v for k, v in (("tune", a.tune), ("draws", a.draws), ("cadeias", a.cadeias), ("priori_terc", a.priori_terc), ("gamma_dp", a.gamma_dp)) if v})
     out = os.path.join(VAR, a.unidade, a.metodo + ("_rapido" if a.rapido else "") + ("_longo" if a.longo else "") + ("" if a.ano == 2022 else f"_{a.ano}") + a.sufixo)
     os.makedirs(out, exist_ok=True)
     if a.metodo == "M2":

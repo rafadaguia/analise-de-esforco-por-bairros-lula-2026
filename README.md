@@ -38,7 +38,8 @@ Este trabalho existe para ajudar no planejamento tático de organizações e gru
 * **Não é previsão.** Os números mostram o que acontece se o comportamento de 2022 entre os turnos se repetir. Os
   intervalos medem a incerteza dentro de uma eleição, não uma mudança de comportamento entre eleições.
 * A nota serve para **triagem**: ela muda com os pesos, o método e o desenho das áreas.
-* Em BA, CE, ES, MG, PA, RJ e SP, a estimativa é **menos segura** (os cálculos não convergiram bem), e o mapa avisa.
+* Em BA, CE, MG, PA e RJ, a estimativa é **menos segura** (os cálculos não convergiram bem), e o mapa avisa. SP e ES saíram
+  dessa lista em 09/10, depois de um reajuste com o dobro de cadeias; MG ainda está em recálculo.
 * Os temas são **sugestões a partir de dados**, não pesquisa de opinião feita no lugar. Nenhuma sugestão usa cor ou raça,
   gênero, religião ou orientação sexual.
 

@@ -134,6 +134,7 @@ summary { cursor: pointer; font-weight: 600; }
     <tr><td>Chance de que levar mais gente às urnas ajude Lula</td><td>Acima de 90%: o mutirão é seguro. Abaixo de 10%: ele tende a atrapalhar. No meio: incerto.</td></tr>
     <tr><td>Diferença Lula − Flávio no 2º turno</td><td>Quanto ficaria a disputa ali se as pessoas repetissem o comportamento de 2022. Número negativo = vantagem de Flávio. É uma simulação, não uma previsão.</td></tr>
     <tr><td>Quanto Lula perdeu aqui além da média do país</td><td>Votos que Lula tinha em 2022 e não teve em 2026, além da queda média. Costuma ser o voto mais fácil de reconquistar.</td></tr>
+    <tr><td>Cálculo difícil, mas a nota foi conferida e é estável</td><td>Os cálculos do estado foram mais difíceis que o normal, mas testamos: a nota de cada lugar quase não muda. Pode usar a nota normalmente; os números absolutos (votos) têm um pouco mais de incerteza.</td></tr>
     <tr><td>Atenção: estimativa menos segura</td><td>Neste estado os cálculos variaram mais que o normal. Use a nota como orientação geral e confie mais no conhecimento local.</td></tr>
   </table>
 
@@ -296,7 +297,9 @@ NC News, Poder360 e SBT News.</p>
   vizinhas.</li>
 <li><strong>MCMC e diagnóstico.</strong> O modelo é ajustado por amostragem (NUTS), com 6 a 12 cadeias independentes por estado.
   Cadeias presas numa solução pior são descartadas. Onde o R-hat passa de 1,05 ou sobram poucas cadeias boas, o mapa
-  avisa que a estimativa é menos segura.</li>
+  avisa que a estimativa é menos segura. Nesses estados, um teste extra refaz a nota de cada área com grupos diferentes
+  de cadeias e compara com o ruído normal da simulação: se a nota não muda além do ruído, o aviso fica mais leve
+  ("cálculo difícil, mas a nota foi conferida e é estável").</li>
 <li><strong>Validação.</strong> O modelo foi ajustado sem 20% das áreas e testado nelas: o resultado real ficou dentro do intervalo de
   90% em 95,7% dos casos. Também foi testado entre eleições (2018 → 2022 e 2014 → 2018), onde acerta menos: por isso os
   intervalos não cobrem mudança de comportamento entre eleições.</li>

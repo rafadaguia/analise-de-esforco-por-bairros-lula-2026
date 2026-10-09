@@ -93,6 +93,18 @@ def rotulos(gu, mun, rmg, u):
 AVISO_QUANDO = "breve"   # quando sai o reajuste extralongo; o aviso some sozinho quando ele termina
 
 
+def ufs_conferidas(pasta, inst):
+    """UFs com selo pelo critério dos parâmetros cuja nota é estável entre cadeias (bairros/b18_estabilidade_notas.py):
+    mais de uma cadeia aproveitada, a fração dos que não votaram que iria para Lula estável (R-hat <= 1,05) em 90%+ das
+    áreas e a nota mudando entre cadeias no máximo 2 pontos acima do ruído da simulação. Recebem um aviso mais leve."""
+    arq = os.path.join(pasta, "estabilidade_notas.csv")
+    if not os.path.exists(arq):
+        return []
+    e = pd.read_csv(arq)
+    ok = (~e["posterior"].str.startswith("1 cadeia")) & (e["pct_areas_rhat_maior_1_05"] <= 10) & (e["excesso_pp"] <= 2)
+    return sorted(set(e.loc[ok, "uf"]) & set(inst))
+
+
 def ufs_reprocessando(unidade):
     """UFs do reajuste extralongo que ainda não têm resultado (aviso de atualização no mapa, no guia e nos relatórios)."""
     pasta = os.path.join(VAR, unidade, "MC_extralongo")
@@ -224,6 +236,8 @@ def main():
         if rh is None or (isinstance(rh, float) and np.isnan(rh)) or rh > 1.05 or len(dg.get("logp_cadeias", [0] * 6)) - len(dg.get("descartadas", [])) <= 3:
             inst.append(dg["uf"])
     reproc = ufs_reprocessando(a.unidade)
+    conf = ufs_conferidas(pasta, inst)
+    inst = [u for u in inst if u not in conf]
     # citações dos planos oficiais por tema (b09/b13) e força do tema soberania por município (b14)
     cit_arq = os.path.join(VAR, a.unidade, "temas_citacoes.json")
     citacoes = json.load(open(cit_arq)) if os.path.exists(cit_arq) else {}
@@ -235,7 +249,7 @@ def main():
                 r_ = sob.loc[int(k)]
                 v["sob"] = {"f": r_["forca_soberania"], "eua": round(float(r_["exp_eua_usd"]) / 1e6, 1),
                             "par": round(100 * float(r_["parcela_eua"]), 0), "am": bool(r_["amazonia_legal"]), "sede": bool(r_["sede_exportadora"])}
-    dados = {"meta": {**meta, "unidade": a.unidade, "metodo": a.metodo, "pesos": a.pesos, "ufs_instaveis": sorted(inst),
+    dados = {"meta": {**meta, "unidade": a.unidade, "metodo": a.metodo, "pesos": a.pesos, "ufs_instaveis": sorted(inst), "ufs_conferidas": sorted(conf),
                       "ufs_reprocessando": reproc, "atualizacao_prevista": AVISO_QUANDO},
              "citacoes": citacoes,
              "grupos": niveis, "dist": dist, "municipios": municipios, "rms": rms}

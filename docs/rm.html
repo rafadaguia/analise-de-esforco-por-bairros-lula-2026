@@ -95,6 +95,7 @@ td + td { padding-left: 12px; }
 .botao-rel { background: var(--surface); color: var(--ink); border: 2px solid var(--ink); margin: 8px 0 4px; }
 .botao-rel::before { content: "↓ "; }
 .selo { border: 1px solid var(--alerta); color: var(--alerta); padding: 6px 10px; font-size: 13px; }
+.selo.leve { border-color: var(--rule); color: var(--ink-2); background: var(--chip); }
 .lista { columns: 2; font-size: 13px; padding-left: 18px; margin: 0; }
 .lista a { color: var(--focus); }
 .temas { border: 1px solid var(--rule); border-left: 4px solid var(--focus); background: var(--bg); padding: 12px 14px; display: grid; gap: 10px; }
@@ -193,7 +194,8 @@ const MODO = "rm";   // municipio | area | rm (cada página do site é gerada co
   const INST = new Set(D.meta.ufs_instaveis || []);
   const REPROC = new Set(D.meta.ufs_reprocessando || []);
   const atualizacao = uf => REPROC.has(uf) ? ` <b>Atualização prevista para ${D.meta.atualizacao_prevista || "breve"}:</b> os números de ${uf} estão sendo recalculados com um processamento mais longo, para deixar a estimativa mais segura. A nota, os votos a recuperar e os temas podem mudar.` : "";
-  const selo = uf => INST.has(uf) || REPROC.has(uf) ? `<div class="selo" role="note">${INST.has(uf) ? `<b>Atenção: estimativa menos segura em ${uf}.</b> Neste estado, os cálculos variaram mais do que o normal. Use a nota como orientação geral, não como número exato, e confira com quem conhece o território.` : ""}${atualizacao(uf)}</div>` : "";
+  const CONF = new Set(D.meta.ufs_conferidas || []);
+  const selo = uf => CONF.has(uf) && !REPROC.has(uf) ? `<div class="selo leve" role="note"><b>Cálculo difícil em ${uf}, mas a nota foi conferida e é estável.</b> Os cálculos deste estado foram mais difíceis que o normal; testamos e a nota de cada lugar quase não muda. Os números absolutos têm um pouco mais de incerteza.</div>` : INST.has(uf) || REPROC.has(uf) ? `<div class="selo" role="note">${INST.has(uf) ? `<b>Atenção: estimativa menos segura em ${uf}.</b> Neste estado, os cálculos variaram mais do que o normal. Use a nota como orientação geral, não como número exato, e confira com quem conhece o território.` : ""}${atualizacao(uf)}</div>` : "";
   let estado = { nivel: "pais" };
 
   const TEMA = { emprego: "emprego", jornada_6x1: "fim da escala 6x1", renda_salario_minimo: "salário mínimo e renda",

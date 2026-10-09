@@ -207,6 +207,10 @@ def relatorio(k, m, D, A, pop, ranks, n_cid):
       f"{m.get('rm') or 'fora de região metropolitana'} · {m['u']} área(s) no mapa")
     w("")
     reproc = uf in set(D["meta"].get("ufs_reprocessando", []))
+    if uf in set(D["meta"].get("ufs_conferidas", [])):
+        w(f"> **Cálculo difícil em {uf}, mas a nota foi conferida e é estável.** Os cálculos deste estado foram mais difíceis "
+          f"que o normal; testamos e a nota de cada lugar quase não muda. Os números absolutos têm um pouco mais de incerteza.")
+        w("")
     if inst or reproc:
         txt = []
         if inst:

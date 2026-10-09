@@ -10,7 +10,8 @@ registrados no TSE. Todos os números vêm de dados públicos e agregados (TSE, 
 
 **Mapa:** https://rafadaguia.github.io/analise-de-esforco-por-bairros-lula-2026/ ·
 **Como usar:** https://rafadaguia.github.io/analise-de-esforco-por-bairros-lula-2026/guia.html ·
-**Relatórios por cidade (PDF):** https://rafadaguia.github.io/analise-de-esforco-por-bairros-lula-2026/relatorios/00_INDICE.pdf
+**Relatórios por cidade (PDF):** https://rafadaguia.github.io/analise-de-esforco-por-bairros-lula-2026/relatorios/00_INDICE.pdf ·
+**Como geramos o mapa:** https://estel.tec.br/2026/10/09/como-geramos-o-mapa-de-esforco-por-bairro/
 
 ## Objetivo
 

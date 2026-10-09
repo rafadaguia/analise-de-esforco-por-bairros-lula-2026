@@ -29,9 +29,9 @@ from b06_montecarlo_bairros import dados_2026, faixa, DEV, SEMENTE   # noqa: E40
 AMOSTRAS = 1000  # sorteios por conjunto de cadeias
 
 
-def preparar(unidade, uf, d22, d26):
+def preparar(unidade, uf, d22, d26, fonte="MC"):
     """Mesma montagem de b06 (taxas por área em 2026) para uma UF; devolve a função de taxas e os dados da UF."""
-    pasta = os.path.join(b5.VAR, unidade, "MC")
+    pasta = os.path.join(b5.VAR, unidade, fonte)
     post = xr.open_dataset(os.path.join(pasta, f"post_{uf}.nc"))
     dz = np.load(os.path.join(pasta, f"dados_{uf}.npz"))
     sub22 = d22[d22["uf"] == uf].reset_index(drop=True)
@@ -94,6 +94,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--unidade", default="U4")
     ap.add_argument("--ufs", nargs="*", default=["BA", "CE", "PA", "RJ", "MG", "SP", "ES", "GO"])
+    ap.add_argument("--fonte", default="MC", help="pasta do posterior a testar (ex.: MC_pesquisa); as outras UFs vêm de MC")
+    ap.add_argument("--saida", default="estabilidade_notas.csv")
     a = ap.parse_args()
     t0 = time.time()
     gen = np.random.default_rng(SEMENTE + 18)
@@ -107,7 +109,7 @@ def main():
     d26 = dados_2026(a.unidade)
     linhas = []
     for uf in a.ufs:
-        post, tem_rm, idx, du = preparar(a.unidade, uf, d22, d26)
+        post, tem_rm, idx, du = preparar(a.unidade, uf, d22, d26, a.fonte)
         nch = post.sizes["chain"]
         D_ = post.sizes["draw"]
         # A e B: dois conjuntos independentes de cadeias (pares e ímpares); A1 e A2: metades das mesmas cadeias de A
@@ -153,7 +155,7 @@ def main():
         })
         print(linhas[-1], f"| {time.time() - t0:.0f}s", flush=True)
     out = pd.DataFrame(linhas)
-    out.to_csv(os.path.join(pasta, "estabilidade_notas.csv"), index=False)
+    out.to_csv(os.path.join(pasta, a.saida), index=False)
     print(out.to_string(index=False))
 
 

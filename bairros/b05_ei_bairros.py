@@ -124,7 +124,15 @@ def indices(d, colunas):
 
 # ----------------------------------------------------------------- modelo
 
-def construir(x, y, N, g, w, mun, rm, tem_rm, eta_mu, eta_sd, uf=None, logN_ref=None):
+# Informação externa sobre a terceira via (--priori-terc): Datafolha, véspera do 2º turno de 2022 (BR-08297/2022, p. 4):
+# eleitores de Tebet 59% Lula / 41% Bolsonaro nos válidos, 21% branco ou nulo e 7% indecisos; de Ciro 56% / 44%, 18% e 5%.
+# Ponderado pelos votos do 1º turno (Tebet 4,92 mi, Ciro 3,60 mi): 57,7% para Lula entre os válidos. Fora (branco, nulo,
+# indeciso ou abstenção) em torno de 25%. Entra como priori nas células da terceira via, com folga para variação regional.
+PRIORI_TERC = {"logit_lula_vs_adv": float(np.log(0.577 / 0.423)), "dp_razao": 0.35,
+               "log_odds_vota": float(np.log(0.75 / 0.25)), "dp_vota": 0.5}
+
+
+def construir(x, y, N, g, w, mun, rm, tem_rm, eta_mu, eta_sd, uf=None, logN_ref=None, priori_terc=False):
     import pymc as pm
     import pytensor.tensor as pt
     n = len(N)
@@ -133,6 +141,12 @@ def construir(x, y, N, g, w, mun, rm, tem_rm, eta_mu, eta_sd, uf=None, logN_ref=
     logN = np.log(N) - (np.log(N).mean() if logN_ref is None else logN_ref)
     with pm.Model(coords=coords) as m:
         eta = pm.Normal("eta", eta_mu, eta_sd, dims=("faixa", "origem", "destino_livre"))
+        if priori_terc:   # pesquisa de 2022 sobre os eleitores da terceira via (ver PRIORI_TERC)
+            pr = PRIORI_TERC
+            razao = eta[:, 2, 0] - eta[:, 2, 1]
+            vota = pt.logsumexp(eta[:, 2, :], axis=1)          # log(odds de votar em um dos dois vs. ficar de fora)
+            pm.Potential("priori_terc", pm.logp(pm.Normal.dist(pr["logit_lula_vs_adv"], pr["dp_razao"]), razao).sum()
+                         + pm.logp(pm.Normal.dist(pr["log_odds_vota"], pr["dp_vota"]), vota).sum())
         gamma = pm.Normal("gamma", 0, 0.5, dims=("cov", "origem", "destino_livre"))
         # município: 2 efeitos (um por destino), comuns às origens. Com 8 por município o modelo
         # não identificava nada nos muitos municípios de unidade única (ESS 3 em SP no teste)
@@ -229,7 +243,7 @@ def ajustar_uf(variante, metodo, uf, rapido, validacao, out, ano=2022):
         treino = np.random.default_rng(SEMENTE + 1).random(len(N)) >= 0.2
     t0 = time.time()
     m = construir(x[treino], y[treino], N[treino], g[treino], w[treino], mun[treino], rm[treino], tem_rm,
-                  eta_mu, eta_sd, logN_ref=logN_ref)
+                  eta_mu, eta_sd, logN_ref=logN_ref, priori_terc=AJUSTE.get("priori_terc", False))
     tr = amostrar_mcmc(m, rapido)
     post, st, reg = descartar_presas(tr)
     rhat, ess = diagnostico(post)
@@ -242,7 +256,7 @@ def ajustar_uf(variante, metodo, uf, rapido, validacao, out, ano=2022):
     diag = {"uf": uf, "validacao": validacao, "unidades": int(len(N)), "unidades_treino": int(treino.sum()),
             "municipios": int(mun.max() + 1), "rms": int(tem_rm.sum()), "segundos": round(time.time() - t0),
             "rhat_max": round(rhat, 3), "ess_min": round(ess), "divergencias": div, "cadeias": len(reg["logp_cadeias"]),
-            "aquecimento": AJUSTE.get("tune") or (4000 if LONGO else 2000), **reg}
+            "aquecimento": AJUSTE.get("tune") or (4000 if LONGO else 2000), "priori_terc": bool(AJUSTE.get("priori_terc")), **reg}
     json.dump(diag, open(os.path.join(out, f"diag_{tag}.json"), "w"))
     return diag
 
@@ -285,12 +299,13 @@ def main():
     ap.add_argument("--validacao", action="store_true")
     ap.add_argument("--longo", action="store_true")
     ap.add_argument("--tune", type=int); ap.add_argument("--draws", type=int); ap.add_argument("--cadeias", type=int)
+    ap.add_argument("--priori-terc", action="store_true", help="usa a pesquisa de 2022 sobre a terceira via como priori")
     ap.add_argument("--sufixo", default="", help="pasta de saída <metodo><sufixo> (ex.: _extralongo)")
     ap.add_argument("--ano", type=int, default=2022, help="ano das transferências 1º->2º turno (backtesting: 2018, 2014, 2010)")
     a = ap.parse_args()
     global LONGO
     LONGO = a.longo
-    AJUSTE.update({k: v for k, v in (("tune", a.tune), ("draws", a.draws), ("cadeias", a.cadeias)) if v})
+    AJUSTE.update({k: v for k, v in (("tune", a.tune), ("draws", a.draws), ("cadeias", a.cadeias), ("priori_terc", a.priori_terc)) if v})
     out = os.path.join(VAR, a.unidade, a.metodo + ("_rapido" if a.rapido else "") + ("_longo" if a.longo else "") + ("" if a.ano == 2022 else f"_{a.ano}") + a.sufixo)
     os.makedirs(out, exist_ok=True)
     if a.metodo == "M2":

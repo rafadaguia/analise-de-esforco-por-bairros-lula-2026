@@ -39,9 +39,10 @@ Este trabalho existe para ajudar no planejamento tático de organizações e gru
 * **Não é previsão.** Os números mostram o que acontece se o comportamento de 2022 entre os turnos se repetir. Os
   intervalos medem a incerteza dentro de uma eleição, não uma mudança de comportamento entre eleições.
 * A nota serve para **triagem**: ela muda com os pesos, o método e o desenho das áreas.
-* Em BA e PA, a estimativa é **menos segura** (os cálculos não convergiram bem), e o mapa avisa. Em CE e RJ, o cálculo também
-  foi difícil, mas um teste mostrou que a nota de cada lugar é estável (aviso mais leve). SP, MG e ES saíram da lista em
-  09/10, depois de um reajuste com o dobro de cadeias.
+* No PA, a estimativa é **menos segura** (os cálculos não convergiram bem), e o mapa avisa. Em CE e RJ, o cálculo também foi
+  difícil, mas um teste mostrou que a nota de cada lugar é estável (aviso mais leve). SP, MG e ES saíram da lista em 09/10,
+  depois de um reajuste com o dobro de cadeias; a BA, depois de usar a pesquisa Datafolha de 2022 sobre os eleitores da
+  terceira via como informação prévia.
 * Os temas são **sugestões a partir de dados**, não pesquisa de opinião feita no lugar. Nenhuma sugestão usa cor ou raça,
   gênero, religião ou orientação sexual.
 
@@ -228,7 +229,11 @@ NC News, Poder360 e SBT News.
   vizinhas.
 * **MCMC e diagnóstico.** O modelo é ajustado por amostragem (NUTS), com 6 a 12 cadeias independentes por estado.
   Cadeias presas numa solução pior são descartadas. Onde o R-hat passa de 1,05 ou sobram poucas cadeias boas, o mapa
-  avisa que a estimativa é menos segura.
+  avisa que a estimativa é menos segura. Nesses estados, um teste extra refaz a nota de cada área com grupos diferentes
+  de cadeias e compara com o ruído normal da simulação: se a nota não muda além do ruído, o aviso fica mais leve
+  ("cálculo difícil, mas a nota foi conferida e é estável"). Na Bahia, o modelo usa também a pesquisa Datafolha da véspera
+  do 2º turno de 2022 (BR-08297/2022) sobre para onde foram os eleitores de Tebet e Ciro, como informação prévia: sem ela,
+  o cálculo não convergia; com ela, convergiu sem piorar o ajuste aos dados.
 * **Validação.** O modelo foi ajustado sem 20% das áreas e testado nelas: o resultado real ficou dentro do intervalo de
   90% em 95,7% dos casos. Também foi testado entre eleições (2018 → 2022 e 2014 → 2018), onde acerta menos: por isso os
   intervalos não cobrem mudança de comportamento entre eleições.

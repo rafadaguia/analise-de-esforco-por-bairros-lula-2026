@@ -182,7 +182,7 @@ const MODO = "municipio";   // municipio | area | rm (cada página do site é ge
   const faixa = a => a ? `${mil(a[1])} <i>provável entre ${mil(a[0])} e ${mil(a[2])}</i>` : "–";
   const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
   const D = await (await fetch("dados.json")).json();
-  // relatórios em PDF das cidades com mais de 100 mil habitantes (código IBGE -> arquivo); sem o índice, sem botão
+  // relatórios em PDF dos 5.571 municípios (código IBGE -> arquivo); sem o índice, sem botão
   const REL = await fetch("relatorios/indice.json").then(r => r.ok ? r.json() : {}).catch(() => ({}));
   // link direto do arquivo no GitHub: o servidor entrega como download (application/octet-stream), e o PDF baixa ao clicar
   const GH_RAW = "https://raw.githubusercontent.com/rafadaguia/analise-de-esforco-por-bairros-lula-2026/main/docs/relatorios/";

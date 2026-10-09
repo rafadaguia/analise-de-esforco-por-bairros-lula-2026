@@ -25,9 +25,9 @@ Este trabalho existe para ajudar no planejamento tático de organizações e gru
   levar mais gente às urnas onde isso tende a ajudá-lo.
 * **Temas para conversar:** temas com mais força para Lula no lugar, temas que o plano de Flávio Bolsonaro não trata,
   temas disputados e temas a evitar, com citação e página do plano oficial.
-* **Relatório em PDF por cidade:** as 319 cidades com mais de 100 mil habitantes têm um relatório com resumo, o que fazer,
+* **Relatório em PDF por cidade:** os 5.571 municípios têm um relatório com resumo, o que fazer,
   principais achados (histórico do PT, abstenção, renda, Bolsa Família, emprego, região metropolitana), áreas prioritárias
-  e temas. O botão "Baixar o relatório" aparece na ficha da cidade e dos bairros.
+  e temas, com a posição da cidade no país e entre cidades do mesmo porte. O botão "Baixar o relatório" aparece na ficha da cidade e dos bairros.
 * **Soberania nacional:** força do tema nas cidades expostas ao tarifaço dos EUA (exportações, Comex Stat) e na Amazônia
   Legal.
 
@@ -241,7 +241,7 @@ NC News, Poder360 e SBT News.
   metas contados parágrafo a parágrafo). Daí saem os temas para puxar, de contraste, disputados e a evitar.
 * **Soberania nacional.** Exposição da cidade ao mercado dos EUA (exportações por eleitor e parcela das exportações) e
   Amazônia Legal.
-* **Relatórios por cidade.** Para as 319 cidades com mais de 100 mil habitantes, os achados saem de regras fixas sobre
+* **Relatórios por cidade.** Para os 5.571 municípios do país, os achados saem de regras fixas sobre
   os números, sem texto gerado por modelo de linguagem: cada frase mostra o número que a sustenta.
 * **Estimativa por pesquisa (MrsP, comparação).** As pesquisas estaduais foram combinadas com o perfil do Censo numa
   estimativa por área, usada só para comparar com o modelo eleitoral. Ela não entra no mapa.

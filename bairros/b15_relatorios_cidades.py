@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Etapa B15: um relatório por cidade com mais de 100 mil habitantes (Censo 2022), em linguagem simples.
+"""Etapa B15: um relatório por município (os 5.571; `--minimo N` limita a cidades com mais de N habitantes), em linguagem simples.
 
 Uso interno (pasta resultados/, fora do git). Lê os mesmos dados do site (mapa/bairros/dados.json e uf/XX.json),
 para que os números batam com o mapa, mais a tabela de áreas (resultado de 2026 e 2022) e o Censo por setor.
@@ -16,7 +16,14 @@ import pandas as pd
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = os.path.join(RAIZ, "mapa", "bairros")
 OUT = os.path.join(RAIZ, "resultados")
-LIMIAR = 100_000
+LIMIAR = 0          # habitantes (Censo 2022); 0 = todos os municípios
+PORTES = [(0, 20_000, "até 20 mil habitantes"), (20_000, 50_000, "20 mil a 50 mil habitantes"),
+          (50_000, 100_000, "50 mil a 100 mil habitantes"), (100_000, 500_000, "100 mil a 500 mil habitantes"),
+          (500_000, 10 ** 9, "mais de 500 mil habitantes")]
+
+
+def porte(p):
+    return next(r for a, b, r in PORTES if a <= p < b)
 
 TEMA = {"emprego": "emprego", "jornada_6x1": "fim da escala 6x1", "renda_salario_minimo": "salário mínimo e renda",
         "custo_de_vida_inflacao_alimentos": "custo de vida e preço dos alimentos", "saude_sus": "saúde (SUS)",
@@ -195,7 +202,8 @@ def relatorio(k, m, D, A, pop, ranks, n_cid):
       f"\"Onde ganhar votos para Lula exige menos esforço\" (2º turno de 2026). Produção independente, sem relação com a "
       f"campanha oficial.*")
     w("")
-    w(f"{mil(pop.get(k, 0))} habitantes (Censo 2022) · {mil(m['ap'])} eleitores aptos · "
+    hab = f"{mil(pop[k])} habitantes (Censo 2022)" if pop.get(k, 0) > 0 else "município criado depois do Censo 2022 (sem população recenseada)"
+    w(f"{hab} · {mil(m['ap'])} eleitores aptos · "
       f"{m.get('rm') or 'fora de região metropolitana'} · {m['u']} área(s) no mapa")
     w("")
     reproc = uf in set(D["meta"].get("ufs_reprocessando", []))
@@ -214,9 +222,10 @@ def relatorio(k, m, D, A, pop, ranks, n_cid):
     # ---------------------------------------------------------------- resumo
     w("## Resumo")
     w("")
-    w(f"* **Nota da cidade: {m['v']} de 7** ({NOTA[m['v']]}). Entre as {n_cid} cidades com mais de 100 mil habitantes, "
-      f"{nome} é a **{ranks['pot'][k]}ª** em votos que dá para recuperar e a **{ranks['pot_mil'][k]}ª** em votos a recuperar "
-      f"por mil eleitores.")
+    pt = porte(pop.get(k, 0))
+    w(f"* **Nota da cidade: {m['v']} de 7** ({NOTA[m['v']]}). Entre as {mil(n_cid)} cidades do país, {nome} é a "
+      f"**{mil(ranks['pot'][k])}ª** em votos que dá para recuperar e a **{mil(ranks['pot_mil'][k])}ª** em votos a recuperar por "
+      f"mil eleitores. Entre as {mil(ranks['n_porte'][pt])} cidades com {pt}, é a **{mil(ranks['pot_porte'][k])}ª**.")
     w(f"* **Votos que dá para recuperar:** {faixa(pot)}.")
     if not np.isnan(desloc):
         comp = "mais" if desloc < nac - 0.5 else ("menos" if desloc > nac + 0.5 else "o mesmo tanto")
@@ -238,7 +247,8 @@ def relatorio(k, m, D, A, pop, ranks, n_cid):
     t = temas_cidade(sub)
     ok = sub[sub["nota"].notna()].sort_values("pot50", ascending=False)
     terc26 = h.get((2026, 1), {}).get("terc", np.nan)
-    terc_pct = 100 * terc26 / val.sum() if val.sum() else np.nan
+    v26 = sub["validos"].fillna(0).sum()          # válidos de 2026 (inclui áreas sem dado de 2022)
+    terc_pct = 100 * terc26 / v26 if v26 else np.nan
     tb, td = G["terc_base"][k], G["terc_dir"][k]
     w("## O que fazer, em resumo")
     w("")
@@ -363,7 +373,8 @@ def relatorio(k, m, D, A, pop, ranks, n_cid):
                         f"{pct(h[(2022, 2)]['abst'])}: {'mais' if h[(2022, 2)]['abst'] > h[(2022, 1)]['abst'] else 'menos'} gente "
                         f"ficou em casa no 2º turno.")
     if not np.isnan(terc26) and terc26 > 0:
-        mais.append(f"**Eleitores de outros candidatos:** {mil(terc26)} votos no 1º turno de 2026 ({pct(terc_pct)} dos válidos). "
+        mais.append(f"**Eleitores de outros candidatos:** {mil(terc26)} votos no 1º turno de 2026"
+                    + (f" ({pct(terc_pct)} dos válidos). " if not np.isnan(terc_pct) else ". ") +
                     f"Se repetirem 2022, rendem saldo de {mil(tb[1])} votos para Lula no 2º turno; se forem mais para Flávio, "
                     f"{mil(td[1])} (negativo = vantagem de Flávio).")
     rr = sub[okv & sub["renda_media_responsavel"].notna()]
@@ -379,11 +390,11 @@ def relatorio(k, m, D, A, pop, ranks, n_cid):
                                      ": a perda foi maior nas áreas de renda alta." if da < db - 1 else
                                      ": a perda foi parecida nos dois grupos."))
     bf = cx.get("bf")
-    if bf and cx.get("dom"):
+    if bf and cx.get("dom", 0) > 0:
         sh = 100 * bf["pbf_familias_beneficiarias"] / cx["dom"]
-        ref = CTX.get("_bf_mediana", np.nan)
+        ref = CTX.get("_bf_mediana", {}).get(porte(pop.get(k, 0)), np.nan)
         mais.append(f"**Bolsa Família:** {mil(bf['pbf_familias_beneficiarias'])} famílias atendidas, cerca de {pct(sh, 0)} dos "
-                    f"domicílios ({'acima' if sh > ref else 'abaixo'} da mediana das cidades deste relatório, {pct(ref, 0)}). "
+                    f"domicílios ({'acima' if sh > ref else 'abaixo'} da mediana das cidades com {porte(pop.get(k, 0))}, {pct(ref, 0)}). "
                     f"{mil(bf['cadunico_familias_pobreza'])} famílias em situação de pobreza no CadÚnico."
                     + (" Programas sociais são tema forte aqui." if sh > ref * 1.2 else ""))
     cg = cx.get("caged")
@@ -484,18 +495,26 @@ def relatorio(k, m, D, A, pop, ranks, n_cid):
 
 
 def main():
+    import argparse
+    ap = argparse.ArgumentParser(); ap.add_argument("--minimo", type=int, default=LIMIAR, help="só cidades com mais de N habitantes")
+    a = ap.parse_args()
     D, A, pop = carregar()
     CITA.update(citacoes_planos())
     M = D["municipios"]
-    cid = [k for k in M if pop.get(k, 0) > LIMIAR]
+    # sem limite, entram todos (inclusive municípios criados depois do Censo 2022, sem população recenseada)
+    cid = list(M) if a.minimo <= 0 else [k for k in M if pop.get(k, 0) >= a.minimo]
     G = D["grupos"]["municipio"]
     pot = pd.Series({k: G["potencial"][k][1] for k in cid})
     pmil = pd.Series({k: 1000 * G["potencial"][k][1] / M[k]["ap"] for k in cid})
+    pts = pd.Series({k: porte(pop.get(k, 0)) for k in cid})
     ranks = {"pot": pot.rank(ascending=False, method="min").astype(int),
-             "pot_mil": pmil.rank(ascending=False, method="min").astype(int)}
+             "pot_mil": pmil.rank(ascending=False, method="min").astype(int),
+             "pot_porte": pot.groupby(pts).rank(ascending=False, method="min").astype(int),
+             "n_porte": pts.value_counts().to_dict()}
     CTX.update(contexto(cid))
-    shs = [100 * CTX[k]["bf"]["pbf_familias_beneficiarias"] / CTX[k]["dom"] for k in cid if CTX[k].get("bf") and CTX[k].get("dom")]
-    CTX["_bf_mediana"] = float(np.median(shs))
+    shs = pd.Series({k: 100 * CTX[k]["bf"]["pbf_familias_beneficiarias"] / CTX[k]["dom"] for k in cid
+                     if CTX[k].get("bf") and CTX[k].get("dom")})
+    CTX["_bf_mediana"] = shs.groupby(pts.reindex(shs.index)).median().to_dict()     # mediana por porte de cidade
     os.makedirs(OUT, exist_ok=True)
     idx = []
     for k in cid:
@@ -508,7 +527,7 @@ def main():
     idx.sort()
     L = ["# Relatórios por cidade: 2º turno de 2026", "",
          "*Uso interno da Estel Tecnologia. Não publicar.* Um relatório para cada uma das "
-         f"{len(cid)} cidades com mais de 100 mil habitantes (Censo 2022), com os mesmos números do mapa. "
+         f"{mil(len(cid))} cidades do país, com os mesmos números do mapa. "
          f"Gerado em {date.today().strftime('%d/%m/%Y')} por `bairros/b15_relatorios_cidades.py`; "
          f"estados com estimativa menos segura: {', '.join(D['meta']['ufs_instaveis']) or 'nenhum'}.", "",
          "Ordem: votos que dá para recuperar (mediana).", "",

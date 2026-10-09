@@ -28,19 +28,21 @@ def b64(p):
 
 
 def css():
-    fontes = open(os.path.join(LIB, "fontes", "fontes.css")).read()
-    fontes = re.sub(r"url\(([^)]+\.woff2)\)", lambda m: f"url(data:font/woff2;base64,{b64(os.path.join(LIB, 'fontes', m.group(1)))})", fontes)
+    # fontes estáticas (mapa/lib/fontes/pdf): fonte variável vira desenho vetorial no PDF e multiplica o tamanho do arquivo
+    pasta = os.path.join(LIB, "fontes", "pdf")
+    fontes = open(os.path.join(pasta, "fontes_pdf.css")).read()
+    fontes = re.sub(r"url\(([^)]+\.ttf)\)", lambda m: f"url(data:font/ttf;base64,{b64(os.path.join(pasta, m.group(1)))})", fontes)
     return fontes + """
 @page { size: A4; margin: 22mm 16mm 20mm 16mm; }
 :root { --azul: #1863DC; --marinho: #00378E; --tinta: #212121; --cinza: #5f6368; --linha: #dfe3ea; --fundo: #f4f6fa; }
 * { box-sizing: border-box; }
 html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-body { font-family: "Instrument Sans", "Helvetica Neue", Arial, sans-serif; color: var(--tinta); font-size: 10pt; line-height: 1.45; margin: 0; }
+body { font-family: "Instrument Sans PDF", "Helvetica Neue", Arial, sans-serif; color: var(--tinta); font-size: 10pt; line-height: 1.45; margin: 0; }
 .capa { display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--azul); padding-bottom: 8px; margin-bottom: 14px; }
 .capa img { height: 34px; }
-.capa .rot { font-family: "Archivo", sans-serif; font-size: 8pt; letter-spacing: .08em; text-transform: uppercase; color: var(--marinho); text-align: right; }
-h1 { font-family: "Archivo", sans-serif; font-weight: 800; font-stretch: 90%; font-size: 26pt; line-height: 1.05; margin: 0 0 6px; color: var(--marinho); }
-h2 { font-family: "Archivo", sans-serif; font-weight: 700; font-size: 13pt; color: var(--marinho); margin: 18px 0 6px; padding-bottom: 3px; border-bottom: 1px solid var(--linha); break-after: avoid; }
+.capa .rot { font-family: "Archivo PDF", sans-serif; font-size: 8pt; letter-spacing: .08em; text-transform: uppercase; color: var(--marinho); text-align: right; }
+h1 { font-family: "Archivo PDF", sans-serif; font-weight: 800; font-size: 26pt; line-height: 1.05; margin: 0 0 6px; color: var(--marinho); }
+h2 { font-family: "Archivo PDF", sans-serif; font-weight: 700; font-size: 13pt; color: var(--marinho); margin: 18px 0 6px; padding-bottom: 3px; border-bottom: 1px solid var(--linha); break-after: avoid; }
 p { margin: 4px 0 8px; }
 ul { margin: 4px 0 8px; padding-left: 16px; }
 li { margin: 3px 0; break-inside: avoid; }
@@ -51,18 +53,25 @@ em { color: var(--cinza); }
 blockquote { margin: 8px 0; padding: 8px 12px; background: #fff6e5; border-left: 4px solid #c27c00; color: #5a3d00; }
 blockquote p { margin: 0; }
 table { width: 100%; border-collapse: collapse; font-size: 8.4pt; margin: 6px 0 10px; break-inside: auto; }
-thead th { background: var(--marinho); color: #fff; font-family: "Archivo", sans-serif; font-weight: 600; text-align: left; padding: 5px 6px; }
+thead th { background: var(--marinho); color: #fff; font-family: "Archivo PDF", sans-serif; font-weight: 600; text-align: left; padding: 5px 6px; }
 td { padding: 4px 6px; border-bottom: 1px solid var(--linha); vertical-align: top; }
 tr { break-inside: avoid; }
 tbody tr:nth-child(even) td { background: var(--fundo); }
 .ficha { display: flex; gap: 10px; align-items: center; margin: 4px 0 10px; color: var(--cinza); font-size: 9pt; }
-.nota { display: inline-flex; align-items: center; gap: 8px; font-family: "Archivo", sans-serif; font-weight: 700; color: var(--tinta); }
+.nota { display: inline-flex; align-items: center; gap: 8px; font-family: "Archivo PDF", sans-serif; font-weight: 700; color: var(--tinta); }
 .nota .n { width: 30px; height: 30px; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; font-size: 15pt; }
 .escala { display: inline-flex; gap: 2px; }
 .escala i { display: inline-block; width: 14px; height: 6px; }
 .indep { background: var(--tinta); color: #fff; font-size: 8pt; padding: 6px 10px; margin: 0 0 12px; }
 .indep b { color: #fff; }
 td.nt { text-align: center; font-weight: 700; }
+h3 { font-family: "Archivo PDF", sans-serif; font-weight: 700; font-size: 11pt; color: var(--tinta); margin: 12px 0 4px; break-after: avoid; }
+code { font-family: Menlo, Consolas, monospace; font-size: 8.4pt; background: var(--fundo); padding: 0 3px; }
+pre { background: var(--fundo); border-left: 3px solid var(--azul); padding: 8px 10px; font-size: 5.5pt; line-height: 1.35; white-space: pre; overflow: hidden; break-inside: avoid; }
+td code { font-size: 7.4pt; white-space: normal; word-break: break-word; }
+td:last-child { min-width: 30%; }
+pre code { background: none; padding: 0; font-size: inherit; }
+hr { border: 0; border-top: 1px solid var(--linha); margin: 12px 0; }
 """
 
 
@@ -78,9 +87,9 @@ PUBLICO = False
 SITE_PUBLICO = "https://rafadaguia.github.io/analise-de-esforco-por-bairros-lula-2026/"
 
 
-def pagina(md_texto, logo):
+def pagina(md_texto, logo, rotulo=None):
     m = re.search(r"\*\*Nota da cidade: (\d) de 7\*\*", md_texto)
-    corpo = markdown.markdown(md_texto, extensions=["tables", "sane_lists"])
+    corpo = markdown.markdown(md_texto, extensions=["tables", "sane_lists", "fenced_code"])
     # a linha de rodapé interna vira faixa de independência; a nota ganha o selo de cor
     corpo = re.sub(r"<p><em>Relatório interno da Estel Tecnologia[^<]*</em></p>", "", corpo, count=1)
     if PUBLICO:
@@ -95,7 +104,7 @@ def pagina(md_texto, logo):
     titulo = re.search(r"<h1>(.*?)</h1>", corpo)
     return f"""<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>{titulo.group(1) if titulo else 'Relatório'}</title>
 <style>{CSS}</style></head><body>
-<div class="capa"><img src="data:image/png;base64,{logo}" alt="Estel Tecnologia"><div class="rot">Relatório por cidade<br>2º turno de 2026{'' if PUBLICO else ' · uso interno'}</div></div>
+<div class="capa"><img src="data:image/png;base64,{logo}" alt="Estel Tecnologia"><div class="rot">{rotulo or 'Relatório por cidade'}<br>2º turno de 2026{'' if PUBLICO else ' · uso interno'}</div></div>
 <div class="indep"><b>Produção independente e exclusiva da Estel Tecnologia.</b> Sem relação com a campanha oficial de Lula, com o PT ou com qualquer partido, federação, coligação ou candidatura.</div>
 {corpo}
 </body></html>"""
@@ -104,7 +113,10 @@ def pagina(md_texto, logo):
 def rodape():
     marca = "Estel Tecnologia · estel.tec.br · " + ("produção independente, sem relação com a campanha oficial" if PUBLICO
                                                     else "uso interno, não publicar")
-    return ('<div style="font-family:Arial,sans-serif;font-size:7pt;color:#5f6368;width:100%;padding:0 16mm;display:flex;'
+    # a mesma fonte do texto (embutida): sem ela o Chrome usa Arial no rodapé e embute mais ~30 KB por PDF
+    fonte = b64(os.path.join(LIB, "fontes", "pdf", "InstrumentSans-latin-4-400.ttf"))
+    return (f'<style>@font-face{{font-family:R;src:url(data:font/ttf;base64,{fonte}) format("truetype")}}</style>'
+            '<div style="font-family:R,sans-serif;font-size:7pt;color:#5f6368;width:100%;padding:0 16mm;display:flex;'
             f'justify-content:space-between"><span>{marca}</span>'
             '<span><span class="pageNumber"></span> / <span class="totalPages"></span></span></div>')
 
@@ -130,16 +142,26 @@ const fs = require('fs');
 
 def main():
     global CSS, OUT, PUBLICO
-    ap = argparse.ArgumentParser(); ap.add_argument("--publico", action="store_true"); a = ap.parse_args()
+    ap = argparse.ArgumentParser(); ap.add_argument("--publico", action="store_true")
+    ap.add_argument("--documentos", action="store_true", help="PDF de EXPLICACAO_SIMPLES.md e EXPLICACAO_TECNICA.md (internos)")
+    a = ap.parse_args()
     PUBLICO = a.publico
     if PUBLICO:
         OUT = os.path.join(RAIZ, "mapa", "bairros", "relatorios")
     CSS = css()
     logo = b64(os.path.join(LIB, "marca", "estel-preto.png"))
+    if a.documentos:
+        OUT = RAIZ
     tmp = os.path.join(OUT, ".html")
     os.makedirs(tmp, exist_ok=True)
     lista = []
     arquivos = sorted(glob.glob(os.path.join(SRC, "*", "*.md"))) + [os.path.join(SRC, "LEIAME.md")]
+    if a.documentos:
+        for nome, rot in (("EXPLICACAO_SIMPLES", "Explicação simples"), ("EXPLICACAO_TECNICA", "Explicação técnica")):
+            html = os.path.join(tmp, nome + ".html")
+            open(html, "w").write(pagina(open(os.path.join(RAIZ, nome + ".md")).read(), logo, rot))
+            lista.append([html, os.path.join(RAIZ, nome + ".pdf")])
+        arquivos = []
     for md in arquivos:
         rel = os.path.relpath(md, SRC)
         texto = open(md).read()

@@ -129,7 +129,7 @@ NC News, Poder360 e SBT News.
   metas contados parágrafo a parágrafo). Daí saem os temas para puxar, de contraste, disputados e a evitar.
 * **Soberania nacional.** Exposição da cidade ao mercado dos EUA (exportações por eleitor e parcela das exportações) e
   Amazônia Legal.
-* **Relatórios por cidade.** Para as 319 cidades com mais de 100 mil habitantes, os achados saem de regras fixas sobre
+* **Relatórios por cidade.** Para os 5.571 municípios do país, os achados saem de regras fixas sobre
   os números, sem texto gerado por modelo de linguagem: cada frase mostra o número que a sustenta.
 * **Estimativa por pesquisa (MrsP, comparação).** As pesquisas estaduais foram combinadas com o perfil do Censo numa
   estimativa por área, usada só para comparar com o modelo eleitoral. Ela não entra no mapa.

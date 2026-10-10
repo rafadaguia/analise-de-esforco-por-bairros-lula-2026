@@ -457,35 +457,6 @@ def relatorio(k, m, D, A, pop, ranks, n_cid):
               "; ".join(f"{r['n']}" for _, r in aj.iterrows()) + ".")
             w("")
 
-    # ---------------------------------------------------------------- públicos (só estado e município; b20)
-    pub = PUBLICOS.get("municipios", {}).get(k)
-    if pub:
-        w("## Públicos: quem são os eleitores da cidade e como cada grupo tende a votar")
-        w("")
-        w("Tamanho de cada grupo no eleitorado da cidade (TSE 2026; religião: Censo 2022, 15 anos ou mais), quanto ele faltou "
-          "no 1º turno de 2022 aqui e como ele tende a votar **no estado** (pesquisa Datafolha nacional ajustada ao resultado "
-          f"do 1º turno em {uf}). O voto por grupo é uma estimativa para o estado, não uma medida da cidade.")
-        w("")
-        w("| Grupo | Parte do eleitorado | Faltou em 2022 | Lula entre os dois (estado) | Leitura |")
-        w("|---|---|---|---|---|")
-        for g in pub:
-            leit = {"base": "base de Lula" + (": levar às urnas" if g["abstencao_acima"] else ": manter mobilizado"),
-                    "disputa": "dividido: conversar com os temas da cidade",
-                    "difícil": "maioria com Flávio: não é prioridade de convencimento"}.get(g["classe"], "sem estimativa")
-            ab = f"{pct(g['abstencao_2022'])}" + (" (acima da média)" if g["abstencao_acima"] else "") if g["abstencao_2022"] is not None else "–"
-            w(f"| {g['grupo']} | {pct(g['pct']) if g['pct'] is not None else '–'} | {ab} | "
-              f"{str(int(g['lula_no_estado'])) + '%' if g['lula_no_estado'] is not None else '–'} | {leit} |")
-        w("")
-        # resumo: só idade e escolaridade (gênero e religião ficam na tabela, sem recomendação própria)
-        mob = [g["grupo"].lower() for g in pub if g["tipo"] in ("idade", "escolaridade") and g["classe"] == "base" and g["abstencao_acima"]]
-        dis = sorted([g for g in pub if g["tipo"] in ("idade", "escolaridade") and g["classe"] == "disputa" and g["pct"]], key=lambda g: -g["pct"])
-        if mob or dis:
-            w("**Na prática:** " + "; ".join(x for x in (
-                (f"levar às urnas quem tende a votar em Lula e falta mais: {', '.join(mob)}" if mob else ""),
-                (f"conversar com os grupos divididos, que somam mais eleitores: {', '.join(g['grupo'].lower() + ' (' + pct(g['pct'], 0) + ')' for g in dis[:2])}" if dis else ""))
-                if x) + ". Gênero e religião aparecem na tabela só como descrição do eleitorado: nenhuma sugestão se baseia apenas neles.")
-            w("")
-
     # ---------------------------------------------------------------- temas
     C = D.get("citacoes", {})
     w("## Temas para conversar")

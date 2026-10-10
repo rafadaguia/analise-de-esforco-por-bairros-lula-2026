@@ -68,6 +68,23 @@ nav.mapas a:focus-visible, .botao:focus-visible { outline: 2px solid var(--focus
 h2 { font-family: var(--display); font-stretch: 75%; font-weight: 700; font-size: 28px; line-height: 1.05; margin: 0; }
 .sub { color: var(--ink-3); font-size: 13px; margin-top: 2px; }
 .medidas { margin: 8px 0 6px; }
+.publicos h3 { font-family: var(--display); font-stretch: 75%; font-size: 22px; margin: 8px 0 0; }
+.ptab { width: 100%; border-collapse: collapse; font-size: 13px; }
+.ptab th { text-align: left; font-size: 12px; font-weight: 600; color: var(--ink-3); padding: 4px 6px 4px 0; border-bottom: 1px solid var(--rule); }
+.ptab tr.sec th { padding-top: 10px; color: var(--ink); font-size: 12px; text-transform: uppercase; letter-spacing: .05em; border-bottom: 1px solid var(--ink-3); }
+.ptab td { padding: 6px 6px 6px 0; border-bottom: 1px solid var(--rule); vertical-align: middle; }
+.ptab td small { display: block; color: var(--ink-3); font-size: 11px; }
+.ptab td.num { text-align: right; white-space: nowrap; }
+.ptab th.num { text-align: right; }
+.ptab { table-layout: fixed; }
+.ptab th:nth-child(1) { width: 30%; } .ptab th:nth-child(2) { width: 24%; } .ptab th:nth-child(4) { width: 16%; }
+.pchip { white-space: normal; }
+.pbar { height: 8px; background: var(--chip); border: 1px solid var(--rule); min-width: 48px; }
+.pbar i { display: block; height: 100%; background: var(--ink-2); }
+.pchip { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 6px; white-space: nowrap; border: 1px solid var(--rule); }
+.pchip.base { background: var(--pos); color: #fff; border-color: var(--pos); }
+.pchip.div { background: var(--chip); color: var(--alerta); border-color: var(--alerta); }
+.pchip.fla { background: transparent; color: var(--ink-3); }
 .medidas th { text-align: left; font-size: 12px; font-weight: 600; color: var(--ink-3); border-bottom: 1px solid var(--rule); padding: 4px 6px 4px 0; }
 .medidas td { padding: 7px 6px 7px 0; border-bottom: 1px solid var(--rule); vertical-align: top; font-size: 13px; }
 .medidas td.v { font-family: var(--display); font-stretch: 75%; font-size: 20px; font-weight: 700; white-space: nowrap; }
@@ -358,15 +375,27 @@ const MODO = "municipio";   // municipio | area | rm (cada página do site é ge
       linhas.map(([r, a, txt]) => `<tr><td>${r}</td><td class="num v">${txt != null ? txt : a ? mil(a[1]) : "–"}</td><td class="num">${
         txt != null || !a ? "–" : `${mil(a[0])} e ${mil(a[2])}`}</td></tr>`).join("")}</tbody></table>`;
   }
-  // públicos (só estado e município): tamanho no eleitorado, abstenção em 2022 e voto estimado no estado
-  function publicos(lista, onde) {
+  // públicos do estado (b20): gênero, idade, escolaridade e religião. Só no estado: o voto por grupo é estimado para o estado
+  function publicos(lista, uf) {
     const P = D.publicos || {}; if (!lista || !P.grupos) return "";
-    const leit = r => r[3] === 1 ? (r[4] ? "base de Lula: levar às urnas" : "base de Lula") : r[3] === 0 ? "dividido: conversar com os temas" : r[3] === -1 ? "maioria com Flávio" : "–";
-    const p = v => v == null ? "–" : v.toFixed(0) + "%";
-    return `<details class="publicos"><summary class="rot" style="cursor:pointer">Públicos em ${onde}: quem são os eleitores e como cada grupo tende a votar</summary>
-      <table class="medidas"><thead><tr><th>Grupo</th><th class="num">Parte do eleitorado</th><th class="num">Faltou em 2022</th><th class="num">Lula (estado)</th><th>Leitura</th></tr></thead><tbody>${
-      lista.map((r, i) => `<tr><td>${P.grupos[i]}</td><td class="num">${p(r[0])}</td><td class="num">${p(r[1])}${r[4] ? " ↑" : ""}</td><td class="num">${p(r[2])}</td><td>${leit(r)}</td></tr>`).join("")}</tbody></table>
-      <p class="nota">Eleitorado: TSE 2026 (religião: Censo 2022, 15 anos ou mais). "Faltou em 2022": abstenção no 1º turno de 2022 (↑ acima da média). "Lula (estado)": voto estimado do grupo no estado, entre os dois candidatos (Datafolha nacional ajustado ao 1º turno do estado), não uma medida da cidade. Cor ou raça não é usada, e nenhuma sugestão se baseia apenas em gênero ou religião.</p></details>`;
+    const TIT = { genero: "Gênero", idade: "Idade", escolaridade: "Escolaridade", religiao: "Religião" };
+    const LEIT = { 1: ["base", "Base de Lula"], 0: ["div", "Dividido"], "-1": ["fla", "Maioria com Flávio"] };
+    const pc = v => v == null ? "–" : v.toFixed(0) + "%";
+    let html = "", atual = "";
+    lista.forEach((r, i) => {
+      const tipo = P.tipos[i];
+      if (tipo !== atual) { html += `<tr class="sec"><th colspan="4">${TIT[tipo] || tipo}</th></tr>`; atual = tipo; }
+      const [cls, rot] = LEIT[r[3]] || ["", "sem estimativa"];
+      const barra = r[2] == null ? `<span class="nota">sem estimativa</span>` :
+        `<div class="pbar" title="Lula ${pc(r[2])} x Flávio ${pc(100 - r[2])}"><i style="width:${r[2]}%"></i></div><small>Lula ${pc(r[2])}</small>`;
+      html += `<tr><td>${P.grupos[i]}<small>${pc(r[0])} do eleitorado</small></td><td>${barra}</td>
+        <td><span class="pchip ${cls}">${rot}</span>${r[4] && r[3] === 1 && (tipo === "idade" || tipo === "escolaridade") ? `<small>falta muito: levar às urnas</small>` : ""}</td>
+        <td class="num">${pc(r[1])}${r[4] ? " ↑" : ""}</td></tr>`;
+    });
+    return `<section class="publicos"><h3>Públicos em ${uf}</h3>
+      <p class="nota" style="margin:2px 0 6px">Quem são os eleitores do estado e como cada grupo tende a votar no 2º turno.</p>
+      <table class="ptab"><thead><tr><th>Grupo</th><th>Lula x Flávio</th><th>Leitura</th><th class="num">Faltou em 2022</th></tr></thead><tbody>${html}</tbody></table>
+      <p class="nota">Eleitorado: TSE 2026 (religião: Censo 2022, 15 anos ou mais). Voto: Datafolha nacional (1 a 3/10) ajustado ao 1º turno de ${uf}; é uma estimativa para o estado inteiro. "Faltou em 2022": abstenção no 1º turno de 2022 (↑ acima da média do estado). Cor ou raça não é usada, e nenhuma sugestão se baseia apenas em gênero ou religião.</p></section>`;
   }
   function kpisGrupo(nv, k) {
     const g = D.grupos[nv]; if (!g) return "";
@@ -412,7 +441,7 @@ const MODO = "municipio";   // municipio | area | rm (cada página do site é ge
       return;
     }
     if (s.nivel === "uf") {
-      el.innerHTML = `<h2>${s.uf}</h2><div class="sub">Unidade da Federação</div>${publicos((D.publicos || {}).uf && D.publicos.uf[s.uf], s.uf)}${MODO === "municipio" ? `<p class="nota"><b>Agora clique num município de ${s.uf}</b> para abrir a ficha dele. Para trocar de estado, clique em outro estado ou em "Brasil" acima.</p>` : ""}${selo(s.uf)}${kpisGrupo("uf", s.uf)}${barras(D.dist.uf[s.uf])}`;
+      el.innerHTML = `<h2>${s.uf}</h2><div class="sub">Unidade da Federação</div>${MODO === "municipio" ? `<p class="nota"><b>Agora clique num município de ${s.uf}</b> para abrir a ficha dele. Para trocar de estado, clique em outro estado ou em "Brasil" acima.</p>` : ""}${selo(s.uf)}${kpisGrupo("uf", s.uf)}${publicos((D.publicos || {}).uf && D.publicos.uf[s.uf], s.uf)}${barras(D.dist.uf[s.uf])}`;
       if (mover) zoom(bboxUF(s.uf)); return;
     }
     if (s.nivel === "rm") {
@@ -433,7 +462,7 @@ const MODO = "municipio";   // municipio | area | rm (cada página do site é ge
           m.sob.am ? "Amazônia Legal" : ""].filter(Boolean).join(" · ")}. Por quê: onde o tarifaço dos EUA pesa nos empregos e na economia da cidade, a defesa da soberania tende a fazer mais sentido para as pessoas.</div>` : "";
       const rmLink = m.rm ? `<p class="nota">Faz parte da <a href="rm.html#r=${encodeURIComponent(m.rm)}">${m.rm}</a>.</p>` : "";
       el.innerHTML = `<h2>${m.n}</h2><div class="sub">${m.uf}${m.rm ? " · " + m.rm : ""} · ${fmt.format(m.ap)} aptos · ${m.u} área(s)</div>${nivelBox(m.v)}${selo(m.uf)}
-        ${kpisGrupo("municipio", s.mun)}${MODO === "municipio" ? verBairros : ""}${botaoRel(s.mun, m.n)}${cartaoTemas(tc, m.n)}${publicos((D.publicos || {}).mun && D.publicos.mun[s.mun], m.n)}${sb}${barras(D.dist.municipio[s.mun])}${rmLink}
+        ${kpisGrupo("municipio", s.mun)}${MODO === "municipio" ? verBairros : ""}${botaoRel(s.mun, m.n)}${cartaoTemas(tc, m.n)}${sb}${barras(D.dist.municipio[s.mun])}${rmLink}
         ${MODO === "area" ? `<p class="nota">${m.u > 1 ? "Clique numa área do município para ver a ficha do bairro." : "Município sem divisão em bairros com local de votação."}</p>` : ""}`;
       if (mover) zoom(m.b); return;
     }

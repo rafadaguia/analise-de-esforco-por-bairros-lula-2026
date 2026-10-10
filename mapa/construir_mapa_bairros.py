@@ -262,9 +262,9 @@ def main():
         pj = json.load(open(pub_arq))
         cod = {"base": 1, "disputa": 0, "difícil": -1}
         comp = lambda lst: [[g["pct"], g["abstencao_2022"], g["lula_no_estado"], cod.get(g["classe"]), int(g["abstencao_acima"])] for g in lst]
-        pub = {"grupos": [g["grupo"] for g in next(iter(pj["estados"].values()))],
-               "uf": {k: comp(v) for k, v in pj["estados"].items()},
-               "mun": {k: comp(v) for k, v in pj["municipios"].items()}}
+        um = next(iter(pj["estados"].values()))
+        pub = {"grupos": [g["grupo"] for g in um], "tipos": [g["tipo"] for g in um],   # só estados (decisão de 10/10)
+               "uf": {k: comp(v) for k, v in pj["estados"].items()}}
     dados = {"meta": {**meta, "unidade": a.unidade, "metodo": a.metodo, "pesos": a.pesos, "ufs_instaveis": sorted(inst), "ufs_conferidas": sorted(conf),
                       "ufs_reprocessando": reproc, "atualizacao_prevista": AVISO_QUANDO},
              "citacoes": citacoes,

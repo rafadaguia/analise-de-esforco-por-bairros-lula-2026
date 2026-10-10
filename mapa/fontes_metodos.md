@@ -36,12 +36,12 @@ identificável foi usado.
   Porto Velho, Recife, Rio de Janeiro, Salvador, Santo André, Santos, São Bernardo do Campo, São Paulo (GeoSampa),
   Teresina e Vitória. Endereço e conferência de cada uma: `bairros/insumos/prefeituras/catalogo.csv`.
 
-### Públicos (estados e municípios)
+### Públicos (só estados)
 
-* **TSE, perfil do eleitorado 2026:** eleitores de cada município por gênero, faixa de idade e escolaridade.
-* **TSE, comparecimento e abstenção por perfil (1º turno de 2022):** quanto cada grupo faltou em cada município.
+* **TSE, perfil do eleitorado 2026:** eleitores de cada estado por gênero, faixa de idade e escolaridade.
+* **TSE, comparecimento e abstenção por perfil (1º turno de 2022):** quanto cada grupo faltou em cada estado.
 * **IBGE, Censo 2022, religião (tabela 10198):** católicos, evangélicos e sem religião entre as pessoas de 15 anos ou
-  mais de cada município.
+  mais de cada estado (somadas dos municípios).
 * **Datafolha, 1 a 3/10/2026 (BR-08039/2026):** voto no 2º turno por gênero, idade, escolaridade e religião, no país.
   Cor ou raça existe nessas fontes e **não é usada**.
 
@@ -148,7 +148,7 @@ NC News, Poder360 e SBT News.
   metas contados parágrafo a parágrafo). Daí saem os temas para puxar, de contraste, disputados e a evitar.
 * **Soberania nacional.** Exposição da cidade ao mercado dos EUA (exportações por eleitor e parcela das exportações) e
   Amazônia Legal.
-* **Públicos (só estados e municípios, nunca bairros).** Para cada grupo de gênero, idade, escolaridade e religião: o
+* **Públicos (só estados).** Para cada grupo de gênero, idade, escolaridade e religião: o
   tamanho no eleitorado, a abstenção em 2022 e o voto estimado no estado. O voto vem da diferença de cada grupo para a
   média nacional no Datafolha, aplicada ao resultado real do 1º turno de 2026 no estado (uma aproximação). O grupo é
   "base" com Lula a 58% ou mais entre os dois, "difícil" com 42% ou menos e "dividido" entre os dois. As sugestões

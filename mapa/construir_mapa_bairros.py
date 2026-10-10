@@ -255,10 +255,20 @@ def main():
                 r_ = sob.loc[int(k)]
                 v["sob"] = {"f": r_["forca_soberania"], "eua": round(float(r_["exp_eua_usd"]) / 1e6, 1),
                             "par": round(100 * float(r_["parcela_eua"]), 0), "am": bool(r_["amazonia_legal"]), "sede": bool(r_["sede_exportadora"])}
+    # públicos por estado e município (b20): [parte do eleitorado, abstenção 2022, Lula no estado, classe, abstenção acima]
+    pub_arq = os.path.join(VAR, a.unidade, "publicos.json")
+    pub = {}
+    if os.path.exists(pub_arq):
+        pj = json.load(open(pub_arq))
+        cod = {"base": 1, "disputa": 0, "difícil": -1}
+        comp = lambda lst: [[g["pct"], g["abstencao_2022"], g["lula_no_estado"], cod.get(g["classe"]), int(g["abstencao_acima"])] for g in lst]
+        pub = {"grupos": [g["grupo"] for g in next(iter(pj["estados"].values()))],
+               "uf": {k: comp(v) for k, v in pj["estados"].items()},
+               "mun": {k: comp(v) for k, v in pj["municipios"].items()}}
     dados = {"meta": {**meta, "unidade": a.unidade, "metodo": a.metodo, "pesos": a.pesos, "ufs_instaveis": sorted(inst), "ufs_conferidas": sorted(conf),
                       "ufs_reprocessando": reproc, "atualizacao_prevista": AVISO_QUANDO},
              "citacoes": citacoes,
-             "grupos": niveis, "dist": dist, "municipios": municipios, "rms": rms}
+             "grupos": niveis, "dist": dist, "municipios": municipios, "rms": rms, "publicos": pub}
     json.dump(limpo(dados), open(os.path.join(OUT, "dados.json"), "w"), ensure_ascii=False, separators=(",", ":"), allow_nan=False)
     # unidades em arquivos por UF (carregados sob demanda, ao entrar na UF)
     os.makedirs(os.path.join(OUT, "uf"), exist_ok=True)

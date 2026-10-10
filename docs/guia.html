@@ -140,6 +140,7 @@ summary { cursor: pointer; font-weight: 600; }
     <tr><td>Diferença Lula − Flávio no 2º turno</td><td>Quanto ficaria a disputa ali se as pessoas repetissem o comportamento de 2022. Número negativo = vantagem de Flávio. É uma simulação, não uma previsão.</td></tr>
     <tr><td>Quanto Lula perdeu aqui além da média do país</td><td>Votos que Lula tinha em 2022 e não teve em 2026, além da queda média. Costuma ser o voto mais fácil de reconquistar.</td></tr>
     <tr><td>Cálculo difícil, mas a nota foi conferida e é estável</td><td>Os cálculos do estado foram mais difíceis que o normal, mas testamos: a nota de cada lugar quase não muda. Pode usar a nota normalmente; os números absolutos (votos) têm um pouco mais de incerteza.</td></tr>
+    <tr><td>Públicos (estado e município)</td><td>Quem são os eleitores do lugar (gênero, idade, escolaridade e religião), quanto cada grupo faltou em 2022 e como ele tende a votar no estado. Use para saber com quem conversar e quem levar às urnas. Não existe para bairros, e nenhuma sugestão se baseia apenas em gênero ou religião.</td></tr>
     <tr><td>Atenção: estimativa menos segura</td><td>Neste estado os cálculos variaram mais que o normal. Use a nota como orientação geral e confie mais no conhecimento local.</td></tr>
   </table>
 
@@ -226,6 +227,15 @@ identificável foi usado.</p>
   (portal de dados do Governo de Alagoas), Manaus, Maringá, Mogi das Cruzes, Natal, Niterói, Ponta Grossa, Porto Alegre,
   Porto Velho, Recife, Rio de Janeiro, Salvador, Santo André, Santos, São Bernardo do Campo, São Paulo (GeoSampa),
   Teresina e Vitória. Endereço e conferência de cada uma: <code>bairros/insumos/prefeituras/catalogo.csv</code>.</li>
+</ul>
+<h3>Públicos (estados e municípios)</h3>
+<ul>
+<li><strong>TSE, perfil do eleitorado 2026:</strong> eleitores de cada município por gênero, faixa de idade e escolaridade.</li>
+<li><strong>TSE, comparecimento e abstenção por perfil (1º turno de 2022):</strong> quanto cada grupo faltou em cada município.</li>
+<li><strong>IBGE, Censo 2022, religião (tabela 10198):</strong> católicos, evangélicos e sem religião entre as pessoas de 15 anos ou
+  mais de cada município.</li>
+<li><strong>Datafolha, 1 a 3/10/2026 (BR-08039/2026):</strong> voto no 2º turno por gênero, idade, escolaridade e religião, no país.
+  Cor ou raça existe nessas fontes e <strong>não é usada</strong>.</li>
 </ul>
 <h3>Outros órgãos federais</h3>
 <ul>
@@ -328,6 +338,11 @@ NC News, Poder360 e SBT News.</p>
   metas contados parágrafo a parágrafo). Daí saem os temas para puxar, de contraste, disputados e a evitar.</li>
 <li><strong>Soberania nacional.</strong> Exposição da cidade ao mercado dos EUA (exportações por eleitor e parcela das exportações) e
   Amazônia Legal.</li>
+<li><strong>Públicos (só estados e municípios, nunca bairros).</strong> Para cada grupo de gênero, idade, escolaridade e religião: o
+  tamanho no eleitorado, a abstenção em 2022 e o voto estimado no estado. O voto vem da diferença de cada grupo para a
+  média nacional no Datafolha, aplicada ao resultado real do 1º turno de 2026 no estado (uma aproximação). O grupo é
+  "base" com Lula a 58% ou mais entre os dois, "difícil" com 42% ou menos e "dividido" entre os dois. As sugestões
+  práticas usam só idade e escolaridade; gênero e religião aparecem apenas como descrição do eleitorado.</li>
 <li><strong>Relatórios por cidade.</strong> Para os 5.571 municípios do país, os achados saem de regras fixas sobre
   os números, sem texto gerado por modelo de linguagem: cada frase mostra o número que a sustenta.</li>
 <li><strong>Estimativa por pesquisa (MrsP, comparação).</strong> As pesquisas estaduais foram combinadas com o perfil do Censo numa

@@ -358,6 +358,16 @@ const MODO = "area";   // municipio | area | rm (cada página do site é gerada 
       linhas.map(([r, a, txt]) => `<tr><td>${r}</td><td class="num v">${txt != null ? txt : a ? mil(a[1]) : "–"}</td><td class="num">${
         txt != null || !a ? "–" : `${mil(a[0])} e ${mil(a[2])}`}</td></tr>`).join("")}</tbody></table>`;
   }
+  // públicos (só estado e município): tamanho no eleitorado, abstenção em 2022 e voto estimado no estado
+  function publicos(lista, onde) {
+    const P = D.publicos || {}; if (!lista || !P.grupos) return "";
+    const leit = r => r[3] === 1 ? (r[4] ? "base de Lula: levar às urnas" : "base de Lula") : r[3] === 0 ? "dividido: conversar com os temas" : r[3] === -1 ? "maioria com Flávio" : "–";
+    const p = v => v == null ? "–" : v.toFixed(0) + "%";
+    return `<details class="publicos"><summary class="rot" style="cursor:pointer">Públicos em ${onde}: quem são os eleitores e como cada grupo tende a votar</summary>
+      <table class="medidas"><thead><tr><th>Grupo</th><th class="num">Parte do eleitorado</th><th class="num">Faltou em 2022</th><th class="num">Lula (estado)</th><th>Leitura</th></tr></thead><tbody>${
+      lista.map((r, i) => `<tr><td>${P.grupos[i]}</td><td class="num">${p(r[0])}</td><td class="num">${p(r[1])}${r[4] ? " ↑" : ""}</td><td class="num">${p(r[2])}</td><td>${leit(r)}</td></tr>`).join("")}</tbody></table>
+      <p class="nota">Eleitorado: TSE 2026 (religião: Censo 2022, 15 anos ou mais). "Faltou em 2022": abstenção no 1º turno de 2022 (↑ acima da média). "Lula (estado)": voto estimado do grupo no estado, entre os dois candidatos (Datafolha nacional ajustado ao 1º turno do estado), não uma medida da cidade. Cor ou raça não é usada, e nenhuma sugestão se baseia apenas em gênero ou religião.</p></details>`;
+  }
   function kpisGrupo(nv, k) {
     const g = D.grupos[nv]; if (!g) return "";
     const q = m => g[m] && g[m][k];
@@ -402,7 +412,7 @@ const MODO = "area";   // municipio | area | rm (cada página do site é gerada 
       return;
     }
     if (s.nivel === "uf") {
-      el.innerHTML = `<h2>${s.uf}</h2><div class="sub">Unidade da Federação</div>${MODO === "municipio" ? `<p class="nota"><b>Agora clique num município de ${s.uf}</b> para abrir a ficha dele. Para trocar de estado, clique em outro estado ou em "Brasil" acima.</p>` : ""}${selo(s.uf)}${kpisGrupo("uf", s.uf)}${barras(D.dist.uf[s.uf])}`;
+      el.innerHTML = `<h2>${s.uf}</h2><div class="sub">Unidade da Federação</div>${publicos((D.publicos || {}).uf && D.publicos.uf[s.uf], s.uf)}${MODO === "municipio" ? `<p class="nota"><b>Agora clique num município de ${s.uf}</b> para abrir a ficha dele. Para trocar de estado, clique em outro estado ou em "Brasil" acima.</p>` : ""}${selo(s.uf)}${kpisGrupo("uf", s.uf)}${barras(D.dist.uf[s.uf])}`;
       if (mover) zoom(bboxUF(s.uf)); return;
     }
     if (s.nivel === "rm") {
@@ -423,7 +433,7 @@ const MODO = "area";   // municipio | area | rm (cada página do site é gerada 
           m.sob.am ? "Amazônia Legal" : ""].filter(Boolean).join(" · ")}. Por quê: onde o tarifaço dos EUA pesa nos empregos e na economia da cidade, a defesa da soberania tende a fazer mais sentido para as pessoas.</div>` : "";
       const rmLink = m.rm ? `<p class="nota">Faz parte da <a href="rm.html#r=${encodeURIComponent(m.rm)}">${m.rm}</a>.</p>` : "";
       el.innerHTML = `<h2>${m.n}</h2><div class="sub">${m.uf}${m.rm ? " · " + m.rm : ""} · ${fmt.format(m.ap)} aptos · ${m.u} área(s)</div>${nivelBox(m.v)}${selo(m.uf)}
-        ${kpisGrupo("municipio", s.mun)}${MODO === "municipio" ? verBairros : ""}${botaoRel(s.mun, m.n)}${cartaoTemas(tc, m.n)}${sb}${barras(D.dist.municipio[s.mun])}${rmLink}
+        ${kpisGrupo("municipio", s.mun)}${MODO === "municipio" ? verBairros : ""}${botaoRel(s.mun, m.n)}${cartaoTemas(tc, m.n)}${publicos((D.publicos || {}).mun && D.publicos.mun[s.mun], m.n)}${sb}${barras(D.dist.municipio[s.mun])}${rmLink}
         ${MODO === "area" ? `<p class="nota">${m.u > 1 ? "Clique numa área do município para ver a ficha do bairro." : "Município sem divisão em bairros com local de votação."}</p>` : ""}`;
       if (mover) zoom(m.b); return;
     }

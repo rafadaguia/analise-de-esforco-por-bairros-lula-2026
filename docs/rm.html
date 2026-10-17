@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script src="https://barra.comitedetecnologia.com.br/barra.js" defer></script>
 <title>Esforço por Região Metropolitana</title>
 <link rel="icon" href="data:,">
 <!-- bibliotecas e fontes locais (pasta lib/): a página não chama nenhum servidor externo -->
@@ -147,7 +148,7 @@ td + td { padding-left: 12px; }
 <body>
 <div class="wrap">
   <div class="marca"><a href="https://estel.tec.br" rel="noopener" aria-label="Estel Tecnologia, abre o site"><img class="claro" src="lib/marca/estel-preto.png" alt="Estel Tecnologia" width="104" height="34"><img class="escuro" src="lib/marca/estel-branco.png" alt="Estel Tecnologia" width="104" height="34"></a><span class="nota">Produção independente da <a href="https://estel.tec.br" style="color:inherit">Estel Tecnologia</a></span></div>
-  <div class="independente" role="note"><b>Produção independente e exclusiva da Estel Tecnologia.</b> Esta ferramenta não tem relação com a campanha oficial de Lula, com o PT ou com qualquer partido, federação, coligação ou candidatura, e não foi encomendada nem paga por eles.</div>
+  <div class="independente" role="note"><b>Estudo construído de forma independente pela Estel Tecnologia.</b> A utilização pela campanha foi posterior à construção do estudo.</div>
   <a class="artigo" href="https://estel.tec.br/2026/10/09/como-geramos-o-mapa-de-esforco-por-bairro/" target="_blank" rel="noopener"><b>Como geramos este mapa →</b> leia o texto completo no site da Estel Tecnologia</a>
   <header>
     <div class="eyebrow">2º turno de 2026 · <span id="eyebrow-modo"></span></div>
@@ -176,7 +177,7 @@ td + td { padding-left: 12px; }
       <a class="voltar-mapa" href="#mapa" onclick="event.preventDefault();document.querySelector('.mapa-caixa').scrollIntoView({behavior:'smooth',block:'start'})">↑ Voltar ao mapa</a>
     </aside>
   </div>
-  <p class="fontes">Produção independente e exclusiva da <a href="https://estel.tec.br">Estel Tecnologia</a> (estel.tec.br), sem relação com a campanha oficial, partidos ou candidaturas. Fontes: TSE (votação por seção e locais de votação, 2022 e 2026), IBGE (Censo 2022: malhas e agregados por setor; regiões metropolitanas), malhas de bairros de prefeituras, nomes de parte das áreas © colaboradores do OpenStreetMap (ODbL). Método: inferência ecológica RxC hierárquica (Rosen, Jiang, King e Tanner, 2001) e Monte Carlo; nível de esforço com foco no potencial por eleitor. Detalhes, limites e reprodução no notebook <code>analise_bairros.ipynb</code>. Software: MapLibre GL JS e PMTiles (BSD-3); fontes Archivo, Instrument Sans e Noto Sans (SIL OFL 1.1); licenças em <code>lib/</code>.</p>
+  <p class="fontes">Estudo construído de forma independente pela <a href="https://estel.tec.br">Estel Tecnologia</a> (estel.tec.br); a utilização pela campanha foi posterior à construção do estudo. Fontes: TSE (votação por seção e locais de votação, 2022 e 2026), IBGE (Censo 2022: malhas e agregados por setor; regiões metropolitanas), malhas de bairros de prefeituras, nomes de parte das áreas © colaboradores do OpenStreetMap (ODbL). Método: inferência ecológica RxC hierárquica (Rosen, Jiang, King e Tanner, 2001) e Monte Carlo; nível de esforço com foco no potencial por eleitor. Detalhes, limites e reprodução no notebook <code>analise_bairros.ipynb</code>. Software: MapLibre GL JS e PMTiles (BSD-3); fontes Archivo, Instrument Sans e Noto Sans (SIL OFL 1.1); licenças em <code>lib/</code>.</p>
 </div>
 <script src="lib/maplibre-gl.js"></script>
 <script src="lib/pmtiles.js"></script>

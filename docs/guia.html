@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script src="https://barra.comitedetecnologia.com.br/barra.js" defer></script>
 <title>Como Usar o Mapa</title>
 <link rel="icon" href="data:,">
 <link rel="stylesheet" href="lib/fontes/fontes.css">
@@ -76,12 +77,13 @@ summary { cursor: pointer; font-weight: 600; }
   background: var(--surface); color: var(--ink); text-decoration: none; font-size: 14px; }
 .artigo b { color: var(--focus); }
 .artigo:hover { border-color: var(--focus); }
+code { overflow-wrap: anywhere; word-break: break-word; }   /* caminhos de arquivo longos não estouram a tela do celular */
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="marca"><a href="https://estel.tec.br" rel="noopener" aria-label="Estel Tecnologia, abre o site"><img class="claro" src="lib/marca/estel-preto.png" alt="Estel Tecnologia" width="104" height="34"><img class="escuro" src="lib/marca/estel-branco.png" alt="Estel Tecnologia" width="104" height="34"></a><span class="nota">Produção independente da <a href="https://estel.tec.br" style="color:inherit">Estel Tecnologia</a></span></div>
-  <div class="independente" role="note"><b>Produção independente e exclusiva da Estel Tecnologia.</b> Esta ferramenta não tem relação com a campanha oficial de Lula, com o PT ou com qualquer partido, federação, coligação ou candidatura, e não foi encomendada nem paga por eles.</div>
+  <div class="independente" role="note"><b>Estudo construído de forma independente pela Estel Tecnologia.</b> A utilização pela campanha foi posterior à construção do estudo.</div>
   <a class="artigo" href="https://estel.tec.br/2026/10/09/como-geramos-o-mapa-de-esforco-por-bairro/" target="_blank" rel="noopener"><b>Como geramos este mapa →</b> leia o texto completo no site da Estel Tecnologia</a>
   <div class="eyebrow">2º turno de 2026 · guia para coordenadores locais</div>
   <h1>Como usar o mapa na campanha de rua e nas redes</h1>
@@ -294,7 +296,9 @@ NC News, Poder360 e SBT News.</p>
 <li><strong>Apple Vision (ocrmac)</strong>: leitura (OCR) das tabelas em imagem dos relatórios da AtlasIntel, no próprio computador.</li>
 <li><strong>PyMuPDF</strong>: leitura do texto dos planos de governo e dos relatórios de pesquisa em PDF.</li>
 <li><strong>tippecanoe e PMTiles</strong>: transformam as 19 mil áreas em "blocos" de mapa leves, servidos num único arquivo.</li>
-<li><strong>MapLibre GL JS</strong>: o mapa interativo no navegador, sem servidor e sem serviços externos.</li>
+<li><strong>MapLibre GL JS</strong>: o mapa interativo no navegador, sem servidor; mapa, dados e relatórios ficam todos no próprio site.</li>
+<li><strong>Barra dos Aplicativos da Virada</strong>: a faixa no topo das páginas é carregada de barra.comitedetecnologia.com.br (script,
+  logo, fonte e lista de iniciativas vêm desse endereço). É o único recurso externo do site.</li>
 <li><strong>Jupyter</strong>: o notebook técnico (<code>analise_bairros.ipynb</code>) com todas as tabelas e diagnósticos.</li>
 <li><strong>python-markdown e Chrome sem interface (puppeteer-core)</strong>: geração dos relatórios em PDF de cada cidade.</li>
 </ul>
@@ -348,7 +352,7 @@ NC News, Poder360 e SBT News.</p>
 <li><strong>Estimativa por pesquisa (MrsP, comparação).</strong> As pesquisas estaduais foram combinadas com o perfil do Censo numa
   estimativa por área, usada só para comparar com o modelo eleitoral. Ela não entra no mapa.</li>
 </ul>
-  <p class="fontes">Produção independente e exclusiva da <a href="https://estel.tec.br">Estel Tecnologia</a> (estel.tec.br), sem relação com a campanha oficial, partidos ou candidaturas. Lista completa de fontes, ferramentas e metodologias nas seções 10 a 12. Método e limites detalhados no notebook <code>analise_bairros.ipynb</code>.</p>
+  <p class="fontes">Estudo construído de forma independente pela <a href="https://estel.tec.br">Estel Tecnologia</a> (estel.tec.br); a utilização pela campanha foi posterior à construção do estudo. Lista completa de fontes, ferramentas e metodologias nas seções 10 a 12. Método e limites detalhados no notebook <code>analise_bairros.ipynb</code>.</p>
 </div>
 </body>
 </html>

@@ -201,8 +201,8 @@ def relatorio(k, m, D, A, pop, ranks, n_cid):
     w(f"# {nome} ({uf})")
     w("")
     w(f"*Relatório interno da Estel Tecnologia · gerado em {date.today().strftime('%d/%m/%Y')} a partir do mapa "
-      f"\"Onde ganhar votos para Lula exige menos esforço\" (2º turno de 2026). Produção independente, sem relação com a "
-      f"campanha oficial.*")
+      f"\"Onde ganhar votos para Lula exige menos esforço\" (2º turno de 2026). Estudo independente; a utilização pela "
+      f"campanha foi posterior à sua construção.*")
     w("")
     hab = f"{mil(pop[k])} habitantes (Censo 2022)" if pop.get(k, 0) > 0 else "município criado depois do Censo 2022 (sem população recenseada)"
     w(f"{hab} · {mil(m['ap'])} eleitores aptos · "

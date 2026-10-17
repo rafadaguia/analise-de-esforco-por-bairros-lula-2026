@@ -54,7 +54,8 @@ def main():
 
 **Estel Tecnologia** ([estel.tec.br](https://estel.tec.br)) · análise de 07 e 08/10/2026
 
-> **Produção independente e exclusiva da Estel Tecnologia (estel.tec.br).** Esta ferramenta não tem relação com a campanha oficial de Lula, com o PT ou com qualquer partido, federação, coligação ou candidatura, e não foi encomendada nem paga por eles.
+> **Estudo construído de forma independente pela Estel Tecnologia (estel.tec.br).** A utilização pela campanha foi posterior à
+> construção do estudo.
 
 Esta análise leva ao nível de bairro a pergunta da versão municipal (v2.0, tag `v2.0`): **onde a campanha
 deve gastar tempo e dinheiro entre os turnos?** Agora, com a pergunta mais fina: **onde cada voto a mais

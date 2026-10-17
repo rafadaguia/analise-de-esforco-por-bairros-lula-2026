@@ -1,8 +1,7 @@
 # Análise de esforço por bairro: 2º turno de 2026
 
-> **Produção independente e exclusiva da [Estel Tecnologia](https://estel.tec.br).** Esta ferramenta não tem relação com a
-> campanha oficial de Lula, com o PT ou com qualquer partido, federação, coligação ou candidatura, e não foi encomendada
-> nem paga por eles.
+> **Estudo construído de forma independente pela [Estel Tecnologia](https://estel.tec.br).** A utilização pela campanha
+> foi posterior à construção do estudo.
 
 Mapa interativo que mostra, por **município, bairro e região metropolitana**, onde o mesmo esforço de campanha tende a
 trazer mais votos para Lula no 2º turno de 2026, com **temas sugeridos para cada lugar** a partir dos planos de governo
@@ -220,7 +219,9 @@ NC News, Poder360 e SBT News.
 * **Apple Vision (ocrmac)**: leitura (OCR) das tabelas em imagem dos relatórios da AtlasIntel, no próprio computador.
 * **PyMuPDF**: leitura do texto dos planos de governo e dos relatórios de pesquisa em PDF.
 * **tippecanoe e PMTiles**: transformam as 19 mil áreas em "blocos" de mapa leves, servidos num único arquivo.
-* **MapLibre GL JS**: o mapa interativo no navegador, sem servidor e sem serviços externos.
+* **MapLibre GL JS**: o mapa interativo no navegador, sem servidor; mapa, dados e relatórios ficam todos no próprio site.
+* **Barra dos Aplicativos da Virada**: a faixa no topo das páginas é carregada de barra.comitedetecnologia.com.br (script,
+  logo, fonte e lista de iniciativas vêm desse endereço). É o único recurso externo do site.
 * **Jupyter**: o notebook técnico (`analise_bairros.ipynb`) com todas as tabelas e diagnósticos.
 * **python-markdown e Chrome sem interface (puppeteer-core)**: geração dos relatórios em PDF de cada cidade.
 

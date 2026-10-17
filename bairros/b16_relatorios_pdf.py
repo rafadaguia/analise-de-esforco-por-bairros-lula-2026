@@ -105,13 +105,13 @@ def pagina(md_texto, logo, rotulo=None):
     return f"""<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>{titulo.group(1) if titulo else 'Relatório'}</title>
 <style>{CSS}</style></head><body>
 <div class="capa"><img src="data:image/png;base64,{logo}" alt="Estel Tecnologia"><div class="rot">{rotulo or 'Relatório por cidade'}<br>2º turno de 2026{'' if PUBLICO else ' · uso interno'}</div></div>
-<div class="indep"><b>Produção independente e exclusiva da Estel Tecnologia.</b> Sem relação com a campanha oficial de Lula, com o PT ou com qualquer partido, federação, coligação ou candidatura.</div>
+<div class="indep"><b>Estudo construído de forma independente pela Estel Tecnologia.</b> A utilização pela campanha foi posterior à construção do estudo.</div>
 {corpo}
 </body></html>"""
 
 
 def rodape():
-    marca = "Estel Tecnologia · estel.tec.br · " + ("produção independente, sem relação com a campanha oficial" if PUBLICO
+    marca = "Estel Tecnologia · estel.tec.br · " + ("estudo independente; uso pela campanha posterior à sua construção" if PUBLICO
                                                     else "uso interno, não publicar")
     # a mesma fonte do texto (embutida): sem ela o Chrome usa Arial no rodapé e embute mais ~30 KB por PDF
     fonte = b64(os.path.join(LIB, "fontes", "pdf", "InstrumentSans-latin-4-400.ttf"))

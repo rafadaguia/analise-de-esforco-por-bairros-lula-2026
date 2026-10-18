@@ -69,6 +69,8 @@ nav.mapas a:focus-visible, .botao:focus-visible { outline: 2px solid var(--focus
 h2 { font-family: var(--display); font-stretch: 75%; font-weight: 700; font-size: 28px; line-height: 1.05; margin: 0; }
 .sub { color: var(--ink-3); font-size: 13px; margin-top: 2px; }
 .medidas { margin: 8px 0 6px; }
+.subtemas { margin: 4px 0 0; padding-left: 18px; font-size: 14px; line-height: 1.4; }
+.subtemas li { margin: 4px 0; }
 .publicos h3 { font-family: var(--display); font-stretch: 75%; font-size: 22px; margin: 8px 0 0; }
 .ptab { width: 100%; border-collapse: collapse; font-size: 13px; }
 .ptab th { text-align: left; font-size: 12px; font-weight: 600; color: var(--ink-3); padding: 4px 6px 4px 0; border-bottom: 1px solid var(--rule); }
@@ -238,7 +240,21 @@ const MODO = /*__MODO__*/"municipio";   // municipio | area | rm (cada página d
     return linhas.length ? `<details><summary class="rot" style="cursor:pointer">Onde está escrito: planos de governo registrados no TSE</summary><ul class="nota" style="margin:6px 0 0;padding-left:18px">${linhas.join("")}</ul></details>` : "";
   }
   const chips = (l, c) => l && l.length ? l.map(t => `<span class="chip ${c}">${TEMA[t] || t.replace(/_/g, " ")}</span>`).join("") : `<span class="nota">–</span>`;
-  function cartaoTemas(tm, onde) {
+  // subtemas (como falar de cada tema aqui): o subtema mais indicado e o motivo local, para os temas de puxar, contraste e disputa
+  const EMPATE = new Set(["seguranca_publica"]);
+  function comoFalar(tm, st) {
+    if (!st || !D.subtemas) return "";
+    const linhas = [], vistos = new Set();
+    for (const k of ["a", "f", "d"]) for (const t of (tm[k] || [])) {
+      const lst = st[t] && st[t][k]; if (!lst || !lst.length || vistos.has(t)) continue; vistos.add(t);
+      const [s1, m1] = lst[0]; const s2 = lst[1] && lst[1][0];
+      // segurança: os dois subtemas estão quase empatados nos planos (validação de 18/10); aparecem como opções equivalentes
+      if (EMPATE.has(t) && s2) { linhas.push(`<li><b>${TEMA[t] || t}</b>: ${D.subtemas[s1] || s1} ou ${D.subtemas[s2] || s2} <span class="nota">(os dois pesam igual nos planos)</span></li>`); continue; }
+      linhas.push(`<li><b>${TEMA[t] || t}</b>: ${D.subtemas[s1] || s1}${m1 ? ` <span class="nota">(${m1})</span>` : ""}${s2 ? `; também ${D.subtemas[s2] || s2}` : ""}</li>`);
+    }
+    return linhas.length ? `<div class="grupo"><span class="rot">Como falar de cada tema aqui</span><ul class="subtemas">${linhas.join("")}</ul></div>` : "";
+  }
+  function cartaoTemas(tm, onde, st) {
     if (!tm) return "";
     return `<section class="temas" aria-label="Temas">
       <h3>Temas para conversar em ${onde}<small>Sugestão a partir de dados (pesquisas, Censo e planos de governo). Não é pesquisa feita no lugar: teste e ajuste.</small></h3>
@@ -246,6 +262,7 @@ const MODO = /*__MODO__*/"municipio";   // municipio | area | rm (cada página d
       <div class="grupo"><span class="rot">Contraste: o plano de Flávio não trata (ou trata pouco)</span><div class="chips">${chips(tm.f, "f")}</div></div>
       <div class="grupo"><span class="rot">Cuidado: os dois lados disputam estes temas</span><div class="chips">${chips(tm.d, "d")}</div></div>
       <div class="grupo"><span class="rot">Melhor evitar: costumam dividir</span><div class="chips">${chips(tm.e, "e")}</div></div>
+      ${comoFalar(tm, st)}
       ${citacoes(tm)}
       <p class="nota" style="margin:0">Importância dos temas nas pesquisas × perfil do lugar no Censo (renda, idade, alfabetização, saneamento, favelas, zona rural), emprego formal, Bolsa Família e exposição ao tarifaço × força das propostas nos planos oficiais registrados no TSE. "Flávio mais fraco": temas que o plano dele não trata ou trata com bem menos propostas. Não usam cor, gênero, religião ou orientação sexual; não descrevem moradores.</p>
     </section>`;
@@ -463,7 +480,7 @@ const MODO = /*__MODO__*/"municipio";   // municipio | area | rm (cada página d
           m.sob.am ? "Amazônia Legal" : ""].filter(Boolean).join(" · ")}. Por quê: onde o tarifaço dos EUA pesa nos empregos e na economia da cidade, a defesa da soberania tende a fazer mais sentido para as pessoas.</div>` : "";
       const rmLink = m.rm ? `<p class="nota">Faz parte da <a href="rm.html#r=${encodeURIComponent(m.rm)}">${m.rm}</a>.</p>` : "";
       el.innerHTML = `<h2>${m.n}</h2><div class="sub">${m.uf}${m.rm ? " · " + m.rm : ""} · ${fmt.format(m.ap)} aptos · ${m.u} área(s)</div>${nivelBox(m.v)}${selo(m.uf)}
-        ${kpisGrupo("municipio", s.mun)}${MODO === "municipio" ? verBairros : ""}${botaoRel(s.mun, m.n)}${cartaoTemas(tc, m.n)}${sb}${barras(D.dist.municipio[s.mun])}${rmLink}
+        ${kpisGrupo("municipio", s.mun)}${MODO === "municipio" ? verBairros : ""}${botaoRel(s.mun, m.n)}${cartaoTemas(tc, m.n, m.st)}${sb}${barras(D.dist.municipio[s.mun])}${rmLink}
         ${MODO === "area" ? `<p class="nota">${m.u > 1 ? "Clique numa área do município para ver a ficha do bairro." : "Município sem divisão em bairros com local de votação."}</p>` : ""}`;
       if (mover) zoom(m.b); return;
     }
@@ -476,7 +493,7 @@ const MODO = /*__MODO__*/"municipio";   // municipio | area | rm (cada página d
         ["Votos a recuperar a cada mil eleitores", null, u.pm == null ? "–" : fmt.format(u.pm)],
         ["Efeito de levar mais 2 em cada 100 eleitores às urnas", u.mob],
         ["Chance de que levar mais gente às urnas ajude Lula", null, pct(u.pr, 0)]])}
-      ${cartaoTemas(u.tm, u.n)}
+      ${cartaoTemas(u.tm, u.n, u.st)}
       <table>
         <tr><td>Votos de Lula no 1º turno de 2026</td><td class="num">${u.l26 == null ? "–" : u.l26.toFixed(1).replace(".", ",") + "%"}</td></tr>
         <tr><td>Votos de Lula no 2º turno de 2022</td><td class="num">${u.l22 == null ? "–" : u.l22.toFixed(1).replace(".", ",") + "%"}</td></tr>

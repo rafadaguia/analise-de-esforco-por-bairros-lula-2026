@@ -1,0 +1,832 @@
+{
+ "_leia": "Taxonomia curada de subtemas (17/10/2026), a partir das propostas do modelo local (subtemas_propostas.json) e dos planos de governo. 'ind' = indicadores de necessidade local: [indicador, sentido (+1 = quanto maior, mais necessidade; -1 = quanto menor), nível]. Sem indicador local, o subtema vale igual em todo lugar e a prioridade vem dos planos.",
+ "saude_sus": [
+  {
+   "chave": "atencao_basica",
+   "nome": "posto de saúde e médico perto de casa",
+   "descr": "UBS, unidades de saúde da família, Mais Médicos, atenção básica, agentes comunitários",
+   "ind": [
+    [
+     "ubs_dist_km",
+     1,
+     "area"
+    ],
+    [
+     "ubs_por_10mil",
+     -1,
+     "area"
+    ],
+    [
+     "renda_resp",
+     -1,
+     "area"
+    ]
+   ]
+  },
+  {
+   "chave": "especialistas",
+   "nome": "filas para especialista e exames",
+   "descr": "consultas com especialistas, exames, cirurgias eletivas, filas, Agora Tem Especialistas, policlínicas",
+   "ind": [
+    [
+     "especialidade_por_100mil",
+     -1,
+     "municipio"
+    ]
+   ]
+  },
+  {
+   "chave": "remedios",
+   "nome": "remédios de graça (Farmácia Popular)",
+   "descr": "Farmácia Popular, medicamentos gratuitos, assistência farmacêutica",
+   "ind": [
+    [
+     "pct_60m",
+     1,
+     "area"
+    ],
+    [
+     "renda_resp",
+     -1,
+     "area"
+    ]
+   ]
+  },
+  {
+   "chave": "urgencia",
+   "nome": "UPA, pronto-socorro e SAMU",
+   "descr": "urgência e emergência, UPA, pronto-socorro, SAMU, hospitais",
+   "ind": [
+    [
+     "urgencia_dist_km",
+     1,
+     "area"
+    ]
+   ]
+  },
+  {
+   "chave": "saude_mental",
+   "nome": "saúde mental (CAPS)",
+   "descr": "saúde mental, CAPS, autismo, dependência química",
+   "ind": [
+    [
+     "caps_por_100mil",
+     -1,
+     "municipio"
+    ]
+   ]
+  },
+  {
+   "chave": "mulher_crianca",
+   "nome": "saúde da mulher, gestante e criança",
+   "descr": "pré-natal, parto, saúde materno-infantil, saúde da mulher, vacinação infantil",
+   "ind": [
+    [
+     "pct_0a4",
+     1,
+     "area"
+    ]
+   ]
+  },
+  {
+   "chave": "idosos",
+   "nome": "cuidado com os idosos",
+   "descr": "cuidado ao idoso, doenças crônicas, cuidadores, envelhecimento",
+   "ind": [
+    [
+     "pct_70m",
+     1,
+     "area"
+    ]
+   ]
+  }
+ ],
+ "educacao": [
+  {
+   "chave": "creches",
+   "nome": "vaga em creche e primeira infância",
+   "descr": "creches, educação infantil, primeira infância",
+   "ind": [
+    [
+     "creche_cobertura",
+     -1,
+     "municipio"
+    ],
+    [
+     "pct_0a4",
+     1,
+     "area"
+    ]
+   ]
+  },
+  {
+   "chave": "alfabetizacao",
+   "nome": "alfabetização e ensino básico",
+   "descr": "alfabetização na idade certa, ensino fundamental, educação de jovens e adultos (EJA)",
+   "ind": [
+    [
+     "analfab_15m",
+     1,
+     "area"
+    ]
+   ]
+  },
+  {
+   "chave": "tempo_integral",
+   "nome": "escola em tempo integral",
+   "descr": "escola em tempo integral, jornada ampliada",
+   "ind": [
+    [
+     "integral_pct",
+     -1,
+     "municipio"
+    ]
+   ]
+  },
+  {
+   "chave": "tecnico_superior",
+   "nome": "ensino técnico e faculdade (Pé-de-Meia, ProUni, Fies)",
+   "descr": "ensino médio técnico, institutos federais, universidades, Pé-de-Meia, ProUni, Fies, permanência estudantil",
+   "ind": [
+    [
+     "pct_15a24",
+     1,
+     "area"
+    ]
+   ]
+  },
+  {
+   "chave": "conectividade_escola",
+   "nome": "internet e tecnologia nas escolas",
+   "descr": "conectividade, tecnologia e internet nas escolas",
+   "ind": []
+  }
+ ],
+ "emprego": [
+  {
+   "chave": "emprego_jovem",
+   "nome": "primeiro emprego e jovens",
+   "descr": "emprego para jovens, aprendiz, primeiro emprego",
+   "ind": [
+    [
+     "pct_15a24",
+     1,
+     "area"
+    ]
+   ]
+  },
+  {
+   "chave": "qualificacao",
+   "nome": "qualificação e curso técnico",
+   "descr": "qualificação profissional, cursos técnicos, formação para o trabalho",
+   "ind": [
+    [
+     "renda_resp",
+     -1,
+     "area"
+    ]
+   ]
+  },
+  {
+   "chave": "mulher_trabalho",
+   "nome": "trabalho da mulher e cuidado com os filhos",
+   "descr": "emprego das mulheres, cuidado, creches para mães trabalhadoras",
+   "ind": [
+    [
+     "pct_0a4",
+     1,
+     "area"
+    ]
+   ]
+  },
+  {
+   "chave": "empreendedorismo",
+   "nome": "pequeno negócio e MEI",
+   "descr": "empreendedorismo, microempresa, MEI, crédito para pequenos negócios, menos burocracia",
+   "ind": []
+  },
+  {
+   "chave": "aplicativos",
+   "nome": "trabalhadores de aplicativo",
+   "descr": "motoristas e entregadores de aplicativo, plataformas digitais",
+   "ind": []
+  },
+  {
+   "chave": "industria",
+   "nome": "indústria e obras gerando emprego",
+   "descr": "reindustrialização, infraestrutura, obras, PAC, empregos industriais",
+   "ind": [
+    [
+     "caged_var",
+     -1,
+     "municipio"
+    ]
+   ]
+  }
+ ],
+ "jornada_6x1": [
+  {
+   "chave": "fim_6x1",
+   "nome": "fim da escala 6x1",
+   "descr": "redução da jornada, fim da escala 6x1, folga",
+   "ind": []
+  },
+  {
+   "chave": "direitos_trabalho",
+   "nome": "direitos e trabalho digno",
+   "descr": "direitos trabalhistas, trabalho digno, carteira assinada",
+   "ind": []
+  }
+ ],
+ "renda_salario_minimo": [
+  {
+   "chave": "salario_minimo",
+   "nome": "aumento real do salário mínimo",
+   "descr": "valorização do salário mínimo, aumento real",
+   "ind": [
+    [
+     "renda_resp",
+     -1,
+     "area"
+    ]
+   ]
+  },
+  {
+   "chave": "combate_pobreza",
+   "nome": "renda e combate à pobreza",
+   "descr": "renda das famílias, combate à pobreza e à fome",
+   "ind": [
+    [
+     "bf_pct",
+     1,
+     "municipio"
+    ]
+   ]
+  },
+  {
+   "chave": "poder_compra",
+   "nome": "poder de compra e inflação",
+   "descr": "renda real, poder de compra, inflação",
+   "ind": []
+  }
+ ],
+ "custo_de_vida_inflacao_alimentos": [
+  {
+   "chave": "alimentos",
+   "nome": "preço da comida",
+   "descr": "preço dos alimentos, cesta básica, comida mais barata",
+   "ind": [
+    [
+     "renda_resp",
+     -1,
+     "area"
+    ]
+   ]
+  },
+  {
+   "chave": "energia_conta",
+   "nome": "conta de luz e gás",
+   "descr": "conta de luz, energia elétrica, gás de cozinha, tarifa social",
+   "ind": []
+  },
+  {
+   "chave": "impostos_consumo",
+   "nome": "impostos sobre o consumo",
+   "descr": "impostos nos produtos, cesta básica sem imposto",
+   "ind": []
+  },
+  {
+   "chave": "combustivel",
+   "nome": "gasolina, diesel e frete",
+   "descr": "combustíveis, frete, logística",
+   "ind": []
+  }
+ ],
+ "seguranca_publica": [
+  {
+   "chave": "crime_organizado",
+   "nome": "crime organizado e facções",
+   "descr": "crime organizado, facções, milícias, tráfico",
+   "ind": []
+  },
+  {
+   "chave": "violencia_mulher",
+   "nome": "violência contra a mulher",
+   "descr": "violência contra a mulher, feminicídio, Lei Maria da Penha",
+   "ind": []
+  },
+  {
+   "chave": "policiamento",
+   "nome": "policiamento e segurança no bairro",
+   "descr": "polícia, policiamento, segurança nas cidades, guardas",
+   "ind": []
+  },
+  {
+   "chave": "armas_fronteiras",
+   "nome": "armas e fronteiras",
+   "descr": "controle de armas, fronteiras, contrabando",
+   "ind": []
+  },
+  {
+   "chave": "presidios",
+   "nome": "presídios e penas",
+   "descr": "sistema prisional, penas, presídios",
+   "ind": []
+  }
+ ],
+ "moradia_mcmv": [
+  {
+   "chave": "casa_propria",
+   "nome": "casa própria (Minha Casa, Minha Vida)",
+   "descr": "Minha Casa Minha Vida, construção de moradias, financiamento habitacional",
+   "ind": [
+    [
+     "renda_resp",
+     -1,
+     "area"
+    ],
+    [
+     "favela",
+     1,
+     "area"
+    ]
+   ]
+  },
+  {
+   "chave": "regularizacao",
+   "nome": "escritura e regularização do terreno",
+   "descr": "regularização fundiária, escritura, título de propriedade",
+   "ind": [
+    [
+     "favela",
+     1,
+     "area"
+    ]
+   ]
+  },
+  {
+   "chave": "urbanizacao",
+   "nome": "urbanização e melhoria das casas",
+   "descr": "urbanização de assentamentos, reforma de moradias, melhorias habitacionais",
+   "ind": [
+    [
+     "sem_esgoto",
+     1,
+     "area"
+    ]
+   ]
+  }
+ ],
+ "transporte_mobilidade": [
+  {
+   "chave": "transporte_publico",
+   "nome": "transporte coletivo e tarifa",
+   "descr": "transporte público, ônibus, metrô, tarifa, mobilidade urbana",
+   "ind": [],
+   "requer": {
+    "urbano": true
+   }
+  },
+  {
+   "chave": "estradas",
+   "nome": "estradas e rodovias",
+   "descr": "rodovias, estradas, pavimentação, concessões",
+   "ind": [
+    [
+     "rural",
+     1,
+     "area"
+    ]
+   ]
+  },
+  {
+   "chave": "ferrovias_logistica",
+   "nome": "ferrovias e logística",
+   "descr": "ferrovias, portos, logística de cargas",
+   "ind": []
+  },
+  {
+   "chave": "motoristas_app",
+   "nome": "motoristas de aplicativo",
+   "descr": "motoristas de aplicativo, mototaxistas",
+   "ind": []
+  }
+ ],
+ "programas_sociais": [
+  {
+   "chave": "bolsa_familia",
+   "nome": "Bolsa Família",
+   "descr": "Bolsa Família, transferência de renda, CadÚnico",
+   "ind": [
+    [
+     "bf_pct",
+     1,
+     "municipio"
+    ]
+   ]
+  },
+  {
+   "chave": "primeira_infancia",
+   "nome": "crianças e primeira infância",
+   "descr": "benefícios para crianças, primeira infância, gestantes",
+   "ind": [
+    [
+     "pct_0a4",
+     1,
+     "area"
+    ]
+   ]
+  },
+  {
+   "chave": "fome",
+   "nome": "combate à fome e alimentação",
+   "descr": "segurança alimentar, combate à fome, cozinhas solidárias, alimentação escolar",
+   "ind": [
+    [
+     "pobreza_cadunico",
+     1,
+     "municipio"
+    ]
+   ]
+  },
+  {
+   "chave": "autonomia",
+   "nome": "porta de saída: emprego para quem recebe benefício",
+   "descr": "autonomia, qualificação e emprego para beneficiários",
+   "ind": []
+  }
+ ],
+ "impostos_isencao_ir": [
+  {
+   "chave": "isencao_ir",
+   "nome": "isenção do IR até R$ 5 mil",
+   "descr": "isenção do imposto de renda, faixa de isenção, salário até 5 mil",
+   "ind": []
+  },
+  {
+   "chave": "consumo",
+   "nome": "menos imposto na comida e nos produtos",
+   "descr": "impostos sobre consumo, cesta básica, reforma tributária do consumo",
+   "ind": [
+    [
+     "renda_resp",
+     -1,
+     "area"
+    ]
+   ]
+  },
+  {
+   "chave": "pequenas_empresas",
+   "nome": "imposto para pequenos negócios",
+   "descr": "Simples, MEI, impostos de pequenas empresas",
+   "ind": []
+  },
+  {
+   "chave": "justica_tributaria",
+   "nome": "quem ganha mais paga mais",
+   "descr": "justiça tributária, taxação de super-ricos, dividendos",
+   "ind": []
+  }
+ ],
+ "previdencia": [
+  {
+   "chave": "filas_inss",
+   "nome": "fila do INSS e aposentadoria",
+   "descr": "filas do INSS, perícias, concessão de aposentadorias e benefícios",
+   "ind": [
+    [
+     "pct_60m",
+     1,
+     "area"
+    ]
+   ]
+  },
+  {
+   "chave": "descontos_fraudes",
+   "nome": "descontos indevidos e fraudes no INSS",
+   "descr": "descontos indevidos, fraudes, ressarcimento a aposentados",
+   "ind": [
+    [
+     "pct_70m",
+     1,
+     "area"
+    ]
+   ]
+  },
+  {
+   "chave": "contribuicao",
+   "nome": "contribuição de autônomos e aplicativos",
+   "descr": "formalização, contribuição de autônomos e trabalhadores de aplicativo",
+   "ind": []
+  }
+ ],
+ "agronegocio_meio_ambiente": [
+  {
+   "chave": "desmatamento",
+   "nome": "desmatamento e crimes ambientais",
+   "descr": "desmatamento, queimadas, garimpo ilegal, crimes ambientais",
+   "ind": [
+    [
+     "amazonia",
+     1,
+     "municipio"
+    ]
+   ]
+  },
+  {
+   "chave": "credito_rural",
+   "nome": "crédito e seguro rural",
+   "descr": "Plano Safra, crédito rural, seguro rural",
+   "ind": [
+    [
+     "rural",
+     1,
+     "area"
+    ]
+   ]
+  },
+  {
+   "chave": "clima_desastres",
+   "nome": "secas, enchentes e clima",
+   "descr": "mudanças climáticas, secas, enchentes, desastres, defesa civil",
+   "ind": []
+  },
+  {
+   "chave": "bioeconomia",
+   "nome": "bioeconomia e energia limpa",
+   "descr": "bioeconomia, mercado de carbono, biocombustíveis, transição energética",
+   "ind": []
+  }
+ ],
+ "agricultura_familiar": [
+  {
+   "chave": "credito_pronaf",
+   "nome": "crédito do Pronaf",
+   "descr": "Pronaf, crédito para agricultor familiar, renegociação de dívidas rurais",
+   "ind": [
+    [
+     "agro_familiar_pct",
+     1,
+     "municipio"
+    ]
+   ]
+  },
+  {
+   "chave": "assistencia_tecnica",
+   "nome": "assistência técnica no campo",
+   "descr": "assistência técnica e extensão rural (ATER), orientação técnica",
+   "ind": [
+    [
+     "agro_sem_ater_pct",
+     1,
+     "municipio"
+    ]
+   ]
+  },
+  {
+   "chave": "energia_rural",
+   "nome": "luz e água no campo",
+   "descr": "energia elétrica no campo, Luz para Todos, cisternas",
+   "ind": [
+    [
+     "agro_sem_energia_pct",
+     1,
+     "municipio"
+    ]
+   ]
+  },
+  {
+   "chave": "comercializacao",
+   "nome": "venda da produção (PAA, merenda)",
+   "descr": "compras públicas, PAA, PNAE, comercialização, mercados",
+   "ind": [
+    [
+     "agro_familiar_pct",
+     1,
+     "municipio"
+    ]
+   ]
+  },
+  {
+   "chave": "terra",
+   "nome": "terra e regularização fundiária",
+   "descr": "reforma agrária, regularização fundiária rural, assentamentos",
+   "ind": []
+  }
+ ],
+ "costumes_religiao": [
+  {
+   "chave": "familia_valores",
+   "nome": "família e valores",
+   "descr": "família, valores, liberdade religiosa",
+   "ind": []
+  },
+  {
+   "chave": "protecao_mulher",
+   "nome": "proteção da mulher e das crianças",
+   "descr": "proteção à mulher, às crianças e adolescentes",
+   "ind": []
+  },
+  {
+   "chave": "escola_doutrinacao",
+   "nome": "escola e doutrinação",
+   "descr": "debate sobre doutrinação, ideologia nas escolas",
+   "ind": []
+  }
+ ],
+ "corrupcao": [
+  {
+   "chave": "fraude_inss",
+   "nome": "fraude no INSS",
+   "descr": "fraudes no INSS, descontos em aposentadorias",
+   "ind": []
+  },
+  {
+   "chave": "transparencia",
+   "nome": "transparência e controle",
+   "descr": "transparência, controle, combate à corrupção, CGU, Polícia Federal",
+   "ind": []
+  },
+  {
+   "chave": "crime_integridade",
+   "nome": "lavagem de dinheiro e integridade",
+   "descr": "lavagem de dinheiro, integridade, crime organizado",
+   "ind": []
+  }
+ ],
+ "instituicoes_stf_reeleicao": [
+  {
+   "chave": "stf",
+   "nome": "STF e equilíbrio entre os poderes",
+   "descr": "Supremo Tribunal Federal, decisões monocráticas, equilíbrio entre poderes",
+   "ind": []
+  },
+  {
+   "chave": "reeleicao",
+   "nome": "reeleição e mandatos",
+   "descr": "fim da reeleição, mandatos",
+   "ind": []
+  },
+  {
+   "chave": "liberdade_expressao",
+   "nome": "liberdade de expressão e redes",
+   "descr": "liberdade de expressão, censura, regulação das redes",
+   "ind": []
+  }
+ ],
+ "endividamento_apostas": [
+  {
+   "chave": "dividas",
+   "nome": "dívidas e nome sujo (Desenrola)",
+   "descr": "endividamento, renegociação de dívidas, Desenrola",
+   "ind": [
+    [
+     "renda_resp",
+     -1,
+     "area"
+    ]
+   ]
+  },
+  {
+   "chave": "apostas",
+   "nome": "bets e vício em apostas",
+   "descr": "apostas online, bets, vício em jogos",
+   "ind": [
+    [
+     "pct_15a24",
+     1,
+     "area"
+    ]
+   ]
+  }
+ ],
+ "saneamento": [
+  {
+   "chave": "esgoto",
+   "nome": "esgoto",
+   "descr": "rede de esgoto, tratamento de esgoto",
+   "ind": [
+    [
+     "sem_esgoto",
+     1,
+     "area"
+    ]
+   ]
+  },
+  {
+   "chave": "agua",
+   "nome": "água encanada",
+   "descr": "água tratada, abastecimento de água, cisternas",
+   "ind": [
+    [
+     "sem_agua",
+     1,
+     "area"
+    ]
+   ]
+  },
+  {
+   "chave": "lixo",
+   "nome": "coleta de lixo",
+   "descr": "coleta de lixo, resíduos sólidos, lixões",
+   "ind": [
+    [
+     "sem_lixo",
+     1,
+     "area"
+    ]
+   ]
+  }
+ ],
+ "periferias_favelas": [
+  {
+   "chave": "urbanizacao_favela",
+   "nome": "urbanização de favelas e comunidades",
+   "descr": "urbanização, infraestrutura em favelas e periferias",
+   "ind": [
+    [
+     "favela",
+     1,
+     "area"
+    ]
+   ]
+  },
+  {
+   "chave": "juventude_cultura",
+   "nome": "juventude, cultura e esporte na periferia",
+   "descr": "cultura, esporte e oportunidades para jovens da periferia",
+   "ind": [
+    [
+     "pct_15a24",
+     1,
+     "area"
+    ]
+   ]
+  },
+  {
+   "chave": "internet",
+   "nome": "internet nas comunidades",
+   "descr": "conectividade, internet nas periferias",
+   "ind": []
+  }
+ ],
+ "soberania_nacional": [
+  {
+   "chave": "tarifaco_agro",
+   "nome": "tarifaço e exportações do campo (café, carne, suco, frutas)",
+   "descr": "tarifas dos EUA sobre café, carne, suco de laranja, frutas, defesa dos exportadores",
+   "ind": [
+    [
+     "eua_agro_por_eleitor",
+     1,
+     "municipio"
+    ]
+   ]
+  },
+  {
+   "chave": "tarifaco_industria",
+   "nome": "tarifaço e empregos da indústria (aço, aviões, máquinas, calçados)",
+   "descr": "tarifas dos EUA sobre aço, aviões, máquinas, calçados e produtos industriais",
+   "ind": [
+    [
+     "eua_ind_por_eleitor",
+     1,
+     "municipio"
+    ]
+   ]
+  },
+  {
+   "chave": "petroleo_energia",
+   "nome": "petróleo, energia e Petrobras",
+   "descr": "petróleo, Petrobras, energia, combustíveis, pré-sal",
+   "ind": [
+    [
+     "eua_petroleo_por_eleitor",
+     1,
+     "municipio"
+    ]
+   ]
+  },
+  {
+   "chave": "amazonia_territorio",
+   "nome": "Amazônia, fronteiras e território",
+   "descr": "defesa da Amazônia, fronteiras, território, recursos naturais",
+   "ind": [
+    [
+     "amazonia",
+     1,
+     "municipio"
+    ]
+   ],
+   "requer": {
+    "amazonia": true
+   }
+  },
+  {
+   "chave": "digital",
+   "nome": "soberania digital e big techs",
+   "descr": "soberania digital, inteligência artificial, big techs, dados",
+   "ind": []
+  }
+ ]
+}

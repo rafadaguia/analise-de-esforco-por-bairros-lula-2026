@@ -142,6 +142,7 @@ code { overflow-wrap: anywhere; word-break: break-word; }   /* caminhos de arqui
     <tr><td>Diferença Lula − Flávio no 2º turno</td><td>Quanto ficaria a disputa ali se as pessoas repetissem o comportamento de 2022. Número negativo = vantagem de Flávio. É uma simulação, não uma previsão.</td></tr>
     <tr><td>Quanto Lula perdeu aqui além da média do país</td><td>Votos que Lula tinha em 2022 e não teve em 2026, além da queda média. Costuma ser o voto mais fácil de reconquistar.</td></tr>
     <tr><td>Cálculo difícil, mas a nota foi conferida e é estável</td><td>Os cálculos do estado foram mais difíceis que o normal, mas testamos: a nota de cada lugar quase não muda. Pode usar a nota normalmente; os números absolutos (votos) têm um pouco mais de incerteza.</td></tr>
+    <tr><td>Como falar de cada tema aqui</td><td>Dentro de cada tema sugerido, o assunto mais indicado para aquele lugar (por exemplo, em saúde: "posto de saúde perto de casa" ou "remédios de graça") e, entre parênteses, o dado local que justifica a escolha. É o ponto de partida da conversa; confirme com quem conhece o bairro.</td></tr>
     <tr><td>Públicos (só na ficha do estado)</td><td>Quem são os eleitores do estado (gênero, idade, escolaridade e religião), como cada grupo tende a votar e quanto faltou em 2022. "Base de Lula": Lula com 58% ou mais no grupo; "Dividido": entre 42% e 58%; "Maioria com Flávio": 42% ou menos. Como a estimativa é do estado inteiro, não aparece nas fichas de cidade e bairro. Nenhuma sugestão se baseia apenas em gênero ou religião.</td></tr>
     <tr><td>Atenção: estimativa menos segura</td><td>Neste estado os cálculos variaram mais que o normal. Use a nota como orientação geral e confie mais no conhecimento local.</td></tr>
   </table>
@@ -238,6 +239,20 @@ identificável foi usado.</p>
   mais de cada estado (somadas dos municípios).</li>
 <li><strong>Datafolha, 1 a 3/10/2026 (BR-08039/2026):</strong> voto no 2º turno por gênero, idade, escolaridade e religião, no país.
   Cor ou raça existe nessas fontes e <strong>não é usada</strong>.</li>
+</ul>
+<h3>Subtemas (necessidade local de cada assunto)</h3>
+<ul>
+<li><strong>Ministério da Saúde, CNES (Cadastro Nacional de Estabelecimentos de Saúde):</strong> 452 mil estabelecimentos ativos com
+  coordenada conferida (os 4 mil que caíam a mais de 30 km do próprio município ficaram de fora): distância média dos
+  moradores até o posto de saúde (UBS, saúde da família, unidades fluviais e indígenas) e até o pronto-atendimento ou
+  hospital mais próximos, postos num raio de 2 km por morador, centros de especialidade e CAPS por habitante.</li>
+<li><strong>INEP, Censo Escolar 2024:</strong> matrículas em creche (comparadas às crianças de 0 a 4 anos do Censo), em tempo integral e
+  escolas públicas sem internet para os alunos, por município.</li>
+<li><strong>IBGE, Censo Agropecuário 2017 (tabelas 6778 e 6779):</strong> estabelecimentos da agricultura familiar, sem orientação técnica
+  e sem energia elétrica, por município.</li>
+<li><strong>IBGE, Censo 2022:</strong> crianças de 0 a 4 anos, jovens, idosos, alfabetização, renda, saneamento e favelas, por setor.</li>
+<li><strong>MDIC, Comex Stat:</strong> exportações de 2025 aos EUA por produto (café, carnes, suco, aço, aviões, petróleo etc.), por
+  município.</li>
 </ul>
 <h3>Outros órgãos federais</h3>
 <ul>
@@ -347,6 +362,20 @@ NC News, Poder360 e SBT News.</p>
   média nacional no Datafolha, aplicada ao resultado real do 1º turno de 2026 no estado (uma aproximação). O grupo é
   "base" com Lula a 58% ou mais entre os dois, "difícil" com 42% ou menos e "dividido" entre os dois. As sugestões
   práticas usam só idade e escolaridade; gênero e religião aparecem apenas como descrição do eleitorado.</li>
+<li><strong>Subtemas.</strong> Cada tema foi dividido em subtemas concretos (por exemplo, saúde: posto de saúde perto de casa, filas
+  para especialista, remédios, urgência, saúde mental, gestantes e crianças, idosos), a partir dos planos, com sugestões de
+  um modelo de linguagem local e curadoria. O modelo local classificou cada parágrafo dos planos por subtema. Em cada
+  bairro e cidade, o subtema indicado junta a necessidade local (indicadores comparados com o resto do país) e a força das
+  propostas de Lula, e vem com o dado que o justifica (por exemplo, "posto de saúde mais próximo a 3,2 km"). Segurança,
+  corrupção, costumes e STF não têm dado local público por bairro: ali o subtema vem só dos planos. Para os temas de
+  puxar, só entram subtemas em que o plano de Lula tem mais propostas que o de Flávio; nos disputados, ao menos empate.
+  Onde nenhum subtema passa (custo de vida, em que o plano de Flávio tem mais propostas específicas), a ficha não sugere
+  subtema. Transporte coletivo só aparece em área urbana de cidade com mais de 50 mil habitantes.</li>
+<li><strong>Validação dos subtemas.</strong> Um segundo modelo local (qwen3) classificou de novo os parágrafos dos planos; vale o
+  rótulo que os dois modelos dão, e as divergências nos subtemas usados nas fichas foram lidas uma a uma. Um Monte Carlo
+  (300 sorteios variando os pesos da regra, os rótulos e os parágrafos dos planos) mostrou que o subtema indicado continua
+  entre os dois da ficha em 92% dos casos com o erro de rótulo esperado. Em segurança, "armas e fronteiras" e "violência
+  contra a mulher" estão praticamente empatados nos planos e aparecem como opções equivalentes.</li>
 <li><strong>Relatórios por cidade.</strong> Para os 5.571 municípios do país, os achados saem de regras fixas sobre
   os números, sem texto gerado por modelo de linguagem: cada frase mostra o número que a sustenta.</li>
 <li><strong>Estimativa por pesquisa (MrsP, comparação).</strong> As pesquisas estaduais foram combinadas com o perfil do Censo numa

@@ -219,6 +219,14 @@ def main():
         rms[k] = {"uf": s["uf"].mode().iat[0], "mun": [str(int(x)) for x in s["cd_mun_ibge"]], "ap": int(s["aptos"].sum()),
                   "v": int(nv_rm["v"].get(k)) if k in nv_rm.index else None,
                   "b": [b.minx.min(), b.miny.min(), b.maxx.max(), b.maxy.max()] if len(b) else None}
+    # subtemas (b21d): por área e por município, com o motivo local
+    st_arq = os.path.join(VAR, a.unidade, "subtemas_areas.json")
+    st_area = json.load(open(st_arq)) if os.path.exists(st_arq) else {}
+    st_mun_arq = os.path.join(VAR, a.unidade, "subtemas_municipios.json")
+    st_mun = json.load(open(st_mun_arq)) if os.path.exists(st_mun_arq) else {}
+    tax_arq = os.path.join(RAIZ, "bairros", "insumos", "temas", "subtemas.json")
+    nomes_sub = {s["chave"]: s["nome"] for t, lst in json.load(open(tax_arq)).items() if not t.startswith("_") for s in lst} \
+        if os.path.exists(tax_arq) else {}
     unidades = {}
     for _, x in u.iterrows():
         unidades[x["id_unidade"]] = {
@@ -232,6 +240,7 @@ def main():
                     for k, c in (("a", "temas_aderentes_lula"), ("f", "temas_flavio_mais_fraco"),
                                  ("d", "temas_disputados"), ("e", "temas_evitar"))}
                    if temas is not None and x["id_unidade"] in temas.index else None),
+            "st": st_area.get(x["id_unidade"]) or None,
         }
     import glob as _g
     inst = []
@@ -265,10 +274,13 @@ def main():
         um = next(iter(pj["estados"].values()))
         pub = {"grupos": [g["grupo"] for g in um], "tipos": [g["tipo"] for g in um],   # só estados (decisão de 10/10)
                "uf": {k: comp(v) for k, v in pj["estados"].items()}}
+    for k, v in municipios.items():
+        if st_mun.get(k):
+            v["st"] = st_mun[k]
     dados = {"meta": {**meta, "unidade": a.unidade, "metodo": a.metodo, "pesos": a.pesos, "ufs_instaveis": sorted(inst), "ufs_conferidas": sorted(conf),
                       "ufs_reprocessando": reproc, "atualizacao_prevista": AVISO_QUANDO},
              "citacoes": citacoes,
-             "grupos": niveis, "dist": dist, "municipios": municipios, "rms": rms, "publicos": pub}
+             "grupos": niveis, "dist": dist, "municipios": municipios, "rms": rms, "publicos": pub, "subtemas": nomes_sub}
     json.dump(limpo(dados), open(os.path.join(OUT, "dados.json"), "w"), ensure_ascii=False, separators=(",", ":"), allow_nan=False)
     # unidades em arquivos por UF (carregados sob demanda, ao entrar na UF)
     os.makedirs(os.path.join(OUT, "uf"), exist_ok=True)

@@ -117,6 +117,12 @@ def citacoes_planos():
 CITA = {}
 _pub = os.path.join(RAIZ, "variantes", "U4", "publicos.json")
 PUBLICOS = json.load(open(_pub)) if os.path.exists(_pub) else {}
+EMPATE_SUB = {"seguranca_publica"}
+_stm = os.path.join(RAIZ, "variantes", "U4", "subtemas_municipios.json")
+_tax = os.path.join(RAIZ, "bairros", "insumos", "temas", "subtemas.json")
+SUBTEMAS = {"municipios": json.load(open(_stm)) if os.path.exists(_stm) else {},
+            "nomes": {s["chave"]: s["nome"] for t_, l_ in json.load(open(_tax)).items() if not t_.startswith("_") for s in l_}
+            if os.path.exists(_tax) else {}}
 CTX = {}
 PT = {2010: "Dilma", 2014: "Dilma", 2018: "Haddad", 2022: "Lula"}
 
@@ -469,6 +475,27 @@ def relatorio(k, m, D, A, pop, ranks, n_cid):
     w(f"* **Contraste (o plano de Flávio não trata, ou trata pouco):** {nomes(t['f'], 2)}.")
     w(f"* **Disputados (os dois lados falam; prepare a resposta):** {nomes(t['d'], 2)}.")
     w(f"* **Evite puxar:** {nomes(t['e'], 2)}.")
+    # subtemas (b21d): como falar de cada tema na cidade, com o dado local que justifica
+    stm = SUBTEMAS.get("municipios", {}).get(k, {})
+    linhas_st, vistos = [], set()
+    for modo, lista in (("a", t["a"][:3]), ("f", t["f"][:2]), ("d", t["d"][:2])):
+        for x, _ in lista:
+            lst = stm.get(x, {}).get(modo)
+            if not lst or x in vistos:
+                continue
+            vistos.add(x)
+            s1, m1 = lst[0]
+            extra = f"; também {SUBTEMAS['nomes'].get(lst[1][0], lst[1][0])}" if len(lst) > 1 else ""
+            if x in EMPATE_SUB and len(lst) > 1:   # segurança: dois subtemas quase empatados nos planos (validação de 18/10)
+                linhas_st.append(f"* **{TEMA.get(x, x)}:** {SUBTEMAS['nomes'].get(s1, s1)} ou "
+                                 f"{SUBTEMAS['nomes'].get(lst[1][0], lst[1][0])} (os dois pesam igual nos planos).")
+                continue
+            linhas_st.append(f"* **{TEMA.get(x, x)}:** {SUBTEMAS['nomes'].get(s1, s1)}" + (f" ({m1})" if m1 else "") + extra + ".")
+    if linhas_st:
+        w("")
+        w("**Como falar de cada tema aqui** (o assunto mais indicado dentro de cada tema, pelo dado local e pelas propostas):")
+        w("")
+        L.extend(linhas_st)
     w("")
     cit = []
     for x, _ in t["a"][:3]:

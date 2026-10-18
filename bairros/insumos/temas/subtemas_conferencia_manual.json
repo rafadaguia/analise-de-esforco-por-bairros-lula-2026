@@ -1,0 +1,806 @@
+[
+{
+"cand": "flavio",
+"id": 104,
+"subtema": "urgencia",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 124,
+"subtema": "urgencia",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 143,
+"subtema": "urgencia",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 146,
+"subtema": "urgencia",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 228,
+"subtema": "desmatamento",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 276,
+"subtema": "desmatamento",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 286,
+"subtema": "desmatamento",
+"trata": true
+},
+{
+"cand": "flavio",
+"id": 147,
+"subtema": "desmatamento",
+"trata": false
+},
+{
+"cand": "flavio",
+"id": 151,
+"subtema": "desmatamento",
+"trata": false
+},
+{
+"cand": "flavio",
+"id": 174,
+"subtema": "desmatamento",
+"trata": true
+},
+{
+"cand": "flavio",
+"id": 176,
+"subtema": "desmatamento",
+"trata": true
+},
+{
+"cand": "flavio",
+"id": 177,
+"subtema": "desmatamento",
+"trata": true
+},
+{
+"cand": "flavio",
+"id": 180,
+"subtema": "desmatamento",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 59,
+"subtema": "crime_integridade",
+"trata": true
+},
+{
+"cand": "flavio",
+"id": 216,
+"subtema": "crime_integridade",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 28,
+"subtema": "agua",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 168,
+"subtema": "agua",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 28,
+"subtema": "lixo",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 168,
+"subtema": "lixo",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 174,
+"subtema": "lixo",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 303,
+"subtema": "aplicativos",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 313,
+"subtema": "aplicativos",
+"trata": true
+},
+{
+"cand": "flavio",
+"id": 41,
+"subtema": "atencao_basica",
+"trata": false
+},
+{
+"cand": "flavio",
+"id": 45,
+"subtema": "atencao_basica",
+"trata": true
+},
+{
+"cand": "flavio",
+"id": 91,
+"subtema": "atencao_basica",
+"trata": false
+},
+{
+"cand": "flavio",
+"id": 102,
+"subtema": "atencao_basica",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 128,
+"subtema": "atencao_basica",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 133,
+"subtema": "atencao_basica",
+"trata": true
+},
+{
+"cand": "flavio",
+"id": 87,
+"subtema": "bolsa_familia",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 60,
+"subtema": "bolsa_familia",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 171,
+"subtema": "bolsa_familia",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 240,
+"subtema": "clima_desastres",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 243,
+"subtema": "clima_desastres",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 256,
+"subtema": "clima_desastres",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 280,
+"subtema": "clima_desastres",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 283,
+"subtema": "clima_desastres",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 284,
+"subtema": "clima_desastres",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 285,
+"subtema": "clima_desastres",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 295,
+"subtema": "clima_desastres",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 318,
+"subtema": "clima_desastres",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 60,
+"subtema": "combate_pobreza",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 61,
+"subtema": "combate_pobreza",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 224,
+"subtema": "combate_pobreza",
+"trata": true
+},
+{
+"cand": "flavio",
+"id": 132,
+"subtema": "contribuicao",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 311,
+"subtema": "contribuicao",
+"trata": true
+},
+{
+"cand": "flavio",
+"id": 65,
+"subtema": "credito_pronaf",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 228,
+"subtema": "credito_pronaf",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 231,
+"subtema": "credito_pronaf",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 232,
+"subtema": "credito_pronaf",
+"trata": false
+},
+{
+"cand": "flavio",
+"id": 0,
+"subtema": "crime_organizado",
+"trata": false
+},
+{
+"cand": "flavio",
+"id": 24,
+"subtema": "crime_organizado",
+"trata": true
+},
+{
+"cand": "flavio",
+"id": 27,
+"subtema": "crime_organizado",
+"trata": true
+},
+{
+"cand": "flavio",
+"id": 29,
+"subtema": "crime_organizado",
+"trata": true
+},
+{
+"cand": "flavio",
+"id": 180,
+"subtema": "crime_organizado",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 19,
+"subtema": "crime_organizado",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 320,
+"subtema": "crime_organizado",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 87,
+"subtema": "direitos_trabalho",
+"trata": true
+},
+{
+"cand": "flavio",
+"id": 41,
+"subtema": "especialistas",
+"trata": false
+},
+{
+"cand": "flavio",
+"id": 45,
+"subtema": "especialistas",
+"trata": true
+},
+{
+"cand": "flavio",
+"id": 104,
+"subtema": "especialistas",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 81,
+"subtema": "especialistas",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 129,
+"subtema": "especialistas",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 133,
+"subtema": "especialistas",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 144,
+"subtema": "especialistas",
+"trata": true
+},
+{
+"cand": "flavio",
+"id": 101,
+"subtema": "industria",
+"trata": false
+},
+{
+"cand": "flavio",
+"id": 146,
+"subtema": "industria",
+"trata": false
+},
+{
+"cand": "flavio",
+"id": 149,
+"subtema": "industria",
+"trata": false
+},
+{
+"cand": "flavio",
+"id": 197,
+"subtema": "industria",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 112,
+"subtema": "industria",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 295,
+"subtema": "industria",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 26,
+"subtema": "justica_tributaria",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 61,
+"subtema": "justica_tributaria",
+"trata": false
+},
+{
+"cand": "flavio",
+"id": 103,
+"subtema": "mulher_crianca",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 15,
+"subtema": "mulher_crianca",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 141,
+"subtema": "mulher_crianca",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 9,
+"subtema": "petroleo_energia",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 39,
+"subtema": "petroleo_energia",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 262,
+"subtema": "petroleo_energia",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 283,
+"subtema": "petroleo_energia",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 224,
+"subtema": "poder_compra",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 311,
+"subtema": "poder_compra",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 144,
+"subtema": "remedios",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 145,
+"subtema": "remedios",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 147,
+"subtema": "remedios",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 148,
+"subtema": "remedios",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 60,
+"subtema": "salario_minimo",
+"trata": false
+},
+{
+"cand": "flavio",
+"id": 91,
+"subtema": "tecnico_superior",
+"trata": true
+},
+{
+"cand": "flavio",
+"id": 96,
+"subtema": "tecnico_superior",
+"trata": false
+},
+{
+"cand": "flavio",
+"id": 114,
+"subtema": "tecnico_superior",
+"trata": false
+},
+{
+"cand": "flavio",
+"id": 172,
+"subtema": "tecnico_superior",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 63,
+"subtema": "tecnico_superior",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 64,
+"subtema": "tecnico_superior",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 67,
+"subtema": "tecnico_superior",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 119,
+"subtema": "tecnico_superior",
+"trata": false
+},
+{
+"cand": "flavio",
+"id": 41,
+"subtema": "tempo_integral",
+"trata": false
+},
+{
+"cand": "flavio",
+"id": 112,
+"subtema": "tempo_integral",
+"trata": false
+},
+{
+"cand": "flavio",
+"id": 15,
+"subtema": "transporte_publico",
+"trata": false
+},
+{
+"cand": "flavio",
+"id": 142,
+"subtema": "transporte_publico",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 168,
+"subtema": "transporte_publico",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 134,
+"subtema": "urbanizacao_favela",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 35,
+"subtema": "bioeconomia",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 181,
+"subtema": "bioeconomia",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 228,
+"subtema": "bioeconomia",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 234,
+"subtema": "bioeconomia",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 243,
+"subtema": "bioeconomia",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 277,
+"subtema": "bioeconomia",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 279,
+"subtema": "bioeconomia",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 286,
+"subtema": "bioeconomia",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 290,
+"subtema": "bioeconomia",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 295,
+"subtema": "bioeconomia",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 327,
+"subtema": "bioeconomia",
+"trata": true
+},
+{
+"cand": "flavio",
+"id": 176,
+"subtema": "bioeconomia",
+"trata": true
+},
+{
+"cand": "flavio",
+"id": 177,
+"subtema": "bioeconomia",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 39,
+"subtema": "digital",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 190,
+"subtema": "digital",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 320,
+"subtema": "armas_fronteiras",
+"trata": false
+},
+{
+"cand": "flavio",
+"id": 35,
+"subtema": "violencia_mulher",
+"trata": true
+},
+{
+"cand": "flavio",
+"id": 41,
+"subtema": "saude_mental",
+"trata": false
+},
+{
+"cand": "flavio",
+"id": 133,
+"subtema": "pequenas_empresas",
+"trata": true
+},
+{
+"cand": "flavio",
+"id": 135,
+"subtema": "pequenas_empresas",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 228,
+"subtema": "comercializacao",
+"trata": false
+},
+{
+"cand": "lula",
+"id": 98,
+"subtema": "policiamento",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 102,
+"subtema": "policiamento",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 107,
+"subtema": "policiamento",
+"trata": false
+},
+{
+"cand": "flavio",
+"id": 21,
+"subtema": "policiamento",
+"trata": false
+},
+{
+"cand": "flavio",
+"id": 22,
+"subtema": "policiamento",
+"trata": false
+},
+{
+"cand": "flavio",
+"id": 26,
+"subtema": "policiamento",
+"trata": true
+},
+{
+"cand": "flavio",
+"id": 27,
+"subtema": "policiamento",
+"trata": true
+},
+{
+"cand": "flavio",
+"id": 29,
+"subtema": "policiamento",
+"trata": true
+},
+{
+"cand": "flavio",
+"id": 35,
+"subtema": "policiamento",
+"trata": false
+},
+{
+"cand": "flavio",
+"id": 184,
+"subtema": "policiamento",
+"trata": true
+},
+{
+"cand": "flavio",
+"id": 229,
+"subtema": "policiamento",
+"trata": true
+},
+{
+"cand": "lula",
+"id": 97,
+"subtema": "presidios",
+"trata": false
+},
+{
+"cand": "flavio",
+"id": 29,
+"subtema": "presidios",
+"trata": true
+}
+]

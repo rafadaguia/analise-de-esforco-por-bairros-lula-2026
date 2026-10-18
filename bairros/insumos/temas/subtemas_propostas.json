@@ -1,0 +1,1486 @@
+{
+ "agricultura_familiar": {
+  "n_paragrafos": 11,
+  "subtemas": [
+   {
+    "chave": "credito_e_financiamento",
+    "nome": "Crédito e Financiamento",
+    "descricao": "Acesso a crédito via Pronaf e expansão de linhas de financiamento para o produtor.",
+    "ids": [
+     72,
+     229
+    ]
+   },
+   {
+    "chave": "regularizacao_fundiaria",
+    "nome": "Regularização Fundiária",
+    "descricao": "Regularização de terras, reforma agrária e desburocratização de títulos rurais.",
+    "ids": [
+     232,
+     65,
+     67
+    ]
+   },
+   {
+    "chave": "comercializacao_e_mercados",
+    "nome": "Comercialização e Mercados",
+    "descricao": "Acesso a mercados via PAA, alimentação escolar e melhoria da venda de produtos.",
+    "ids": [
+     226,
+     229,
+     230
+    ]
+   },
+   {
+    "chave": "sustentabilidade_e_agroecologia",
+    "nome": "Sustentabilidade e Agroecologia",
+    "descricao": "Fomento a práticas sustentáveis, agroecologia e conciliação ambiental.",
+    "ids": [
+     228,
+     229,
+     232
+    ]
+   },
+   {
+    "chave": "seguro_e_mecanizacao",
+    "nome": "Seguro e Mecanização",
+    "descricao": "Fortalecimento do Garantia-Safra, seguro rural e mecanização do campo.",
+    "ids": [
+     231
+    ]
+   },
+   {
+    "chave": "assistencia_tecnica_e_capacitacao",
+    "nome": "Assistência Técnica e Capacitação",
+    "descricao": "Ampliação da ATER e qualificação profissional para trabalhadores rurais.",
+    "ids": [
+     72,
+     230
+    ]
+   }
+  ]
+ },
+ "agronegocio_meio_ambiente": {
+  "n_paragrafos": 86,
+  "subtemas": [
+   {
+    "chave": "agricultura_familiar_e_agroecologia",
+    "nome": "Agricultura Familiar e Agroecologia",
+    "descricao": "Apoio à produção familiar, crédito para agroecologia e sucessão rural.",
+    "ids": [
+     228,
+     229,
+     230,
+     231,
+     232
+    ]
+   },
+   {
+    "chave": "credito_e_seguro_rural",
+    "nome": "Crédito e Seguro Rural",
+    "descricao": "Ampliação do Plano Safra, seguros contra quebras de safra e financiamento da produção.",
+    "ids": [
+     231,
+     237,
+     240,
+     80,
+     159
+    ]
+   },
+   {
+    "chave": "combate_ao_desmatamento_e_crimes_ambientais",
+    "nome": "Combate ao Desmatamento e Crimes Ambientais",
+    "descricao": "Fiscalização, monitoramento tecnológico e combate a crimes ambientais e fundiários.",
+    "ids": [
+     19,
+     35,
+     105,
+     275,
+     281,
+     282,
+     291,
+     178,
+     179
+    ]
+   },
+   {
+    "chave": "regularizacao_fundiaria",
+    "nome": "Regularização Fundiária",
+    "descricao": "Titulação de terras rurais e regularização de territórios.",
+    "ids": [
+     232,
+     281,
+     66,
+     161
+    ]
+   },
+   {
+    "chave": "mudancas_climaticas_e_desastres",
+    "nome": "Mudanças Climáticas e Desastres",
+    "descricao": "Adaptação climática, resiliência no campo e Defesa Civil contra desastres.",
+    "ids": [
+     89,
+     176,
+     238,
+     277,
+     293,
+     294,
+     154
+    ]
+   },
+   {
+    "chave": "bioeconomia_e_mercado_de_carbono",
+    "nome": "Bioeconomia e Mercado de Carbono",
+    "descricao": "Valorização da biodiversidade, créditos de carbono e pagamentos por serviços ambientais.",
+    "ids": [
+     198,
+     278,
+     289,
+     175,
+     176,
+     177,
+     181,
+     188
+    ]
+   },
+   {
+    "chave": "transicao_energetica_e_biocombustiveis",
+    "nome": "Transição Energética e Biocombustíveis",
+    "descricao": "Fomento a energias renováveis, bioenergia e combustíveis sustentáveis.",
+    "ids": [
+     234,
+     244,
+     248,
+     256,
+     257,
+     272,
+     158,
+     165
+    ]
+   }
+  ]
+ },
+ "corrupcao": {
+  "n_paragrafos": 17,
+  "subtemas": [
+   {
+    "chave": "transparencia_e_digitalizacao",
+    "nome": "Transparência e Digitalização",
+    "descricao": "Uso de tecnologia e transparência digital para controle de gastos e serviços.",
+    "ids": [
+     60,
+     213,
+     214,
+     221,
+     228
+    ]
+   },
+   {
+    "chave": "gestao_tecnica_e_estatais",
+    "nome": "Gestão Técnica e Estatais",
+    "descricao": "Combate ao apadrinhamento político em cargos públicos, estatais e fundos de pensão.",
+    "ids": [
+     215,
+     216,
+     217,
+     218
+    ]
+   },
+   {
+    "chave": "fraudes_previdenciarias",
+    "nome": "Fraudes no INSS",
+    "descricao": "Medidas para coibir roubos de aposentados e fraudes em benefícios previdenciários.",
+    "ids": [
+     225,
+     226,
+     227,
+     228
+    ]
+   },
+   {
+    "chave": "crime_organizado_e_integridade",
+    "nome": "Crime Organizado e Integridade",
+    "descricao": "Planos de integridade e combate ao crime organizado através de asfixia financeira.",
+    "ids": [
+     59,
+     99
+    ]
+   },
+   {
+    "chave": "reforma_administrativa_e_fiscal",
+    "nome": "Reforma Administrativa e Fiscal",
+    "descricao": "Corte de gastos, redução de supersalários e enxugamento da máquina pública.",
+    "ids": [
+     19,
+     210,
+     214
+    ]
+   }
+  ]
+ },
+ "costumes_religiao": {
+  "n_paragrafos": 27,
+  "subtemas": [
+   {
+    "chave": "valores_e_familia",
+    "nome": "Valores e Família",
+    "descricao": "Defesa de valores conservadores, estrutura familiar e patrimônio da família.",
+    "ids": [
+     8,
+     13,
+     20,
+     21,
+     30,
+     42,
+     44,
+     90,
+     92,
+     110,
+     138,
+     230,
+     232
+    ]
+   },
+   {
+    "chave": "protecao_e_apoio_mulher",
+    "nome": "Proteção e Apoio à Mulher",
+    "descricao": "Políticas de combate a relações abusivas, independência financeira e Centrais da Mulher.",
+    "ids": [
+     13,
+     30,
+     31,
+     37,
+     42
+    ]
+   },
+   {
+    "chave": "educacao_e_doutrinacao",
+    "nome": "Educação e Doutrinação",
+    "descricao": "Combate à ideologia nas escolas e ampliação de escolas cívico-militares.",
+    "ids": [
+     92,
+     96
+    ]
+   },
+   {
+    "chave": "rede_de_cuidados",
+    "nome": "Rede de Cuidados",
+    "descricao": "Apoio ao cuidado de idosos, crianças (creches) e pessoas com deficiência ou doenças raras.",
+    "ids": [
+     106,
+     107,
+     108,
+     109,
+     110
+    ]
+   },
+   {
+    "chave": "identidade_e_esporte",
+    "nome": "Identidade e Esporte",
+    "descricao": "Regulamentação de competições esportivas femininas com base no sexo biológico.",
+    "ids": [
+     116
+    ]
+   },
+   {
+    "chave": "cultura_e_democracia",
+    "nome": "Cultura e Democracia",
+    "descricao": "A cultura como ferramenta estratégica para a democracia e sustentabilidade.",
+    "ids": [
+     152
+    ]
+   }
+  ]
+ },
+ "custo_de_vida_inflacao_alimentos": {
+  "n_paragrafos": 57,
+  "subtemas": [
+   {
+    "chave": "impostos_e_consumo",
+    "nome": "Impostos e Consumo",
+    "descricao": "Tributação sobre a cesta básica, IVA e redução de impostos para baixar preços ao consumidor.",
+    "ids": [
+     26,
+     3,
+     15,
+     72,
+     73,
+     74,
+     75,
+     88,
+     220
+    ]
+   },
+   {
+    "chave": "precos_de_alimentos",
+    "nome": "Preços de Alimentos",
+    "descricao": "Combate à fome, segurança alimentar, custo de fertilizantes e armazenamento de safras.",
+    "ids": [
+     224,
+     228,
+     229,
+     246,
+     68,
+     81,
+     82,
+     84,
+     159,
+     160
+    ]
+   },
+   {
+    "chave": "custo_da_energia",
+    "nome": "Custo da Energia",
+    "descricao": "Redução da conta de luz, tarifas residenciais, gás natural e pobreza energética.",
+    "ids": [
+     250,
+     255,
+     259,
+     264,
+     15,
+     76,
+     77,
+     78,
+     155,
+     156,
+     157,
+     158
+    ]
+   },
+   {
+    "chave": "controle_da_inflacao",
+    "nome": "Controle da Inflação",
+    "descricao": "Políticas macroeconômicas, responsabilidade fiscal e juros para estabilizar a moeda.",
+    "ids": [
+     21,
+     178,
+     180,
+     184,
+     186,
+     3,
+     70,
+     86,
+     149,
+     220
+    ]
+   },
+   {
+    "chave": "logistica_e_fretes",
+    "nome": "Logística e Fretes",
+    "descricao": "Investimentos em infraestrutura, ferrovias e hidrovias para reduzir o custo de transporte de produtos.",
+    "ids": [
+     249,
+     79,
+     80,
+     83,
+     148,
+     150,
+     151
+    ]
+   }
+  ]
+ },
+ "educacao": {
+  "n_paragrafos": 56,
+  "subtemas": [
+   {
+    "chave": "creches_e_primeira_infancia",
+    "nome": "Creches e Primeira Infância",
+    "descricao": "Expansão de vagas em creches e redes de cuidado infantil.",
+    "ids": [
+     112,
+     125,
+     41,
+     43,
+     107
+    ]
+   },
+   {
+    "chave": "alfabetizacao_e_ensino_basico",
+    "nome": "Alfabetização e Ensino Básico",
+    "descricao": "Métodos de alfabetização, combate ao analfabetismo e qualidade do aprendizado escolar.",
+    "ids": [
+     112,
+     93,
+     94
+    ]
+   },
+   {
+    "chave": "educacao_tempo_integral",
+    "nome": "Educação em Tempo Integral",
+    "descricao": "Ampliação da jornada escolar e atividades complementares.",
+    "ids": [
+     84,
+     113,
+     125,
+     97,
+     98
+    ]
+   },
+   {
+    "chave": "ensino_tecnico_e_superior",
+    "nome": "Ensino Técnico e Superior",
+    "descricao": "Expansão de institutos federais, universidades e alinhamento com o mercado de trabalho.",
+    "ids": [
+     64,
+     111,
+     120,
+     121,
+     122,
+     125,
+     100,
+     101,
+     102,
+     172
+    ]
+   },
+   {
+    "chave": "conectividade_e_tecnologia",
+    "nome": "Conectividade e Tecnologia",
+    "descricao": "Internet nas escolas, letramento digital e economia digital.",
+    "ids": [
+     53,
+     115,
+     33,
+     50,
+     96
+    ]
+   },
+   {
+    "chave": "auxilio_estudantil_e_evasao",
+    "nome": "Auxílio Estudantil e Evasão",
+    "descricao": "Programas de transferência de renda, bolsas e combate à evasão escolar.",
+    "ids": [
+     33,
+     85,
+     116,
+     98,
+     112
+    ]
+   },
+   {
+    "chave": "educacao_inclusiva_e_diversidade",
+    "nome": "Educação Inclusiva e Diversidade",
+    "descricao": "Políticas para surdos, indígenas, quilombolas e pessoas com deficiência.",
+    "ids": [
+     64,
+     67,
+     80,
+     81
+    ]
+   }
+  ]
+ },
+ "emprego": {
+  "n_paragrafos": 101,
+  "subtemas": [
+   {
+    "chave": "emprego_jovem_e_aprendizado",
+    "nome": "Emprego Jovem e Aprendizado",
+    "descricao": "Políticas de inserção de jovens no mercado, aprendizagem profissional e crédito para juventude.",
+    "ids": [
+     85,
+     87,
+     126,
+     127
+    ]
+   },
+   {
+    "chave": "qualificacao_e_ensino_tecnico",
+    "nome": "Qualificação e Ensino Técnico",
+    "descricao": "Alinhamento da educação profissional às demandas do mercado e cursos de capacitação.",
+    "ids": [
+     72,
+     78,
+     85,
+     100,
+     101,
+     102,
+     123,
+     298
+    ]
+   },
+   {
+    "chave": "trabalho_feminino_e_cuidado",
+    "nome": "Trabalho Feminino e Cuidado",
+    "descricao": "Igualdade salarial, apoio à mulher no mercado de trabalho e políticas de economia do cuidado.",
+    "ids": [
+     72,
+     90,
+     304,
+     30,
+     31,
+     33,
+     34,
+     40,
+     41,
+     106
+    ]
+   },
+   {
+    "chave": "empreendedorismo_e_burocracia",
+    "nome": "Empreendedorismo e Burocracia",
+    "descricao": "Fomento a pequenas empresas, redução de impostos e desburocratização para abrir negócios.",
+    "ids": [
+     87,
+     160,
+     307,
+     64,
+     133,
+     134,
+     135
+    ]
+   },
+   {
+    "chave": "plataformas_e_novas_relacoes_trabalho",
+    "nome": "Plataformas e Novas Relações de Trabalho",
+    "descricao": "Regulação do trabalho por aplicativos, combate à pejotização e flexibilização de jornadas.",
+    "ids": [
+     300,
+     301,
+     313,
+     131,
+     132
+    ]
+   },
+   {
+    "chave": "industria_e_infraestrutura",
+    "nome": "Indústria e Infraestrutura",
+    "descricao": "Geração de empregos através de investimentos em obras, neoindustrialização e energia.",
+    "ids": [
+     86,
+     183,
+     189,
+     190,
+     198,
+     203,
+     207,
+     249,
+     262,
+     142,
+     144,
+     145,
+     148,
+     156,
+     167
+    ]
+   },
+   {
+    "chave": "inclusao_e_diversidade_laboral",
+    "nome": "Inclusão e Diversidade Laboral",
+    "descricao": "Políticas de emprego para pessoas com deficiência, idosos e combate a discriminações.",
+    "ids": [
+     78,
+     81,
+     303,
+     304,
+     126,
+     127
+    ]
+   }
+  ]
+ },
+ "endividamento_apostas": {
+  "n_paragrafos": 8,
+  "subtemas": [
+   {
+    "chave": "combate_ao_vicio_e_controle_de_apostas",
+    "nome": "Combate ao vício e apostas",
+    "descricao": "Medidas de saúde mental, monitoramento e controle de apostas on-line.",
+    "ids": [
+     146,
+     188
+    ]
+   },
+   {
+    "chave": "renegociacao_e_reducao_de_dividas",
+    "nome": "Renegociação de dívidas",
+    "descricao": "Programas para redução de dívidas de famílias, pequenos negócios e agricultores.",
+    "ids": [
+     30,
+     70
+    ]
+   },
+   {
+    "chave": "uso_de_recursos_sociais_em_apostas",
+    "nome": "Apostas e programas sociais",
+    "descricao": "Proibição do uso de benefícios sociais em jogos de apostas.",
+    "ids": [
+     87
+    ]
+   },
+   {
+    "chave": "educacao_e_orientacao_financeira",
+    "nome": "Orientação financeira",
+    "descricao": "Apoio e educação financeira para a população via instituições bancárias.",
+    "ids": [
+     87,
+     136
+    ]
+   },
+   {
+    "chave": "credito_e_endividamento",
+    "nome": "Crédito e endividamento",
+    "descricao": "Análise da concessão de crédito e diagnóstico do endividamento das famílias.",
+    "ids": [
+     70,
+     188,
+     136
+    ]
+   }
+  ]
+ },
+ "impostos_isencao_ir": {
+  "n_paragrafos": 37,
+  "subtemas": [
+   {
+    "chave": "isencao_e_tributacao_ir",
+    "nome": "Isenção e Imposto de Renda",
+    "descricao": "Medidas sobre isenções de IR e tributação de camadas de alta renda.",
+    "ids": [
+     25
+    ]
+   },
+   {
+    "chave": "impostos_sobre_consumo_e_alimentos",
+    "nome": "Impostos sobre Consumo e Alimentos",
+    "descricao": "Tributação de cesta básica, IVA e redução de impostos em produtos básicos.",
+    "ids": [
+     26,
+     72,
+     74,
+     75,
+     223,
+     224
+    ]
+   },
+   {
+    "chave": "tributacao_empreendedores_e_pme",
+    "nome": "Impostos para Empreendedores e PMEs",
+    "descricao": "Simplificação tributária e redução de encargos para micro e pequenas empresas e autônomos.",
+    "ids": [
+     222,
+     308,
+     133,
+     135
+    ]
+   },
+   {
+    "chave": "energia_e_combustiveis",
+    "nome": "Impostos sobre Energia e Combustíveis",
+    "descricao": "Redução de tributos e encargos em contas de luz e combustíveis.",
+    "ids": [
+     15,
+     77,
+     158
+    ]
+   },
+   {
+    "chave": "justica_e_reforma_tributaria",
+    "nome": "Justiça e Reforma Tributária",
+    "descricao": "Discussões sobre a estrutura da reforma tributária, justiça fiscal e simplificação do sistema.",
+    "ids": [
+     22,
+     26,
+     93,
+     185,
+     73,
+     74,
+     222,
+     223,
+     224
+    ]
+   }
+  ]
+ },
+ "instituicoes_stf_reeleicao": {
+  "n_paragrafos": 24,
+  "subtemas": [
+   {
+    "chave": "reforma_stf_e_poderes",
+    "nome": "Reforma do STF e Equilíbrio de Poderes",
+    "descricao": "Propostas sobre a função do STF, decisões monocráticas e a relação entre os Poderes.",
+    "ids": [
+     199,
+     201,
+     203
+    ]
+   },
+   {
+    "chave": "foro_privilegiado",
+    "nome": "Foro Privilegiado",
+    "descricao": "Discussão sobre a manutenção ou fim do foro privilegiado para parlamentares.",
+    "ids": [
+     200
+    ]
+   },
+   {
+    "chave": "reeleicao_presidencial",
+    "nome": "Reeleição Presidencial",
+    "descricao": "Proposta de alteração nas regras de reeleição para o cargo de Presidente da República.",
+    "ids": [
+     204
+    ]
+   },
+   {
+    "chave": "liberdade_expressao_e_censura",
+    "nome": "Liberdade de Expressão e Censura",
+    "descricao": "Debates sobre regulação de redes sociais, combate à censura e liberdade de opinião.",
+    "ids": [
+     18,
+     47,
+     205,
+     206,
+     207
+    ]
+   },
+   {
+    "chave": "fortalecimento_democracia",
+    "nome": "Fortalecimento da Democracia",
+    "descricao": "Declarações gerais e políticas voltadas à manutenção e defesa do regime democrático.",
+    "ids": [
+     2,
+     3,
+     4,
+     11,
+     43,
+     152,
+     232
+    ]
+   }
+  ]
+ },
+ "jornada_6x1": {
+  "n_paragrafos": 5,
+  "subtemas": [
+   {
+    "chave": "fim_da_escala_6x1",
+    "nome": "Fim da escala 6x1",
+    "descricao": "Propostas sobre a extinção da jornada 6x1 e redução da carga horária.",
+    "ids": [
+     301
+    ]
+   },
+   {
+    "chave": "trabalho_por_plataformas",
+    "nome": "Trabalho por aplicativos",
+    "descricao": "Regulação e manutenção do trabalho via plataformas digitais.",
+    "ids": [
+     301,
+     132
+    ]
+   },
+   {
+    "chave": "emprego_jovem",
+    "nome": "Emprego para jovens",
+    "descricao": "Incentivos, crédito e fomento à contratação de trabalhadores jovens.",
+    "ids": [
+     87,
+     127
+    ]
+   },
+   {
+    "chave": "flexibilidade_e_negociacao",
+    "nome": "Flexibilização da jornada",
+    "descricao": "Jornadas flexíveis e a prevalência do acordo negociado sobre a lei.",
+    "ids": [
+     127,
+     132
+    ]
+   },
+   {
+    "chave": "direitos_e_dignidade",
+    "nome": "Direitos e trabalho digno",
+    "descricao": "Garantia de direitos trabalhistas, justiça social e dignidade no emprego.",
+    "ids": [
+     87,
+     314
+    ]
+   }
+  ]
+ },
+ "moradia_mcmv": {
+  "n_paragrafos": 23,
+  "subtemas": [
+   {
+    "chave": "construcao_e_metas_mcmv",
+    "nome": "Construção e Metas do MCMV",
+    "descricao": "Ampliação de metas de moradias e retomada de programas habitacionais federais.",
+    "ids": [
+     171,
+     172,
+     139
+    ]
+   },
+   {
+    "chave": "regularizacao_fundiaria",
+    "nome": "Regularização Fundiária",
+    "descricao": "Titulação de imóveis e legalização da posse da terra.",
+    "ids": [
+     57,
+     173,
+     40,
+     140
+    ]
+   },
+   {
+    "chave": "credito_e_financiamento",
+    "nome": "Crédito e Financiamento",
+    "descricao": "Facilitação de crédito habitacional, redução de juros e papel de bancos.",
+    "ids": [
+     86,
+     136,
+     138
+    ]
+   },
+   {
+    "chave": "urbanizacao_e_saneamento",
+    "nome": "Urbanização e Saneamento",
+    "descricao": "Infraestrutura em periferias, urbanização de favelas/encostas e saneamento básico.",
+    "ids": [
+     28,
+     173,
+     174,
+     140
+    ]
+   },
+   {
+    "chave": "moradia_para_grupos_especificos",
+    "nome": "Moradia para Grupos Específicos",
+    "descricao": "Acesso à habitação e acessibilidade para mulheres e idosos.",
+    "ids": [
+     34,
+     40,
+     43,
+     108
+    ]
+   },
+   {
+    "chave": "gestao_de_imoveis_da_uniao",
+    "nome": "Imóveis da União",
+    "descricao": "Destinação de imóveis públicos para habitação e serviços.",
+    "ids": [
+     56,
+     57
+    ]
+   }
+  ]
+ },
+ "periferias_favelas": {
+  "n_paragrafos": 8,
+  "subtemas": [
+   {
+    "chave": "urbanizacao_e_infraestrutura",
+    "nome": "Urbanização e Infraestrutura",
+    "descricao": "Obras de urbanização, saneamento e regularização fundiária em favelas e periferias.",
+    "ids": [
+     101,
+     173,
+     174
+    ]
+   },
+   {
+    "chave": "cultura_e_juventude",
+    "nome": "Cultura e Juventude",
+    "descricao": "Apoio à cultura periférica, pontos de cultura, bibliotecas e saúde mental juvenil.",
+    "ids": [
+     88,
+     156
+    ]
+   },
+   {
+    "chave": "seguranca_publica",
+    "nome": "Segurança Pública",
+    "descricao": "Combate ao crime organizado e ações de segurança em comunidades e periferias.",
+    "ids": [
+     101,
+     139
+    ]
+   },
+   {
+    "chave": "saude_e_medicamentos",
+    "nome": "Saúde e Medicamentos",
+    "descricao": "Acesso a remédios e manutenção do programa Farmácia Popular nas periferias.",
+    "ids": [
+     134
+    ]
+   },
+   {
+    "chave": "conectividade_digital",
+    "nome": "Conectividade Digital",
+    "descricao": "Expansão de internet via fibra óptica e tecnologia 5G em regiões prioritárias.",
+    "ids": [
+     213
+    ]
+   },
+   {
+    "chave": "habitacao",
+    "nome": "Habitação",
+    "descricao": "Programas de moradia e regularização de domicílios.",
+    "ids": [
+     139,
+     173
+    ]
+   }
+  ]
+ },
+ "previdencia": {
+  "n_paragrafos": 18,
+  "subtemas": [
+   {
+    "chave": "filas_e_atendimento_inss",
+    "nome": "Filas e Atendimento do INSS",
+    "descricao": "Medidas para reduzir a espera e modernizar a gestão do atendimento previdenciário.",
+    "ids": [
+     311,
+     45,
+     61,
+     62,
+     228
+    ]
+   },
+   {
+    "chave": "trabalho_por_plataformas",
+    "nome": "Trabalho por Aplicativos",
+    "descricao": "Regulação e cobertura previdenciária para trabalhadores de plataformas digitais.",
+    "ids": [
+     313,
+     132
+    ]
+   },
+   {
+    "chave": "combate_a_fraudes",
+    "nome": "Combate a Fraudes e Descontos",
+    "descricao": "Ações para coibir roubos de aposentados, fraudes em benefícios e descontos indevidos.",
+    "ids": [
+     225,
+     226,
+     227,
+     228
+    ]
+   },
+   {
+    "chave": "sustentabilidade_e_custeio",
+    "nome": "Custeio e Gestão de Fundos",
+    "descricao": "Diversificação de fontes de custeio e governança de fundos de pensão.",
+    "ids": [
+     312,
+     217
+    ]
+   },
+   {
+    "chave": "formalizacao_e_contribuicao",
+    "nome": "Formalização e Contribuição",
+    "descricao": "Combate à pejotização e proteção social para autônomos e informais.",
+    "ids": [
+     16,
+     300,
+     308
+    ]
+   }
+  ]
+ },
+ "programas_sociais": {
+  "n_paragrafos": 22,
+  "subtemas": [
+   {
+    "chave": "combate_pobreza_e_renda",
+    "nome": "Combate à Pobreza e Renda",
+    "descricao": "Políticas de transferência de renda, proteção social e combate à extrema pobreza.",
+    "ids": [
+     2,
+     22,
+     29,
+     60,
+     224,
+     120,
+     121
+    ]
+   },
+   {
+    "chave": "infancia_e_juventude",
+    "nome": "Infância e Juventude",
+    "descricao": "Proteção infantil, educação integral e incentivos para evitar a evasão escolar.",
+    "ids": [
+     83,
+     84,
+     116
+    ]
+   },
+   {
+    "chave": "moradia_e_habitação",
+    "nome": "Moradia e Habitação",
+    "descricao": "Programas de habitação popular e acesso a crédito imobiliário.",
+    "ids": [
+     171,
+     136
+    ]
+   },
+   {
+    "chave": "autonomia_e_emprego",
+    "nome": "Autonomia e Emprego",
+    "descricao": "Uso de programas sociais como ponte para a qualificação profissional e inserção no mercado de trabalho.",
+    "ids": [
+     9,
+     122,
+     123,
+     124,
+     162
+    ]
+   },
+   {
+    "chave": "educacao_financeira_e_apostas",
+    "nome": "Educação Financeira e Apostas",
+    "descricao": "Orientação financeira para beneficiários e restrição do uso de auxílios em apostas.",
+    "ids": [
+     87,
+     136
+    ]
+   },
+   {
+    "chave": "servicos_e_tecnologia_social",
+    "nome": "Serviços e Tecnologia Social",
+    "descricao": "Uso de IA, inclusão digital e centrais de apoio para facilitar o acesso a benefícios.",
+    "ids": [
+     31,
+     56
+    ]
+   },
+   {
+    "chave": "seguranca_alimentar_e_energia",
+    "nome": "Segurança Alimentar e Energia",
+    "descricao": "Políticas de combate à fome e gratuidade de energia para baixa renda.",
+    "ids": [
+     224,
+     255
+    ]
+   }
+  ]
+ },
+ "renda_salario_minimo": {
+  "n_paragrafos": 10,
+  "subtemas": [
+   {
+    "chave": "valorizacao_salario_minimo",
+    "nome": "Valorização do Salário Mínimo",
+    "descricao": "Políticas de manutenção e aumento real do valor do salário mínimo.",
+    "ids": [
+     295,
+     297,
+     311
+    ]
+   },
+   {
+    "chave": "renda_e_pobreza",
+    "nome": "Renda e Combate à Pobreza",
+    "descricao": "Ações voltadas para a redução da pobreza, desigualdades e proteção social.",
+    "ids": [
+     29,
+     60,
+     61,
+     224
+    ]
+   },
+   {
+    "chave": "emprego_e_qualificacao",
+    "nome": "Emprego e Qualificação",
+    "descricao": "Geração de empregos de qualidade, valorização do trabalho e superação de baixos salários via inovação.",
+    "ids": [
+     29,
+     295,
+     296,
+     297
+    ]
+   },
+   {
+    "chave": "poder_de_compra",
+    "nome": "Controle da Inflação e Renda Real",
+    "descricao": "Medidas para controlar a inflação a fim de garantir a manutenção do poder de compra.",
+    "ids": [
+     186
+    ]
+   },
+   {
+    "chave": "previdencia_social",
+    "nome": "Previdência Social",
+    "descricao": "Fortalecimento da previdência e melhorias no atendimento do INSS.",
+    "ids": [
+     311
+    ]
+   },
+   {
+    "chave": "autonomia_financeira_familiar",
+    "nome": "Autonomia Financeira e Família",
+    "descricao": "Proteção financeira da mulher para o fortalecimento da estrutura familiar.",
+    "ids": [
+     30
+    ]
+   }
+  ]
+ },
+ "saneamento": {
+  "n_paragrafos": 8,
+  "subtemas": [
+   {
+    "chave": "universalizacao_saneamento",
+    "nome": "Universalização do Saneamento",
+    "descricao": "Ações para garantir que a população geral e de periferias tenha acesso a saneamento básico.",
+    "ids": [
+     174,
+     140,
+     174
+    ]
+   },
+   {
+    "chave": "saneamento_rural",
+    "nome": "Saneamento no Campo",
+    "descricao": "Ampliação do acesso à água e saneamento em áreas rurais.",
+    "ids": [
+     233
+    ]
+   },
+   {
+    "chave": "gestao_residuos_e_energia",
+    "nome": "Resíduos e Biogás",
+    "descricao": "Apoio à gestão de resíduos, esgotos e produção de energia limpa (biogás/biometano).",
+    "ids": [
+     177
+    ]
+   },
+   {
+    "chave": "infraestrutura_urbana_e_fundiaria",
+    "nome": "Urbanização e Regularização",
+    "descricao": "Reforma urbana, regularização fundiária e urbanização de encostas integrada ao saneamento.",
+    "ids": [
+     168,
+     140
+    ]
+   },
+   {
+    "chave": "investimentos_e_parcerias",
+    "nome": "Investimentos e Modelos de Gestão",
+    "descricao": "Financiamento via Novo PAC ou parcerias privadas para obras de infraestrutura.",
+    "ids": [
+     28,
+     140,
+     203
+    ]
+   }
+  ]
+ },
+ "saude_sus": {
+  "n_paragrafos": 46,
+  "subtemas": [
+   {
+    "chave": "saude_digital_e_tecnologia",
+    "nome": "Saúde Digital e IA",
+    "descricao": "Implementação de prontuário único, telessaúde e uso de inteligência artificial para gestão e agendamentos.",
+    "ids": [
+     129,
+     130,
+     131,
+     143,
+     57,
+     58,
+     59,
+     60,
+     104
+    ]
+   },
+   {
+    "chave": "filas_e_atencao_especializada",
+    "nome": "Filas e Consultas Especializadas",
+    "descricao": "Ações para redução de filas, ampliação de exames, cirurgias e consultas com especialistas.",
+    "ids": [
+     124,
+     140,
+     141,
+     143,
+     45
+    ]
+   },
+   {
+    "chave": "medicamentos_e_farmacia",
+    "nome": "Remédios e Farmácia Popular",
+    "descricao": "Manutenção e ampliação do acesso a medicamentos, gratuidade e entrega domiciliar.",
+    "ids": [
+     134,
+     104
+    ]
+   },
+   {
+    "chave": "atencao_basica_e_familia",
+    "nome": "Atenção Básica e Médicos",
+    "descricao": "Fortalecimento de UBS, Programa Mais Médicos, Saúde da Família e equipes multiprofissionais.",
+    "ids": [
+     127,
+     128,
+     132,
+     103
+    ]
+   },
+   {
+    "chave": "saude_mental_e_neurodivergencia",
+    "nome": "Saúde Mental e Autismo",
+    "descricao": "Apoio à saúde mental juvenil, neurodivergentes, autismo e combate a vícios.",
+    "ids": [
+     88,
+     146,
+     109
+    ]
+   },
+   {
+    "chave": "saude_da_mulher_e_materna",
+    "nome": "Saúde da Mulher e Materna",
+    "descricao": "Ampliação de maternidades, exames preventivos, dignidade menstrual e saúde preventiva feminina.",
+    "ids": [
+     145,
+     41
+    ]
+   },
+   {
+    "chave": "saude_do_idoso_e_vulneraveis",
+    "nome": "Cuidado ao Idoso e Vulneráveis",
+    "descricao": "Atendimento domiciliar, ampliação de ILPIs e cuidados específicos para a terceira idade.",
+    "ids": [
+     75,
+     77,
+     103,
+     109
+    ]
+   }
+  ]
+ },
+ "seguranca_publica": {
+  "n_paragrafos": 47,
+  "subtemas": [
+   {
+    "chave": "combate_ao_crime_organizado",
+    "nome": "Crime Organizado",
+    "descricao": "Estratégias de asfixia financeira, desarticulação de facções e recuperação de territórios.",
+    "ids": [
+     36,
+     96,
+     99,
+     100,
+     101,
+     102,
+     22,
+     229
+    ]
+   },
+   {
+    "chave": "violencia_contra_mulher",
+    "nome": "Violência contra a Mulher",
+    "descricao": "Políticas de proteção, combate ao feminicídio e monitoramento de agressores.",
+    "ids": [
+     19,
+     69,
+     70,
+     71,
+     35,
+     36
+    ]
+   },
+   {
+    "chave": "controle_de_armas_e_fronteiras",
+    "nome": "Armas e Fronteiras",
+    "descricao": "Fiscalização de CACs, controle de armas e vigilância de fronteiras contra tráfico.",
+    "ids": [
+     19,
+     103,
+     22,
+     23
+    ]
+   },
+   {
+    "chave": "sistema_prisional_e_penas",
+    "nome": "Prisões e Penas",
+    "descricao": "Gestão prisional, endurecimento de penas, regime de cumprimento e maioridade penal.",
+    "ids": [
+     103,
+     22,
+     24,
+     27,
+     28,
+     29
+    ]
+   },
+   {
+    "chave": "seguranca_digital_e_cibernetica",
+    "nome": "Crimes Cibernéticos",
+    "descricao": "Combate a fraudes digitais, roubo de celulares e letramento digital.",
+    "ids": [
+     79,
+     106,
+     29
+    ]
+   },
+   {
+    "chave": "seguranca_ambiental_e_amazonia",
+    "nome": "Segurança na Amazônia",
+    "descricao": "Combate a crimes ambientais, fundiários e proteção de defensores da floresta.",
+    "ids": [
+     19,
+     105,
+     234,
+     179,
+     180,
+     181
+    ]
+   }
+  ]
+ },
+ "soberania_nacional": {
+  "n_paragrafos": 53,
+  "subtemas": [
+   {
+    "chave": "soberania_digital_e_ia",
+    "nome": "Soberania Digital e IA",
+    "descricao": "Regulação de tecnologias, infraestrutura de dados e letramento digital.",
+    "ids": [
+     53,
+     208,
+     210,
+     328
+    ]
+   },
+   {
+    "chave": "industria_e_tecnologia_defesa",
+    "nome": "Indústria e Defesa Nacional",
+    "descricao": "Investimentos na Base Industrial de Defesa, autonomia tecnológica e inteligência de estado.",
+    "ids": [
+     9,
+     315,
+     318
+    ]
+   },
+   {
+    "chave": "energia_e_combustiveis",
+    "nome": "Energia e Combustíveis",
+    "descricao": "Gestão da Petrobras, refino, gás natural, biocombustíveis e transição energética.",
+    "ids": [
+     248,
+     260,
+     261,
+     262,
+     264,
+     265,
+     266,
+     271,
+     274,
+     157
+    ]
+   },
+   {
+    "chave": "saude_e_soberania_sanitaria",
+    "nome": "Saúde e Soberania Sanitária",
+    "descricao": "Fortalecimento do SUS e fomento ao Complexo Econômico e Industrial da Saúde.",
+    "ids": [
+     32,
+     147,
+     149
+    ]
+   },
+   {
+    "chave": "agricultura_e_fertilizantes",
+    "nome": "Agricultura e Fertilizantes",
+    "descricao": "Autossuficiência na produção de fertilizantes e apoio ao produtor rural.",
+    "ids": [
+     245,
+     157,
+     159
+    ]
+   },
+   {
+    "chave": "diplomacia_e_politica_externa",
+    "nome": "Diplomacia e Política Externa",
+    "descricao": "Autonomia nas relações internacionais, pragmatismo comercial e combate a alinhamentos ideológicos.",
+    "ids": [
+     318,
+     319,
+     330,
+     189,
+     191,
+     192,
+     193,
+     194
+    ]
+   },
+   {
+    "chave": "seguranca_de_fronteiras_e_territorio",
+    "nome": "Segurança de Fronteiras e Território",
+    "descricao": "Fiscalização de fronteiras, combate a crimes transfronteiriços e soberania na Amazônia.",
+    "ids": [
+     23,
+     179,
+     190
+    ]
+   }
+  ]
+ },
+ "transporte_mobilidade": {
+  "n_paragrafos": 23,
+  "subtemas": [
+   {
+    "chave": "transporte_publico_urbano",
+    "nome": "Transporte Público e Mobilidade Urbana",
+    "descricao": "Investimentos em metrôs, BRTs, renovação de frotas e redução de tempo de deslocamento.",
+    "ids": [
+     175,
+     252,
+     152
+    ]
+   },
+   {
+    "chave": "malha_ferroviaria_e_logistica",
+    "nome": "Ferrovias e Logística",
+    "descricao": "Expansão de malhas ferroviárias, corredores logísticos e infraestrutura de transporte de cargas.",
+    "ids": [
+     200,
+     202,
+     204,
+     80,
+     150,
+     186
+    ]
+   },
+   {
+    "chave": "rodovias_e_concessoes",
+    "nome": "Rodovias e Concessões",
+    "descricao": "Investimentos em concessões rodoviárias e modernização da infraestrutura viária.",
+    "ids": [
+     202,
+     204,
+     148
+    ]
+   },
+   {
+    "chave": "combustiveis_e_energia",
+    "nome": "Combustíveis e Energia",
+    "descricao": "Mistura de biocombustíveis, redução de impostos no transporte e infraestrutura de gás.",
+    "ids": [
+     269,
+     15,
+     157
+    ]
+   },
+   {
+    "chave": "transporte_sanitario",
+    "nome": "Transporte Sanitário",
+    "descricao": "Ampliação do transporte para acesso a serviços de saúde.",
+    "ids": [
+     143
+    ]
+   },
+   {
+    "chave": "motoristas_de_aplicativo",
+    "nome": "Motoristas de Aplicativo",
+    "descricao": "Ações de apoio a motoristas de aplicativo e empreendedores do setor.",
+    "ids": [
+     307
+    ]
+   }
+  ]
+ }
+}

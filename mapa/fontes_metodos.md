@@ -155,7 +155,7 @@ NC News, Poder360 e SBT News.
 * **Simulação de Monte Carlo.** 10.000 sorteios dos parâmetros estimados aplicados ao 1º turno de 2026, em dois cenários
   (repetição de 2022 e eleitores de outros candidatos mais para Flávio). Daí saem as medianas e os intervalos de 90%.
 * **Votos que dá para recuperar.** Terreno perdido (queda de Lula entre 2022 e 2026 além da média do país) mais o ganho de
-  levar 2 em cada 100 eleitores a mais às urnas, só onde isso tende a ajudar Lula.
+  2 em cada 100 eleitores a mais votando, só onde isso tende a ajudar Lula.
 * **Nota de 1 a 7.** Junta quatro medidas, cada uma em posição relativa (de 0 a 1) entre as áreas: votos a recuperar por
   eleitor (peso 55%), chance de a mobilização ajudar (15%), firmeza da estimativa (15%) e tamanho do eleitorado (15%). As
   áreas são divididas em sete grupos do mesmo tamanho. Municípios e regiões metropolitanas recebem a nota da mesma forma.

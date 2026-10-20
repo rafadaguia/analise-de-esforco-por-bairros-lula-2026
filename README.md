@@ -14,15 +14,15 @@ registrados no TSE. Todos os números vêm de dados públicos e agregados (TSE, 
 
 ## Objetivo
 
-Este trabalho existe para ajudar no planejamento tático de organizações e grupos de campanha: definir onde concentrar forças. Entre o 1º turno (4 de outubro) e o 2º turno (25 de outubro de 2026) são só três semanas, e não há tempo nem gente para estar em todo lugar. O mapa, os relatórios e as tabelas apontam em que estados, cidades e bairros o mesmo esforço tende a render mais votos para Lula, o que fazer em cada lugar (conversa, reconquista ou levar gente às urnas) e com que temas. É uma ferramenta de triagem para decidir rápido, a ser conferida com quem conhece o território, e não uma previsão de resultado.
+Este trabalho existe para ajudar no planejamento tático de organizações e grupos de campanha: definir onde concentrar forças. Entre o 1º turno (4 de outubro) e o 2º turno (25 de outubro de 2026) são só três semanas, e não há tempo nem gente para estar em todo lugar. O mapa, os relatórios e as tabelas apontam em que estados, cidades e bairros o mesmo esforço tende a render mais votos para Lula, o que fazer em cada lugar (conversa, reconquista ou incentivo ao comparecimento) e com que temas. É uma ferramenta de triagem para decidir rápido, a ser conferida com quem conhece o território, e não uma previsão de resultado.
 
 ## O que o mapa mostra
 
 * **Nota de 1 a 7** para cada município, bairro e região metropolitana. A nota 7 indica onde o esforço tende a render mais
-  votos novos. Ela combina os votos a recuperar por eleitor, a chance de que levar mais gente às urnas ajude Lula, a
+  votos novos. Ela combina os votos a recuperar por eleitor, a chance de que mais gente votando ajude Lula, a
   firmeza da estimativa e o tamanho do eleitorado.
 * **Votos que dá para recuperar:** os votos que Lula perdeu além da média do país entre 2022 e 2026, mais o ganho de
-  levar mais gente às urnas onde isso tende a ajudá-lo.
+  um comparecimento maior onde isso tende a ajudá-lo.
 * **Temas para conversar:** temas com mais força para Lula no lugar, temas que o plano de Flávio Bolsonaro não trata,
   temas disputados e temas a evitar, com citação e página do plano oficial.
 * **Relatório em PDF por cidade:** os 5.571 municípios têm um relatório com resumo, o que fazer,
@@ -270,7 +270,7 @@ NC News, Poder360 e SBT News.
 * **Simulação de Monte Carlo.** 10.000 sorteios dos parâmetros estimados aplicados ao 1º turno de 2026, em dois cenários
   (repetição de 2022 e eleitores de outros candidatos mais para Flávio). Daí saem as medianas e os intervalos de 90%.
 * **Votos que dá para recuperar.** Terreno perdido (queda de Lula entre 2022 e 2026 além da média do país) mais o ganho de
-  levar 2 em cada 100 eleitores a mais às urnas, só onde isso tende a ajudar Lula.
+  2 em cada 100 eleitores a mais votando, só onde isso tende a ajudar Lula.
 * **Nota de 1 a 7.** Junta quatro medidas, cada uma em posição relativa (de 0 a 1) entre as áreas: votos a recuperar por
   eleitor (peso 55%), chance de a mobilização ajudar (15%), firmeza da estimativa (15%) e tamanho do eleitorado (15%). As
   áreas são divididas em sete grupos do mesmo tamanho. Municípios e regiões metropolitanas recebem a nota da mesma forma.

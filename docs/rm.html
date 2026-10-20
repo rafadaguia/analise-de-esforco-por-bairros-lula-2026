@@ -407,7 +407,7 @@ const MODO = "rm";   // municipio | area | rm (cada página do site é gerada co
       const barra = r[2] == null ? `<span class="nota">sem estimativa</span>` :
         `<div class="pbar" title="Lula ${pc(r[2])} x Flávio ${pc(100 - r[2])}"><i style="width:${r[2]}%"></i></div><small>Lula ${pc(r[2])}</small>`;
       html += `<tr><td>${P.grupos[i]}<small>${pc(r[0])} do eleitorado</small></td><td>${barra}</td>
-        <td><span class="pchip ${cls}">${rot}</span>${r[4] && r[3] === 1 && (tipo === "idade" || tipo === "escolaridade") ? `<small>falta muito: levar às urnas</small>` : ""}</td>
+        <td><span class="pchip ${cls}">${rot}</span>${r[4] && r[3] === 1 && (tipo === "idade" || tipo === "escolaridade") ? `<small>falta muito: comparecimento</small>` : ""}</td>
         <td class="num">${pc(r[1])}${r[4] ? " ↑" : ""}</td></tr>`;
     });
     return `<section class="publicos"><h3>Públicos em ${uf}</h3>
@@ -420,10 +420,10 @@ const MODO = "rm";   // municipio | area | rm (cada página do site é gerada co
     const q = m => g[m] && g[m][k];
     return tabelaMedidas([
       ["Votos que dá para recuperar", q("potencial")],
-      ["Efeito de levar mais 2 em cada 100 eleitores às urnas", q("mob")],
+      ["Efeito de mais 2 em cada 100 eleitores votando", q("mob")],
       ["Diferença Lula − Flávio no 2º turno, se 2022 se repetir", q("margem_base")],
       ["Mesma diferença, se os eleitores de outros candidatos forem mais para Flávio", q("margem_dir")]]) + `
-      <p class="nota" style="margin:0">Número negativo = vantagem de Flávio. Números positivos no efeito de levar gente às urnas = ajuda Lula; negativos = ajuda Flávio.</p>`;
+      <p class="nota" style="margin:0">Número negativo = vantagem de Flávio. Números positivos no efeito do comparecimento = ajuda Lula; negativos = ajuda Flávio.</p>`;
   }
   function trilha(s) {
     const t = [["pais", "Brasil"]];
@@ -454,7 +454,7 @@ const MODO = "rm";   // municipio | area | rm (cada página do site é gerada co
     const el = document.getElementById("ficha");
     if (s.nivel === "pais") {
       el.innerHTML = `<h2>Brasil</h2><div class="sub">${fmt.format(D.meta.unidades)} áreas analisadas · de 2022 para 2026, Lula caiu em média ${Math.abs(D.meta.nac_desloc).toFixed(1).replace(".", ",")} pontos percentuais</div>${kpisGrupo("pais", "BR")}
-      <p class="nota">${MODO === "area" ? "<b>Para ver os bairros, aproxime o mapa numa cidade ou busque um município.</b> " : ""}${MODO === "municipio" ? "Clique num estado para aproximar e, depois, num município para abrir a ficha." : "Clique no mapa para abrir uma ficha."} "Votos que dá para recuperar" soma duas coisas: os votos que Lula perdeu além da média do país desde 2022 e o ganho de levar mais gente às urnas onde isso tende a ajudá-lo. Não é previsão de resultado.</p>`;
+      <p class="nota">${MODO === "area" ? "<b>Para ver os bairros, aproxime o mapa numa cidade ou busque um município.</b> " : ""}${MODO === "municipio" ? "Clique num estado para aproximar e, depois, num município para abrir a ficha." : "Clique no mapa para abrir uma ficha."} "Votos que dá para recuperar" soma duas coisas: os votos que Lula perdeu além da média do país desde 2022 e o ganho de um comparecimento maior onde isso tende a ajudá-lo. Não é previsão de resultado.</p>`;
       if (mover) map.fitBounds([[-74, -34], [-34.5, 5.5]], { padding: 10, duration: 600 });
       return;
     }
@@ -491,8 +491,8 @@ const MODO = "rm";   // municipio | area | rm (cada página do site é gerada co
       ${tabelaMedidas([
         ["Votos que dá para recuperar", u.pot],
         ["Votos a recuperar a cada mil eleitores", null, u.pm == null ? "–" : fmt.format(u.pm)],
-        ["Efeito de levar mais 2 em cada 100 eleitores às urnas", u.mob],
-        ["Chance de que levar mais gente às urnas ajude Lula", null, pct(u.pr, 0)]])}
+        ["Efeito de mais 2 em cada 100 eleitores votando", u.mob],
+        ["Chance de que mais gente votando ajude Lula", null, pct(u.pr, 0)]])}
       ${cartaoTemas(u.tm, u.n, u.st)}
       <table>
         <tr><td>Votos de Lula no 1º turno de 2026</td><td class="num">${u.l26 == null ? "–" : u.l26.toFixed(1).replace(".", ",") + "%"}</td></tr>

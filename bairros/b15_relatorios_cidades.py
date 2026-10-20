@@ -271,7 +271,7 @@ def relatorio(k, m, D, A, pop, ranks, n_cid):
          "A militância local deve trabalhar aqui, mas reforços de fora rendem mais em outras cidades."))
     estr = []
     if mob[0] > 0:
-        estr.append("**levar gente às urnas** (o comparecimento favorece Lula)")
+        estr.append("**aumentar o comparecimento** (mais gente votando favorece Lula)")
     if not np.isnan(desloc) and desloc < nac - 1:
         estr.append("**reconquistar quem votou em Lula em 2022** e se afastou (a queda aqui foi maior que no país)")
     if not np.isnan(terc_pct) and terc_pct >= 8:
@@ -299,8 +299,8 @@ def relatorio(k, m, D, A, pop, ranks, n_cid):
     ach = []
     tot_pot = sub["pot50"].clip(lower=0).sum()
     if pot[1] <= 0 or tot_pot <= 0:
-        ach.append("**Pouco terreno a recuperar.** Lula não perdeu aqui mais do que perdeu no país, e levar mais gente às "
-                   "urnas não tende a ajudá-lo. O esforço rende mais em outras cidades: a prioridade aqui é manter os votos "
+        ach.append("**Pouco terreno a recuperar.** Lula não perdeu aqui mais do que perdeu no país, e um comparecimento maior "
+                   "não tende a ajudá-lo. O esforço rende mais em outras cidades: a prioridade aqui é manter os votos "
                    "do 1º turno.")
     else:
         n20 = max(1, int(np.ceil(0.2 * len(ok))))
@@ -319,9 +319,9 @@ def relatorio(k, m, D, A, pop, ranks, n_cid):
     ap_ajuda = sub.loc[pm >= 0.7, "ap"].sum() / sub["ap"].sum()
     ap_atrap = sub.loc[pm <= 0.3, "ap"].sum() / sub["ap"].sum()
     if mob[0] > 0:
-        ach.append(f"**Levar mais gente às urnas ajuda Lula aqui.** Com mais 2 de cada 100 eleitores votando, Lula "
-                   f"ganha {mil(mob[1])} votos de saldo (provável entre {mil(mob[0])} e {mil(mob[2])}). Mobilização para o comparecimento (transporte, lembrete do dia da "
-                   f"votação) é prioridade.")
+        ach.append(f"**Mais gente votando ajuda Lula aqui.** Com mais 2 de cada 100 eleitores votando, Lula "
+                   f"ganha {mil(mob[1])} votos de saldo (provável entre {mil(mob[0])} e {mil(mob[2])}). Incentivar o comparecimento nos dias anteriores à eleição "
+                   f"(lembrar a data e o local de votação) é prioridade.")
     elif mob[2] < 0:
         ach.append(f"**Mobilização geral não ajuda na cidade como um todo:** com mais 2 de cada 100 eleitores votando, o "
                    f"saldo é de {mil(mob[1])} votos para Lula (provável entre {mil(mob[0])} e {mil(mob[2])}; negativo = "
@@ -446,7 +446,7 @@ def relatorio(k, m, D, A, pop, ranks, n_cid):
         w("As áreas com mais votos a recuperar (as primeiras 10). A área é um bairro do IBGE ou, onde a cidade não tem "
           "bairros oficiais, o entorno de um grupo de escolas de votação.")
         w("")
-        w("| Área | Nota | Votos a recuperar | Eleitores | Lula 2026 | Variação desde 2022 | Levar gente às urnas |")
+        w("| Área | Nota | Votos a recuperar | Eleitores | Lula 2026 | Variação desde 2022 | Comparecimento maior |")
         w("|---|---|---|---|---|---|---|")
         for _, r in ok.head(10).iterrows():
             efeito = "ajuda Lula" if r["pr"] >= 0.7 else ("ajuda Flávio" if r["pr"] <= 0.3 else "incerto")
@@ -459,7 +459,7 @@ def relatorio(k, m, D, A, pop, ranks, n_cid):
             w("")
         aj = sub[(sub["pr"] >= 0.7) & (sub["ap"] >= 3000)].sort_values("ap", ascending=False).head(5)
         if len(aj):
-            w("**Onde vale levar gente às urnas** (a mobilização tende a favorecer Lula): " +
+            w("**Onde vale incentivar o comparecimento** (mais gente votando tende a favorecer Lula): " +
               "; ".join(f"{r['n']}" for _, r in aj.iterrows()) + ".")
             w("")
 
@@ -520,8 +520,8 @@ def relatorio(k, m, D, A, pop, ranks, n_cid):
     w("* O mapa fala de **lugares, não de pessoas**: a média de uma área não descreve quem mora nela. As pessoas votam onde "
       "estão inscritas, que nem sempre é o bairro onde moram.")
     w("* **Não é previsão.** Os números mostram o que acontece se o comportamento de 2022 entre os turnos se repetir.")
-    w("* \"Votos que dá para recuperar\" = votos que Lula perdeu aqui além da média do país, mais o ganho de levar mais "
-      "gente às urnas onde isso tende a ajudá-lo.")
+    w("* \"Votos que dá para recuperar\" = votos que Lula perdeu aqui além da média do país, mais o ganho de um "
+      "comparecimento maior onde isso tende a ajudá-lo.")
     w("* Nenhuma sugestão usa cor ou raça, gênero, religião ou orientação sexual.")
     w("")
     return "\n".join(L)

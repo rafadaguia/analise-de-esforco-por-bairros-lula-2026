@@ -49,7 +49,7 @@ Este trabalho existe para ajudar no planejamento tático de organizações e gru
 
 1. **Áreas:** resultado por seção eleitoral (TSE) agregado por local de votação, geocodificado com as coordenadas
    oficiais do TSE (99,4% dos eleitores) e levado aos bairros do Censo 2022 (IBGE). Onde a cidade não tem bairros no
-   IBGE, as áreas são grupos de locais de votação. São 19.191 áreas, e 89% dos eleitores ficam abaixo do município.
+   IBGE, as áreas são grupos de locais de votação. São 19.191 áreas (19.141 com estimativa; 50 muito pequenas ficam sem nota), e 89% dos eleitores ficam abaixo do município.
 2. **Modelo:** inferência ecológica RxC hierárquica (Rosen, Jiang, King e Tanner, 2001) das transferências de voto entre os
    turnos de 2022, com a hierarquia país → UF → região metropolitana → município → área, ajustada por MCMC (PyMC, nutpie).
 3. **Simulação:** Monte Carlo com 10.000 sorteios para os cenários do 2º turno de 2026.
@@ -245,7 +245,8 @@ NC News, Poder360 e SBT News.
   eleitores). Sem coordenada, usa-se a de outro ano, o nome do bairro declarado ou, por último, o município.
 * **Construção das áreas.** O resultado das urnas é somado por escola e levado ao bairro do IBGE onde a escola fica.
   Onde a cidade não tem bairros oficiais, as escolas próximas são agrupadas (k-means) e a área é o entorno delas.
-  Áreas com menos de 1.000 eleitores são juntadas à vizinha. Resultado: 19.191 áreas.
+  Áreas com menos de 1.000 eleitores são juntadas à vizinha. Resultado: 19.191 áreas, das quais 19.141 têm
+  estimativa (as outras 50, com cerca de 3.600 eleitores no total, são pequenas demais e ficam sem nota).
 * **Inferência ecológica RxC hierárquica** (Rosen, Jiang, King e Tanner, 2001). O voto é secreto: não se sabe para
   onde foi cada eleitor. O modelo estima, a partir dos totais de cada área no 1º e no 2º turno de 2022, que fração dos
   eleitores de cada candidato (e de quem não votou) foi para Lula, para o adversário ou ficou de fora. A estimativa usa

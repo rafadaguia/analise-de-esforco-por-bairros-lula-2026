@@ -1,0 +1,200 @@
+{
+ "saude_sus": {
+  "lula": {
+   "p": 36,
+   "t": "Retomamos o Farmácia Popular, ampliando para 41 o número de medicamentos gratuitos distribuídos."
+  },
+  "flavio": {
+   "p": 21,
+   "t": "Vamos ampliar o acesso a exames preventivos, cuidando da mulher com câncer, na menopausa, na gestação ou que sofre de endometriose, por exemplo, e dar acesso também à saúde bucal."
+  }
+ },
+ "educacao": {
+  "lula": {
+   "p": 31,
+   "t": "Seguiremos com as ações e políticas já pactuadas com os estados e municípios brasileiros para chegarmos à meta de 80% das nossas crianças alfabetizadas na idade certa."
+  },
+  "flavio": {
+   "p": 21,
+   "t": "Vamos ampliar a oferta de creches para as crianças desde a primeira infância, em período integral, com alimentação digna e foco no desenvolvimento infantil."
+  }
+ },
+ "emprego": {
+  "lula": {
+   "p": 52,
+   "t": "Seguiremos transformando riquezas como a biodiversidade e a matriz energética limpa em vantagens competitivas duradouras, capazes de sustentar a reindustrialização, a inovação e a geração de empregos de qualidade."
+  },
+  "flavio": {
+   "p": 44,
+   "t": "Para quem tem mais idade, vamos criar um contrato mais atrativo para a contratação de pessoas com 50 anos ou mais desempregadas há pelo menos 12 meses: quem chega à meia-idade com uma vida inteira de trabalho não pode ser tratado como descartável."
+  }
+ },
+ "jornada_6x1": {
+  "lula": {
+   "p": 75,
+   "t": "Manteremos nossa ação junto ao Senado Federal para assegurar o fim da escala 6x1 e a redução da jornada de trabalho para 40 horas, sem redução salarial, nos termos aprovados na Câmara dos Deputados."
+  },
+  "flavio": {
+   "p": 44,
+   "t": "Vamos também dar mais liberdade a quem trabalha, com jornada flexível que caiba na vida de mães, jovens e de quem tem mais dificuldade de entrar no mercado."
+  }
+ },
+ "renda_salario_minimo": {
+  "lula": {
+   "p": 19,
+   "t": "Reinstituímos a política de valorização do salário-mínimo, que assegurou ganhos reais para trabalhadores, aposentados e beneficiários do BPC."
+  },
+  "flavio": null
+ },
+ "custo_de_vida_inflacao_alimentos": {
+  "lula": {
+   "p": 49,
+   "t": "Manteremos a inflação sob controle de forma duradoura e sustentável, garantindo que a renda real da população cresça acima do custo de vida."
+  },
+  "flavio": {
+   "p": 31,
+   "t": "Vamos reduzir impostos sobre energia elétrica e combustíveis, buscar segurança energética ao menor preço possível para o consumidor e regular as diversas fontes com um único norte: o menor preço final para quem paga a conta."
+  }
+ },
+ "seguranca_publica": {
+  "lula": {
+   "p": 27,
+   "t": "Manteremos a estratégia de asfixia financeira do crime organizado por meio de ações articuladas, que já permitiu, desde 2023, causar R$ 35,8 bilhões de prejuízos às organizações criminosas."
+  },
+  "flavio": {
+   "p": 14,
+   "t": "Em parceria com os governos estaduais, vamos criar meio milhão de novas vagas no sistema prisional em 4 anos e zerar o déficit carcerário."
+  }
+ },
+ "moradia_mcmv": {
+  "lula": {
+   "p": 45,
+   "t": "O programa alcançou sua meta de contratar 2 milhões de moradias com um ano de antecedência, o que nos levou a elevar esta meta para 3 milhões até o final de 2026."
+  },
+  "flavio": {
+   "p": 47,
+   "t": "Vamos retomar o Casa Verde e Amarela, com meta de 2,5 milhões de residências e a menor taxa de juros possível no financiamento."
+  }
+ },
+ "transporte_mobilidade": {
+  "lula": {
+   "p": 46,
+   "t": "A atual carteira, entre retomada de obras e novos investimentos, resultará em mais 233 km de metrôs, trens e VLTs e outros 296 km de corredores exclusivos de ônibus no padrão BRT."
+  },
+  "flavio": {
+   "p": 51,
+   "t": "Vamos investir R$ 900 bilhões em quatro anos em rodovias, hidrovias, portos, aeroportos e ferrovias."
+  }
+ },
+ "programas_sociais": {
+  "lula": {
+   "p": 19,
+   "t": "Recriamos e expandimos o Bolsa Família."
+  },
+  "flavio": {
+   "p": 42,
+   "t": "Por isso, o compromisso é claro e vem em primeiro lugar: vamos manter os programas sociais existentes, com aperfeiçoamento da gestão, correção de distorções e combate às fraudes."
+  }
+ },
+ "impostos_isencao_ir": {
+  "lula": {
+   "p": 19,
+   "t": "Aprovamos a reforma tributária do consumo e isentamos de imposto de renda todos os que ganham até R$ 5.000, compromisso assumido na campanha de 2022, marcos do início do processo de redução da regressividade do sistema tributário brasileiro."
+  },
+  "flavio": {
+   "p": 30,
+   "t": "Vamos promover a revisão e o redimensionamento da reforma tributária em curso e da majoração de impostos efetuada pelo atual governo, com o objetivo de reduzir efetivamente a carga sobre a produção e o consumo."
+  }
+ },
+ "previdencia": {
+  "lula": {
+   "p": 77,
+   "t": "Queremos construir mecanismos contributivos mais flexíveis, capazes de acompanhar trajetórias ocupacionais descontínuas e múltiplas, permitindo que a pessoa que trabalha mantenha sua proteção ao longo de toda a vida laboral."
+  },
+  "flavio": {
+   "p": 26,
+   "t": "Vamos investir em tecnologia e digitalizar os processos do INSS, dando continuidade ao caminho do Meu INSS, e profissionalizar a gestão do órgão."
+  }
+ },
+ "agronegocio_meio_ambiente": {
+  "lula": {
+   "p": 70,
+   "t": "No próximo mandato, continuaremos trabalhando para alcançar o desmatamento líquido zero até 2030, meta que reafirmamos."
+  },
+  "flavio": {
+   "p": 28,
+   "t": "Vamos instituir a rastreabilidade completa das cadeias produtivas, integrando em um só sistema os cadastros fundiários e ambientais, as guias de trânsito animal, as autorizações de supressão vegetal e o monitoramento por satélite."
+  }
+ },
+ "agricultura_familiar": {
+  "lula": {
+   "p": 59,
+   "t": "Vamos continuar expandindo o Plano Safra da Agricultura Familiar, com juros compatíveis com o perfil do agricultor e tipo de produto, com prioridade para produção de alimentos da cesta básica."
+  },
+  "flavio": {
+   "p": 27,
+   "t": "E o pequeno produtor que não tem o título da sua terra não consegue crédito, não pode investir e não tem a segurança de que aquilo que ele trabalha é dele."
+  }
+ },
+ "costumes_religiao": {
+  "lula": null,
+  "flavio": null
+ },
+ "corrupcao": {
+  "lula": {
+   "p": 18,
+   "t": "Vamos dar sequência às medidas de controle e integridade da administração pública e ao combate à corrupção."
+  },
+  "flavio": {
+   "p": 70,
+   "t": "Nas empresas públicas, essa proteção tem nome: a Lei das Estatais, de 2016, criada depois da Lava Jato para blindar as estatais da indicação política, com exigência de qualificação técnica e quarentena para quem vem de campanha eleitoral."
+  }
+ },
+ "instituicoes_stf_reeleicao": {
+  "lula": null,
+  "flavio": {
+   "p": 66,
+   "t": "E propomos o fim da reeleição para o cargo de Presidente da República."
+  }
+ },
+ "endividamento_apostas": {
+  "lula": {
+   "p": 12,
+   "t": "Em 2026, o Novo Desenrola Brasil apoiou famílias de menor renda, pequenos negócios e agricultores familiares, oferecendo descontos elevados, juros menores e prazos mais longos."
+  },
+  "flavio": {
+   "p": 33,
+   "t": "Vamos proibir o uso dos recursos dos programas sociais para apostas, porque dinheiro destinado a pôr comida na mesa não pode escoar para a casa de apostas, e promover campanhas educativas e de conscientização sobre os riscos do endividamento com jogos."
+  }
+ },
+ "saneamento": {
+  "lula": {
+   "p": 46,
+   "t": "Continuaremos, no próximo mandato, a perseguir o objetivo de apoiar estados e municípios a universalizar acesso à água tratada e ao esgotamento sanitário, buscando priorizar periferias historicamente negligenciadas."
+  },
+  "flavio": {
+   "p": 47,
+   "t": "O governo do PT tentou desarticulá-lo por decreto; nós vamos garantir sua plena aplicação e acelerar as concessões e parcerias para universalizar o acesso à água tratada e ao esgoto, com atenção especial ao saneamento rural."
+  }
+ },
+ "periferias_favelas": {
+  "lula": {
+   "p": 45,
+   "t": "Com o Periferia Viva, voltamos a investir em urbanização de favelas e em regularização fundiária, abandonados no governo anterior."
+  },
+  "flavio": {
+   "p": 47,
+   "t": "Vamos promover a urbanização de áreas degradadas, evitando o risco de deslizamentos em encostas, e incentivar a regularização fundiária, priorizando as áreas urbanas já consolidadas e reduzindo os vazios urbanos, com parcerias público-privadas que integrem moradia e infraestrutura no mesmo contrato."
+  }
+ },
+ "soberania_nacional": {
+  "lula": {
+   "p": 54,
+   "t": "Garantiremos a soberania digital para que o Brasil e os brasileiros tenham capacidade de desenvolver, operar, regular e governar tecnologias estratégicas e as infraestruturas críticas das quais dependem a economia, os serviços públicos, a ciência, a defesa e a democracia."
+  },
+  "flavio": {
+   "p": 54,
+   "t": "Vamos ampliar a capacidade de armazenamento das safras, para garantir melhores preços ao produtor e oferta contínua à população, e buscar soluções diplomáticas eficazes contra sanções dos Estados Unidos, da China e da Europa aos produtos nacionais."
+  }
+ }
+}

@@ -128,6 +128,10 @@ def main():
 
     mc = pd.read_parquet(os.path.join(pasta, "unidades_mc.parquet"))
     es = pd.read_parquet(os.path.join(pasta, "esforco.parquet"))[["id_unidade", "pot_mil", "nivel_P1", "nivel_P2", "nivel_P3"]]
+    # nomes: os de unidades.parquet valem (conferência de nomes b04e e nomes oficiais de subdistritos b04g)
+    nm_ = pd.read_parquet(os.path.join(VAR, a.unidade, "unidades.parquet"), columns=["id_unidade", "nome"]).set_index("id_unidade")["nome"]
+    if "nome" in mc:
+        mc["nome"] = mc["id_unidade"].map(nm_).fillna(mc["nome"])
     u = mc.merge(es, on="id_unidade", how="left")
     mrp_arq = os.path.join(VAR, a.unidade, "mrp.parquet")
     if os.path.exists(mrp_arq):
@@ -274,9 +278,14 @@ def main():
         um = next(iter(pj["estados"].values()))
         pub = {"grupos": [g["grupo"] for g in um], "tipos": [g["tipo"] for g in um],   # só estados (decisão de 10/10)
                "uf": {k: comp(v) for k, v in pj["estados"].items()}}
+    # subtemas das cidades por estado (st/UF.json), carregados só quando a ficha da cidade abre: o dados.json fica menor
+    os.makedirs(os.path.join(OUT, "st"), exist_ok=True)
+    por_uf = {}
     for k, v in municipios.items():
         if st_mun.get(k):
-            v["st"] = st_mun[k]
+            por_uf.setdefault(v["uf"], {})[k] = st_mun[k]
+    for uf_, d_ in por_uf.items():
+        json.dump(d_, open(os.path.join(OUT, "st", f"{uf_}.json"), "w"), ensure_ascii=False, separators=(",", ":"))
     dados = {"meta": {**meta, "unidade": a.unidade, "metodo": a.metodo, "pesos": a.pesos, "ufs_instaveis": sorted(inst), "ufs_conferidas": sorted(conf),
                       "ufs_reprocessando": reproc, "atualizacao_prevista": AVISO_QUANDO},
              "citacoes": citacoes,
@@ -305,6 +314,9 @@ def main():
     fm = markdown.markdown(open(os.path.join(RAIZ, "mapa", "fontes_metodos.md")).read(), extensions=["sane_lists"])
     n = iter(range(10, 20))
     fm = re.sub(r"<h2>", lambda _: f"<h2>{next(n)}. ", fm)
+    # imagem da prévia do link (og:image)
+    if os.path.exists(os.path.join(RAIZ, "mapa", "og.png")):
+        shutil.copy(os.path.join(RAIZ, "mapa", "og.png"), os.path.join(OUT, "og.png"))
     assert "<!--__FONTES_METODOS__-->" in guia
     aviso = (f'<div class="caixa alerta"><b>Atualização prevista para {AVISO_QUANDO}:</b> os números de {", ".join(reproc)} '
              f'estão sendo recalculados com um processamento mais longo, para deixar a estimativa mais segura. Nesses estados, '

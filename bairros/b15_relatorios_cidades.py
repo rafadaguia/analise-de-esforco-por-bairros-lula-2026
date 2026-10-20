@@ -316,8 +316,8 @@ def relatorio(k, m, D, A, pop, ranks, n_cid):
         ach.append("**Lula resistiu melhor que no país.** O espaço para recuperar votos é menor; o foco é segurar a base e "
                    "ampliar com temas.")
     pm = sub["pr"].fillna(0)
-    ap_ajuda = sub.loc[pm >= 0.7, "ap"].sum() / sub["ap"].sum()
-    ap_atrap = sub.loc[pm <= 0.3, "ap"].sum() / sub["ap"].sum()
+    ap_ajuda = sub.loc[pm >= 0.9, "ap"].sum() / sub["ap"].sum()
+    ap_atrap = sub.loc[pm <= 0.1, "ap"].sum() / sub["ap"].sum()
     if mob[0] > 0:
         ach.append(f"**Mais gente votando ajuda Lula aqui.** Com mais 2 de cada 100 eleitores votando, Lula "
                    f"ganha {mil(mob[1])} votos de saldo (provável entre {mil(mob[0])} e {mil(mob[2])}). Incentivar o comparecimento nos dias anteriores à eleição "
@@ -449,7 +449,7 @@ def relatorio(k, m, D, A, pop, ranks, n_cid):
         w("| Área | Nota | Votos a recuperar | Eleitores | Lula 2026 | Variação desde 2022 | Comparecimento maior |")
         w("|---|---|---|---|---|---|---|")
         for _, r in ok.head(10).iterrows():
-            efeito = "ajuda Lula" if r["pr"] >= 0.7 else ("ajuda Flávio" if r["pr"] <= 0.3 else "incerto")
+            efeito = "ajuda Lula" if r["pr"] >= 0.9 else ("ajuda Flávio" if r["pr"] <= 0.1 else "incerto")
             w(f"| {r['n']} | {int(r['nota'])} | {mil(r['pot50'])} | {mil(r['ap'])} | {pct(r['l26'])} | {pp(r['d'])} | {efeito} |")
         w("")
         quedas = sub[(sub["ap"] >= 3000) & sub["d"].notna()].sort_values("d").head(5)
@@ -457,7 +457,7 @@ def relatorio(k, m, D, A, pop, ranks, n_cid):
             w("**Onde Lula mais caiu desde 2022** (áreas com 3 mil eleitores ou mais): " +
               "; ".join(f"{r['n']} ({pp(r['d'])})" for _, r in quedas.iterrows()) + ".")
             w("")
-        aj = sub[(sub["pr"] >= 0.7) & (sub["ap"] >= 3000)].sort_values("ap", ascending=False).head(5)
+        aj = sub[(sub["pr"] >= 0.9) & (sub["ap"] >= 3000)].sort_values("ap", ascending=False).head(5)
         if len(aj):
             w("**Onde vale incentivar o comparecimento** (mais gente votando tende a favorecer Lula): " +
               "; ".join(f"{r['n']}" for _, r in aj.iterrows()) + ".")
@@ -533,6 +533,15 @@ def main():
     a = ap.parse_args()
     D, A, pop = carregar()
     CITA.update(citacoes_planos())
+    # citações conferidas por leitura humana e com a página checada no PDF (b09c) têm prioridade
+    _cc = os.path.join(RAIZ, "bairros", "insumos", "temas", "citacoes_conferidas.json")
+    if os.path.exists(_cc):
+        for t_, v_ in json.load(open(_cc)).items():
+            for c_ in ("lula", "flavio"):
+                if v_.get(c_):
+                    CITA[(c_, t_)] = (v_[c_]["p"], v_[c_]["t"])
+                else:
+                    CITA.pop((c_, t_), None)
     M = D["municipios"]
     # sem limite, entram todos (inclusive municípios criados depois do Censo 2022, sem população recenseada)
     cid = list(M) if a.minimo <= 0 else [k for k in M if pop.get(k, 0) >= a.minimo]

@@ -4,6 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <script src="https://barra.comitedetecnologia.com.br/barra.js" defer></script>
+<meta name="description" content="Onde cada voto exige menos esforço no 2º turno de 2026, por município, bairro e região metropolitana, com temas por lugar. Estimativas a partir de dados públicos (TSE e IBGE), não é pesquisa de opinião. Estudo independente da Estel Tecnologia.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Estel Tecnologia">
+<meta property="og:title" content="Mapa de esforço do 2º turno: onde cada voto exige menos esforço">
+<meta property="og:description" content="Por município, bairro e região metropolitana, com temas para conversar em cada lugar. Estimativas a partir de dados públicos (TSE e IBGE), não é pesquisa de opinião.">
+<meta property="og:image" content="https://rafadaguia.github.io/analise-de-esforco-por-bairros-lula-2026/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
 <title>Como Usar o Mapa</title>
 <link rel="icon" href="data:,">
 <link rel="stylesheet" href="lib/fontes/fontes.css">
@@ -106,7 +116,7 @@ code { overflow-wrap: anywhere; word-break: break-word; }   /* caminhos de arqui
     <li><b>Abra o mapa de Municípios</b> (página inicial) e digite o nome da sua cidade na busca. Ou clique no seu estado para aproximar e, depois, na sua cidade.</li>
     <li><b>Leia a nota da cidade</b> (de 1 a 7) e os números da ficha. A nota 7 indica o melhor retorno por esforço.</li>
     <li><b>Clique em "Ver os bairros"</b>. Você vai para o mapa de Bairros, já na sua cidade. O botão "Baixar o relatório" baixa um PDF com o resumo da cidade.</li>
-    <li><b>Anote os bairros com nota 6 e 7</b>: em geral, são as prioridades para a equipe de rua.</li>
+    <li><b>Anote os bairros com nota mais alta da sua cidade</b> e os indicados em "Onde começar", na ficha da cidade: em geral, são as prioridades para a equipe de rua.</li>
     <li><b>Clique em cada bairro prioritário</b> e veja o cartão "Temas para conversar". É a sugestão de pauta para panfletos, conversas e posts.</li>
     <li><b>No celular:</b> a busca fica acima do mapa. Com um dedo, a página rola normalmente (inclusive pela faixa cinza à direita do mapa); para mover o mapa, use dois dedos. Depois de escolher um lugar, toque em "Ver a ficha" para descer até os números.</li>
     <li><b>Confira com a equipe local</b>: o mapa erra, e quem anda no bairro sabe coisas que os dados não sabem.</li>
@@ -130,7 +140,7 @@ code { overflow-wrap: anywhere; word-break: break-word; }   /* caminhos de arqui
     <li><b>a estimativa é mais firme</b>, com pouca incerteza;</li>
     <li><b>o lugar tem bastante eleitor</b>, então cada ação alcança mais gente.</li>
   </ul>
-  <p>Cada cidade tem uma parcela de bairros em cada nota, para que você sempre tenha por onde começar. <b>Nota baixa não quer dizer "abandone"</b>: quer dizer que ali o mesmo esforço tende a render menos votos novos.</p>
+  <p>A nota compara cada área com as do país inteiro. Por isso, há cidades sem nenhum bairro com nota 6 ou 7 (Brasília, Porto Alegre, Rio de Janeiro, Fortaleza, Recife, Curitiba e Manaus, por exemplo). Nelas, comece pelas áreas indicadas em "Onde começar", na ficha da cidade: são as que têm mais votos a recuperar ali. <b>Nota baixa não quer dizer "abandone"</b>: quer dizer que ali o mesmo esforço tende a render menos votos novos.</p>
 
   <h2>4. Como ler a ficha</h2>
   <table>
@@ -160,7 +170,7 @@ code { overflow-wrap: anywhere; word-break: break-word; }   /* caminhos de arqui
 
   <h2>6. Na rua</h2>
   <ul>
-    <li><b>Roteiro:</b> comece pelos bairros com nota 6 e 7 da sua cidade. Na mesma nota, prefira os que têm mais "votos que dá para recuperar".</li>
+    <li><b>Roteiro:</b> comece pelos bairros com a nota mais alta da sua cidade, ou pelos de "Onde começar" na ficha da cidade. Na mesma nota, prefira os que têm mais "votos que dá para recuperar". Uma área com zero voto a recuperar estimado aparece com esse aviso na ficha.</li>
     <li><b>Campanha pelo comparecimento</b> (nos dias anteriores à eleição: lembrar a data e o local de votação) só onde a chance de ajudar Lula é alta, acima de 90%. Onde ela é baixa, a campanha genérica pode ajudar o adversário.</li>
     <li><b>Conversa:</b> leve os temas "Puxe estes temas" e um contraste. Use a página do plano de governo para responder "onde está escrito?".</li>
     <li><b>Registre o retorno:</b> anote o que funcionou em cada bairro. Isso vale mais que qualquer mapa.</li>
@@ -323,7 +333,8 @@ NC News, Poder360 e SBT News.</p>
   eleitores). Sem coordenada, usa-se a de outro ano, o nome do bairro declarado ou, por último, o município.</li>
 <li><strong>Construção das áreas.</strong> O resultado das urnas é somado por escola e levado ao bairro do IBGE onde a escola fica.
   Onde a cidade não tem bairros oficiais, as escolas próximas são agrupadas (k-means) e a área é o entorno delas.
-  Áreas com menos de 1.000 eleitores são juntadas à vizinha. Resultado: 19.191 áreas.</li>
+  Áreas com menos de 1.000 eleitores são juntadas à vizinha. Resultado: 19.191 áreas, das quais 19.141 têm
+  estimativa (as outras 50, com cerca de 3.600 eleitores no total, são pequenas demais e ficam sem nota).</li>
 <li><strong>Inferência ecológica RxC hierárquica</strong> (Rosen, Jiang, King e Tanner, 2001). O voto é secreto: não se sabe para
   onde foi cada eleitor. O modelo estima, a partir dos totais de cada área no 1º e no 2º turno de 2022, que fração dos
   eleitores de cada candidato (e de quem não votou) foi para Lula, para o adversário ou ficou de fora. A estimativa usa
